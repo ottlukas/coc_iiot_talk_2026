@@ -1,18 +1,14 @@
-= Open Source for Regulated Manufacturing: GMP‑Compliant IIoT Data Logging with Apache IoTDB
-Lukas Ott <lukas.ott@apache.org>
-2026-10-11
 :revealjs_theme: apache
 :revealjs_slideNumber: true
 :revealjs_hash: true
 :revealjs_transition: slide
 :imagesdir: images
+:revealjs_width: 1400
+:revealjs_height: 900
+:revealjs_margin: 0.1
 
-== Open Source for Regulated Manufacturing
-*GMP‑Compliant IIoT Data Logging with Apache IoTDB*
-
-[.author]#Lukas Ott#
-
-[.date]#October 11, 2026#
+= Open Source for Regulated Manufacturing: GMP‑Compliant IIoT Data Logging with Apache IoTDB
+Lukas Ott <otluk@apache.org>
 
 [.notes]
 --
@@ -23,154 +19,188 @@ auditable, and compliant IIoT data platforms with Apache Software Foundation tec
 
 == Introduction
 
-=== The 2026 Regulatory Storm
-
-* *Annex 11 Overhaul:* Massive text expansion (from 1,500 to ~10,000 words) demanding explicit IT security, cloud control, and absolute data integrity.
-* *The New Annex 22:* Newly introduced specifically to govern and enforce AI-supported systems inside GMP environments.
-* *The Collision:* High-frequency IIoT industrial data velocity meeting the absolute strictest compliance era in modern history.
+=== Why Data Integrity Matters
+[.small]
+* *Regulated Industries:* Crucial for life sciences, including Pharma, MedTech, and Biotech manufacturing.
+* *The Core Conflict:* High-frequency IIoT industrial sensor data velocity colliding directly with strict compliance demands.
+* *The Shift:* Evolving global frameworks require absolute transparency across the entire data lifecycle.
 
 [.notes]
 --
-Annex 11 is undergoing a massive shift. With over 10,000 words now, the focus is heavily on cloud control and data integrity.
-Annex 22 brings AI-supported systems under the GMP umbrella. This means high-speed IIoT must coexist with strict regulations.
+Data integrity is no longer just a checkbox; it's a fundamental requirement in automated life-science production lines.
+--
+
+=== The 2026 Regulatory Storm
+[.small]
+* *Annex 11 Overhaul:* Expanding from 1,500 to 10,000 words, it brings highly detailed requirements for data integrity, cloud computing, and IT security.
+* *The New Annex 22:* Created specifically to regulate AI-supported systems within GMP environments.
+* *The Collision:* High-frequency IIoT industrial data velocity meeting the strictest compliance era in modern history.
+
+[.notes]
+--
+Annex 11 is undergoing a major shift. The focus is increasingly on cloud control, IT security, and data integrity.
+Annex 22 brings AI-supported systems under the GMP umbrella.
 --
 
 === Compliance in 60 Seconds: FDA vs. EU
-
+[.small]
 * *🇺🇸 FDA 21 CFR Part 11 (US Regulation)*
-** Asks: _"Are your electronic records and signatures trustworthy?"_
-** Requires: Secure system validation, unalterable time-stamped audit trails, and training.
+** Focuses on: *"Are electronic records & signatures trustworthy?"*
+** Ensures they are secure and legally equivalent to paper.
 * *🇪🇺 EU Annex 11 (GMP Guideline)*
-** Asks: _"Is your entire computerized system lifecycle validated and controlled?"_
-** Requires: Full risk management, validation testing, supplier governance, and ALCOA+ data integrity.
-* *The Unified Goal:* Moving safely away from paper into compliant, audit-ready digital processes.
+** Focuses on: *"Is the entire system validated, controlled, and compliant?"*
+** Governs computerized environments, life cycles, and supplier governance.
+* *The Unified Goal:* Ensure data integrity, traceability, and shift safely to audit-ready digital processes instead of paper.
 
 [.notes]
 --
-Part 11 focuses on the trustworthiness of records and signatures.
-Annex 11 asks if the entire system lifecycle is controlled.
-Both point towards moving from paper to validated, secure digital processes.
+Part 11 focuses on records and signatures. Annex 11 asks whether the entire system lifecycle is controlled.
 --
+
+== GMP Requirements for IIoT Data
+
+=== Demystifying ALCOA++
+[.extremely-small]
+[cols="1,1,1", options="header"]
+|===
+|ALCOA (Original) |ALCOA+ (Added) |ALCOA++ (The 2026 Shift)
+
+|*Attributable:* Who did it?
+|*Complete:* No missing data.
+|*Integrity:* Protected from changes.
+
+|*Legible:* Can it be read?
+|*Consistent:* Logical data flow.
+|*Robustness:* Prevent data loss.
+
+|*Contemporaneous:* Recorded in real-time.
+|*Enduring:* Long-term retention.
+|*Transparency:* Open for review.
+
+|*Original:* First capture of data.
+|*Available:* Easy review access.
+|*Accountability:* Responsible personnel.
+
+|*Accurate:* Is it correct?
+|
+|*Reliability:* Controlled systems.
+|===
+
+[.notes]
+--
+ALCOA++ introduces parameters explicitly meant to cover automated, high-velocity infrastructure like IIoT streams.
+--
+
+=== Main Elements of 21 CFR Part 11
+[.small]
+* *Validation:* Systems must be formally validated to perform exactly as intended.
+* *Security:* Access to electronic records must be restricted strictly to authorized users.
+* *Record Retention:* Records must be securely retained in an unalterable environment.
+* *Audit Trails:* Every action must be captured automatically with precise date and time stamps.
+* *Electronic Signatures:* Must be completely unique and indissolubly linked to their respective records.
+* *Training:* Personnel must be fully trained and accountable for working under Part 11 requirements.
 
 == The Core Challenge
 
-=== The Traditional Historian "Tax"
-
-* *Commercial Constraints:*
-** Proprietary volume-based and per-tag licensing structures.
-** Vendor lock-in patterns that choke out scaling efforts.
-* *Architectural Limitations:*
-** Rigid operational data models lacking deep metadata lineage.
-** Weak native audit capabilities, requiring heavily customized add-on layers for ALCOA+.
+=== Why Traditional Historians Struggle & Are Expensive
+[.small]
+* *Commercial Constraints*
+** Proprietary licensing based on tags or data volume.
+** Severe vendor lock-in and limited architecture extensibility.
+** High validation and customization effort under GAMP 5.
+* *Technical Limitations*
+** Scaling constraints not originally built for rapid IIoT data velocity.
+** Rigid data models with poor metadata lineage and reproducibility.
+** Siloed architecture with weak integration into modern streaming analytics.
 
 [.takeaway-box]
 --
-*The Burning Question:* Can open source serve as a reliable, highly compliant backbone for a modern industrial historian?
+*The Burning Question:* Can open source serve as a compliant historian backbone?
 --
 
-[.notes]
---
-Traditional industrial historians charge by tags and data volume, which makes scaling expensive.
-They also lack metadata lineage and native audit trails matching ALCOA+ specifications out of the box.
---
+== The Role of Open Source
 
-=== Elevating to ALCOA++
+=== Open Source in Regulated Environments
+[.small]
+* *The Transparency Advantage:* Closed-source platforms act as compliance "black boxes." Open source allows auditors to inspect data processing logic directly.
+* *Interoperability:* Open APIs and standardized storage break downstream analytical silos.
+* *Ecosystem Trust:* The Apache Software Foundation (ASF) provides a strict framework of open vendor-neutral governance, eliminating single-point vendor lock-in risks.
 
-* *ALCOA:* Attributable, Legible, Contemporaneous, Original, Accurate.
-* *ALCOA+:* Adds Complete, Consistent, Enduring, and Available to the lifecycle framework.
-* *ALCOA++ (The 2026 Shift):* Focuses explicitly on system *Integrity*, technical *Robustness*, architectural *Transparency*, personal *Accountability*, and system *Reliability*.
-* *The Open Source Angle:* Community governance natively bridges transparency and cross-sector auditability constraints.
+=== Open Infrastructure Data Commons (OIDC)
 
-[.notes]
---
-ALCOA++ expands traditional ALCOA to focus on system integrity, robustness, transparency, accountability, and reliability.
-Because open source is fully auditable and transparent, it is naturally suited to validation.
---
+* *Real-World Impact:* An open-source software platform leveraging Apache technologies for real-time monitoring, data preservation, and cross-sector infrastructure analysis.
+* *A Trusted Baseline:* Formally published within the United Nations STI Solutions Book, proving open infrastructure can handle mission-critical, long-term data preservation needs.
 
 == The Apache Solution
 
-=== Apache IoTDB as a GMP Historian
-
-* *Purpose-Built:* Crafted intentionally for extreme time-series ingestion rates and high-frequency industrial PLC sensors.
-* *Security-Hardened:* Out-of-the-box user access controls (authentication, authorization), encryption layers, and automated retention management.
-* *UN Recognition:* Formally selected as one of the *Top 60 Global Innovation Cases* by the United Nations STI Forum for real-time monitoring and data preservation.
-
-[source,sql]
-----
--- Enabling secure, immutable writes
-CREATE DATABASE root.factory1;
-CREATE TIMESERIES root.factory1.device1.temperature WITH DATATYPE=DOUBLE, ENCODING=GORILLA;
-----
-
-[.notes]
---
-Apache IoTDB was designed from scratch for time-series data.
-It has built-in auth and encryption.
-It's even recognized by the UN as a top innovation case for data preservation.
---
+=== Apache IoTDB as a GMP Compliant IIoT Historian
+[.small]
+* *Purpose-Built Architecture:* Optimized specifically for high-frequency industrial sensors and PLC time-series streams.
+* *Compliance Safeguards:* Built-in user authentication, role-based access control (RBAC), cryptographic encryption, and automated data retention policies.
+* *Global Innovation:* Selected as one of the **Top 60 Global Innovation Cases** by the United Nations STI Forum for real-time monitoring and data preservation.
 
 === Core Enabler: Apache TSFile
+[.small]
+* *Immutable Design Patterns:* Columnar file design that is inherently append-only, ensuring historical data cannot be silently modified or manipulated.
+* *Data Segmentation:* Isolated physical data layout blocks enable clean risk boundaries for validation and targeted regulatory spot-checks.
+* *Ecosystem Hybridity:* TSFile plus Apache Iceberg allows complex analytical systems to track full historical query lineage and reproduce previous query states flawlessly.
 
-* *Immutable by Design:* TSFile uses an unchangeable append-only model on disk, creating a resilient environment where records cannot be modified silently without breaking validation.
-* *Data Segmentation:* Structuring raw storage into blocks directly allows targeted validation boundaries and efficient regulatory spot reviews.
-* *Future-Proofing:* Bridges hot operational time-series data seamlessly into massive cold data lakes when integrated with an Apache Iceberg catalog.
+=== The End-to-End Apache IIoT Pipeline
+[.small]
+* *Data Integration & Edge:* `Apache PLC4X` parses OPC-UA/Modbus protocols. `Apache NiFi` handles data flow and schema integration.
+* *Messaging & Ingestion:* `Apache BifroMQ` serves as a high-throughput MQTT broker, passing data to `Apache Kafka` data streams.
+* *Stream Processing & Rules:* `Apache Flink` or `Apache Beam` execute real-time compliance, format, and threshold validation.
+* *Storage & Analytics:* `Apache IoTDB` (hot time-series database) saving as `TSFiles` directly into an `Apache Iceberg` data lake catalog, visualized safely via `Apache Superset`.
 
-[.notes]
---
-TSFile is the columnar format used by IoTDB.
-Because it is append-only on disk, it's virtually impossible to rewrite history without breaking validation checksums.
---
+=== Reference Architecture Map
+[.small]
+* *Edge Layer:* Sensors / PLCs -> PLC4X -> NiFi -> BifroMQ
+* *Streaming Layer:* Kafka -> Flink / Beam (Real-time data integrity filters)
+* *Storage Layer:* IoTDB (Hot Storage / TSFile Engine) -> Iceberg Catalog (Cold Storage Archive)
+* *Access Layer:* Superset Dashboards & Secure Auditing Tools
 
-=== The End-to-End Apache Pipeline
+== Compliance and Validation
 
-* *Ingestion/Edge:* Industrial equipment protocols communicate via *Apache PLC4X* directly into high-throughput *Apache BifroMQ* (MQTT broker).
-* *Processing:* *Apache Kafka* pipelines real-time data streams into *Apache Flink* or *Apache Beam* for real-time compliance validation checking.
-* *Storage:* *Apache IoTDB* acts as the high-availability hot historian, writing immutable *TSFiles* that pass downstream into *Apache Iceberg*.
-* *Analytics/BI:* Compliance officers securely run reproducible queries utilizing *Apache Superset*.
+=== Compliance Considerations
+[.small]
+* *Annex 11 Mapping:* Matching specific clauses (e.g., electronic audit trails, automated printouts, system security) to explicit configuration profiles in Apache IoTDB.
+* *21 CFR Part 11 Mapping:* Utilizing integrated user authorization matrices to manage access security and enforce unmodifiable time-stamped logs.
+* *Validation Boundaries:* Clearly defining software boundaries between the underlying operating system infrastructure and containerized Apache applications.
 
-[.notes]
---
-This pipeline covers edge protocol parsing (PLC4X), ingestion (BifroMQ), streaming (Kafka/Flink), storage (IoTDB), and BI (Superset).
-The entire lifecycle is transparent, secure, and open-source.
---
+=== Computer System Validation with GAMP 5
+[.small]
+* *The 9 Steps of Annex 11 Computer System Validation (CSV):*
+1. Risk Assessment
+2. Supplier Qualification
+3. Requirements (URS)
+4. Design & Specifications
+5. IQ/OQ/PQ Testing
+6. Data Integrity Controls
+7. SOPs & Training
+8. Change Control & Review
+9. Operation & Monitoring
 
-== CSV & Validation
-
-=== Computer System Validation (CSV) with GAMP 5
-
-* *Framework Mapping:* Aligning containerized open-source projects safely under GAMP 5 software categorization layers.
-* *System Boundaries:* Clearly defining component isolation to ease structural Risk Assessment (Step 1) and Requirements Specifications (Step 3).
-* *Lifecycle Validation:* Executing repeatable Installation, Operational, and Performance Qualification (IQ/OQ/PQ) testing scripts against the open architecture.
-
-[.notes]
---
-GAMP 5 is the guideline for validating computerized systems in pharma/regulated manufacturing.
-By mapping open-source components into clear software categories and using Docker for environment isolation, IQ/OQ/PQ tests can be automated and run repeatedly.
---
+* *The 3-Tier Testing Blueprint (Step 5):*
+** *Installation Qualification (IQ):* Repeatable deployment checking using reproducible container setups.
+** *Operational Qualification (OQ):* Verifying failover operations, security profiles, and automated database retention policies.
+** *Performance Qualification (PQ):* Simulating maximum IIoT velocity to ensure stability under load.
 
 == Conclusion
 
 === Key Takeaways
 
-1. *Open Source is Superior:* The inherent transparency of open architectures like the ASF ecosystem makes data validation completely verifiable rather than a black box.
-2. *The Power Combination:* Combining Apache IoTDB, TSFile, and Iceberg builds a bulletproof, modern, and cost-effective ALCOA++ architecture.
-3. *Act Now:* Break out of legacy historian tag-licensing bottlenecks to survive the modern regulatory shift.
-
-[.notes]
---
-To summarize: open source gives you full transparency for audits.
-IoTDB and TSFile offer standard-setting immutability.
-And you avoid tag licensing costs.
---
+* *The Open Advantage:* Open-source ecosystems easily support fully compliant, transparent, and scalable industrial architectures.
+* *Future-Proof Storage:* Combining Apache IoTDB, TSFile, and Iceberg builds a modern, cost-effective, and audit-ready data platform.
+* *Strategic Shift:* Adopting open source enables factories to navigate evolving regulations without getting trapped by legacy per-tag vendor licensing.
 
 === Q&A
 
 * Thank you for attending!
-* *Speaker:* Mr. Lukas Ott, Enterprise Architect
-* *Project Details:* https://iotdb.apache.org/
-* *Email:* lukas.ott@apache.org
+* *Speaker:* Lukas Ott, Enterprise Architect
+* *Project:* Apache IoTDB (https://iotdb.apache.org/)
+* *Email:* otluk@apache.org
 
 [.notes]
 --
-Thank you all. I'm now open for any questions you might have.
+Thank you all. I'm now open for questions from the audience.
 --
