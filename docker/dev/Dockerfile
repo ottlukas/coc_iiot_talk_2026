@@ -12,10 +12,10 @@ COPY package*.json ./
 RUN npm install
 
 # Copy compile and watch scripts
-COPY compile.js watch.js ./
+COPY scripts/compile.js scripts/watch.js ./scripts/
 
 # Expose live-reload dev-server port
 EXPOSE 4200
 
 # Start watching and serving
-CMD ["node", "watch.js"]
+CMD ["node", "scripts/watch.js"]

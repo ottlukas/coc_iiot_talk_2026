@@ -1,6 +1,6 @@
 # Reveal.js Docker Setup for AsciiDoc Presentations
 
-This directory contains a complete, Dockerized toolchain for creating and presenting AsciiDoc-based slides using [Reveal.js](https://revealjs.com/). It is pre-configured to align with the Apache Software Foundation's training presentation structure, including automated live reloading in your browser as you edit.
+This repository contains a complete, Dockerized toolchain for creating and presenting AsciiDoc-based slides using [Reveal.js](https://revealjs.com/). It is pre-configured to align with the Apache Software Foundation's training presentation structure, including automated live reloading in your browser as you edit.
 
 ---
 
@@ -20,7 +20,7 @@ The easiest way to build and run the presentation server is using Docker Compose
 
 ```bash
 # Build and start the container
-docker compose up --build
+docker compose -f docker/dev/docker-compose.yml up --build
 ```
 
 Once running, open your browser and navigate to:
@@ -34,21 +34,21 @@ If you prefer to run using raw Docker commands, follow the syntax for your speci
 
 ### 1. Build the Docker Image
 ```bash
-docker build -t asciidoc-revealjs-presentation .
+docker build -f docker/dev/Dockerfile -t asciidoc-revealjs-presentation .
 ```
 
 ### 2. Run the Container
 *   **Linux / macOS (bash/zsh):**
     ```bash
-    docker run --rm -it -p 4200:4200 -v "$(pwd)/slides":/app/slides asciidoc-revealjs-presentation
+    docker run --rm -it -p 4200:4200 -v "$(pwd)/docs":/app/docs asciidoc-revealjs-presentation
     ```
 *   **Windows (PowerShell):**
     ```powershell
-    docker run --rm -it -p 4200:4200 -v "${PWD}/slides":/app/slides asciidoc-revealjs-presentation
+    docker run --rm -it -p 4200:4200 -v "${PWD}/docs":/app/docs asciidoc-revealjs-presentation
     ```
 *   **Windows (Command Prompt - CMD):**
     ```cmd
-    docker run --rm -it -p 4200:4200 -v "%cd%/slides":/app/slides asciidoc-revealjs-presentation
+    docker run --rm -it -p 4200:4200 -v "%cd%/docs":/app/docs asciidoc-revealjs-presentation
     ```
 
 ---
@@ -56,12 +56,12 @@ docker build -t asciidoc-revealjs-presentation .
 ## ✏️ How to Edit and Present
 
 ### Editing Slides
-1. Open [slides/presentation.adoc](file:///c:/Users/luk/Development/coc_iiot_talk_2026/slides/presentation.adoc) in your editor.
+1. Open `docs/presentation.adoc` in your editor.
 2. Make your edits (e.g., adding bullets, slides, or speaker notes).
 3. Save the file. The browser tab open at `http://localhost:4200` will reload automatically within a second!
 
 ### Editing Style & Theme
-1. Open [slides/theme/apache.css](file:///c:/Users/luk/Development/coc_iiot_talk_2026/slides/theme/apache.css) in your editor.
+1. Open `docs/theme/apache.css` in your editor.
 2. Edit CSS styles (such as `--r-heading-color` or layout variables).
 3. Save the file. The styling modifications will reload instantly.
 
@@ -96,18 +96,37 @@ npm run build
 
 ```text
 coc_iiot_talk_2026/
-├── .dockerignore
-├── Dockerfile
-├── docker-compose.yml
-├── package.json
-├── compile.js          # Programmatic Node converter script
-├── watch.js            # Chokidar file watcher & live-server configuration
-├── README.md           # This guide
-└── slides/
-    ├── presentation.adoc  # The main AsciiDoc slides source code
-    ├── images/            # Directory for slide assets and diagrams
-    └── theme/
-        └── apache.css     # Custom presentation stylesheet
+├── README.md                       # This guide
+├── package.json                    # Node.js dependencies & scripts
+│
+├── docs/                           # AsciiDoc source files & assets
+│   ├── presentation.adoc           # Main slide source code
+│   ├── open-source-manufacturing.md    # Talk content outline
+│   ├── open-source-manufacturing-draft.md  # Earlier draft (for reference)
+│   ├── images/                     # Slide images & diagrams
+│   ├── theme/
+│   │   └── apache.css              # Custom presentation stylesheet
+│   └── exports/                    # PDF/PPTX exports
+│       ├── *.pdf
+│       └── *.pptx
+│
+├── docker/                         # Docker configurations
+│   └── dev/
+│       ├── docker-compose.yml      # Development compose file
+│       ├── Dockerfile              # Development container image
+│       └── .dockerignore
+│
+├── presentations/                  # Additional/archived presentations
+│   └── open-source-manufacturing/  # Ruby-based RevealJS setup (legacy)
+│       ├── docker-compose.yml
+│       ├── Dockerfile
+│       ├── slides.adoc
+│       └── ...
+│
+└── scripts/                        # Build & utility scripts
+    ├── compile.js                  # AsciiDoc → HTML converter
+    ├── watch.js                    # File watcher & live-reload server
+    └── organize_repo.py            # Repository cleanup automation
 ```
 
 ---

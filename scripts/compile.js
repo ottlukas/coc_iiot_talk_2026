@@ -6,8 +6,9 @@ const asciidoctorRevealjs = require('@asciidoctor/reveal.js');
 // Register the reveal.js converter with Asciidoctor.js
 asciidoctorRevealjs.register();
 
-const PUBLIC_DIR = path.join(__dirname, 'public');
-const SLIDES_DIR = path.join(__dirname, 'slides');
+const ROOT_DIR = path.join(__dirname, '..');
+const PUBLIC_DIR = path.join(ROOT_DIR, 'public');
+const SLIDES_DIR = path.join(ROOT_DIR, 'docs');
 const REVEAL_DEST = path.join(PUBLIC_DIR, 'reveal.js');
 
 try {
@@ -18,8 +19,8 @@ try {
   fs.ensureDirSync(REVEAL_DEST);
 
   // 2. Copy reveal.js core assets from node_modules
-  const revealSourceDist = path.join(__dirname, 'node_modules', 'reveal.js', 'dist');
-  const revealSourcePlugin = path.join(__dirname, 'node_modules', 'reveal.js', 'plugin');
+  const revealSourceDist = path.join(ROOT_DIR, 'node_modules', 'reveal.js', 'dist');
+  const revealSourcePlugin = path.join(ROOT_DIR, 'node_modules', 'reveal.js', 'plugin');
 
   if (fs.existsSync(revealSourceDist)) {
     fs.copySync(revealSourceDist, path.join(REVEAL_DEST, 'dist'));
@@ -49,7 +50,7 @@ try {
     fs.copySync(customThemeSource, customThemeDest);
     console.log('[Build] Custom Apache theme copied successfully.');
   } else {
-    console.log('[Build] Warning: slides/theme/apache.css not found, custom styling will not apply.');
+    console.log('[Build] Warning: docs/theme/apache.css not found, custom styling will not apply.');
   }
 
   // 5. Compile presentation.adoc

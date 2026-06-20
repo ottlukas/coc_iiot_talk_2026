@@ -3,8 +3,9 @@ const liveServer = require('live-server');
 const { execSync } = require('child_process');
 const path = require('path');
 
-const SLIDES_DIR = path.join(__dirname, 'slides');
-const PUBLIC_DIR = path.join(__dirname, 'public');
+const ROOT_DIR = path.join(__dirname, '..');
+const SLIDES_DIR = path.join(ROOT_DIR, 'docs');
+const PUBLIC_DIR = path.join(ROOT_DIR, 'public');
 
 // Helper to run compiler
 let isCompiling = false;
@@ -14,7 +15,7 @@ function compileSlides() {
 
   console.log(`\n[${new Date().toLocaleTimeString()}] Change detected, recompiling...`);
   try {
-    execSync('node compile.js', { stdio: 'inherit' });
+    execSync('node ' + path.join(__dirname, 'compile.js'), { stdio: 'inherit', cwd: ROOT_DIR });
     console.log(`[${new Date().toLocaleTimeString()}] Recompile complete.`);
   } catch (err) {
     console.error(`[${new Date().toLocaleTimeString()}] Compilation failed:`, err.message);
