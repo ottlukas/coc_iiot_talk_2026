@@ -1,0 +1,18 @@
+{
+  "name": "coc-iiot-talk-2026-presentation",
+  "version": "1.0.0",
+  "description": "Reveal.js Docker setup for creating and presenting AsciiDoc-based presentations",
+  "main": "watch.js",
+  "scripts": {
+    "build": "node compile.js",
+    "dev": "node watch.js"
+  },
+  "dependencies": {
+    "@asciidoctor/core": "^3.0.0",
+    "@asciidoctor/reveal.js": "^5.0.0",
+    "chokidar": "^3.6.0",
+    "fs-extra": "^11.2.0",
+    "live-server": "^1.2.2",
+    "reveal.js": "^5.1.0"
+  }
+}

@@ -1,0 +1,11 @@
+title: "Open Source for Regulated Manufacturing"
+description: "GMP‑Compliant IIoT Data Logging with Apache IoTDB"
+authors:
+  - "Lukas Ott <otluk@apache.org>"
+version: "1.0"
+license: "Apache License 2.0"
+tags:
+  - "open-source"
+  - "manufacturing"
+  - "iotdb"
+  - "iiot"

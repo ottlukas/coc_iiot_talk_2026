@@ -1,0 +1,14 @@
+node_modules/
+public/
+open-source-manufacturing/
+.git/
+.vscode/
+.gemini/
+*.pdf
+*.pptx
+*.md
+!README.md
+Dockerfile
+docker-compose.yml
+.dockerignore
+package-lock.json

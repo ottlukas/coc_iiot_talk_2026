@@ -1,0 +1,56 @@
+/* Custom RevealJS theme for Open Source for Regulated Manufacturing */
+:root{
+  --primary:#2c5364; /* deep teal */
+  --accent:#4a90e2; /* bright blue */
+  --muted:#6b7280; /* gray */
+  --bg-light:#fbfdff;
+  --bg-dark1:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+}
+.reveal{font-family: 'Roboto', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;} 
+.title-slide{background:var(--bg-dark1); color:#fff; display:flex; align-items:center; justify-content:center;}
+.title-inner{max-width:980px; text-align:center; padding:40px;}
+.title-inner h1{font-weight:700; font-size:44px; margin:0 0 10px; color:#fff}
+.title-inner h2{font-weight:400; font-size:20px; color:#dbeafe}
+.title-inner .meta{color:#c7e0ff; margin-top:12px}
+.title-inner .lead{color:#e6f4ff; margin-top:18px}
+
+section{background:var(--bg-light); color:#0f172a; padding:32px 48px}
+h2{color:var(--primary); margin-bottom:12px}
+.footer{position:absolute;right:20px;bottom:14px;font-size:12px;color:var(--muted)}
+
+.row.two-icons{display:flex;gap:18px;justify-content:center}
+.card{background:#fff;border-radius:8px;padding:18px;box-shadow:0 6px 18px rgba(16,24,40,0.06);flex:1}
+
+.split{display:flex;gap:28px}
+.split .col{flex:1;background:#fff;padding:18px;border-radius:8px}
+
+.before-after{display:flex;gap:18px}
+.panel{flex:1;background:#fff;padding:18px;border-left:4px solid var(--accent);border-radius:6px}
+
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:12px}
+.tile{background:#fff;padding:14px;border-radius:8px;box-shadow:0 6px 16px rgba(16,24,40,0.04)}
+.tile .icon{font-weight:700;font-size:18px;color:var(--accent);}
+
+.arch{width:100%;height:120px}
+.two-col{display:flex;gap:18px}
+.two-col .left{flex:1}
+.two-col .right{flex:1}
+
+.comparison{display:flex;gap:20px}
+.comparison .col{flex:1;background:#fff;padding:14px;border-radius:8px}
+
+.pipeline{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.pipeline .step{background:#fff;padding:10px 14px;border-radius:6px;border:1px solid #e6eef8}
+.pipeline .arrow{font-size:20px;color:var(--muted)}
+
+.takeaways{display:flex;gap:18px}
+.tk{background:#fff;padding:16px;border-radius:8px;flex:1}
+
+pre.code{background:#0f172a;color:#e6f4ff;padding:12px;border-radius:8px;overflow:auto}
+
+/* fragments animation */
+.fragment{opacity:0;transform:translateY(8px);transition:all .35s ease}
+.fragment.revealed{opacity:1;transform:none}
+
+/* responsive */
+@media (max-width:900px){.split,.two-col,.before-after,.takeaways{flex-direction:column}}

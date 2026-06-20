@@ -1,0 +1,13 @@
+services:
+  presentation:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: asciidoc-revealjs-presentation
+    ports:
+      - "4200:4200"
+    volumes:
+      - ./slides:/app/slides
+    environment:
+      - PORT=4200
+    restart: unless-stopped
