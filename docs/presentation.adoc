@@ -39,9 +39,12 @@ The next  upcoming evolution with agents is basically not considered as the sema
 * The challenge is to keep up with velocity without losing compliance.
 * The question: can open source become a compliant historian backbone?
 
+image::manufacturingpharma.jpeg[Title="pharmaceutical manufacturing"]
+
 [.notes]
 --
 Data integrity is not a paperwork exercise; it is part of production quality.
+ALCOA means Attributable, Legible, Contemporaneous, Original, and Accurate.
 --
 
 === The Regulatory Pressure Is Rising
@@ -50,6 +53,15 @@ Data integrity is not a paperwork exercise; it is part of production quality.
 * AI-supported systems are becoming part of regulated manufacturing.
 * IIoT platforms now need to handle volume, speed, and auditability together.
 * The result: compliance has to be designed in, not added later.
+
+[.notes]
+--
+GMP pressure is no longer just about records and signatures; it is expanding into cloud, cybersecurity, and AI governance.
+The key point is that regulated systems now need to prove control across the full lifecycle, not only at the point of data capture.
+With Annex 11 already raising expectations, Annex 22 on AI is the next signal that intelligent systems will need validation, traceability, and human oversight.
+For IIoT platforms, that means compliance must cover ingestion, storage, processing, and decision support end to end.
+The message to remember: if AI and connected systems are part of production, their behavior must be explainable, controlled, and auditable.
+--
 
 image::regulatorystorm.jpeg[Title="Regulatory storm"]
 
@@ -64,17 +76,19 @@ That is the cleanest way to frame FDA and EU expectations: records on one side, 
 * Is the whole system controlled?
 --
 
-=== FDA vs. EU in 60 Seconds
+=== Comaparing the two Aspects of Regulations
 
-[cols="1,2", options="header"]
-|===
-|Framework |Focus
+image::fdaeu.jpeg[Title="FDA vs. EU"]
 
+[.notes]
+--
 |FDA 21 CFR Part 11 |Electronic records and signatures must be trustworthy, secure, and equivalent to paper.
 |EU Annex 11 |Computerized systems must be validated, controlled, and managed across the full lifecycle.
-|===
+--
 
-=== The Takeaway
+=== Shared Compliance Goal
+
+image::compliancetakeaway.jpeg[Title="Compliance Takeaway"]
 
 * Part 11 asks whether records and signatures can be trusted.
 * Annex 11 asks whether the entire system is validated and controlled.
@@ -89,9 +103,12 @@ image::compliancedata.jpeg[Title="Compliance and Data"]
 
 image::alcoa.jpeg[Title="ALCOA to ALCOA++ Evolution Framework"]
 
+[.notes]
+--
 * Data must be attributable, legible, contemporaneous, original, and accurate.
 * It must also be complete, consistent, enduring, and available.
 * In IIoT, that is not enough unless the platform also protects integrity at machine speed.
+--
 
 === ALCOA: Core Principles
 
@@ -144,7 +161,7 @@ The challenge is not just storing data. The challenge is storing it in a way tha
 --
 
 [.section-break]
-== Why Open Source
+== Open Source?
 
 image::whyopensource.jpeg[Title="Why Open Source"]
 
@@ -173,12 +190,25 @@ image::apachestack.jpeg[Title="Compliance and Validation"]
 * Includes authentication, RBAC, encryption, and retention controls.
 * Designed for use cases where data volume and compliance both matter.
 
+[.notes]
+--
+IoTDB is the time-series database at the center of the stack.
+RBAC means role-based access control.
+--
+
 === Apache TSFile as the Storage Foundation
 
 * Append-only by design, which supports immutable storage patterns.
 * Columnar layout improves efficiency and validation boundaries.
 * Works well with historical reproducibility and spot-checking.
 * Can be paired with Apache Iceberg for richer query lineage.
+
+[.notes]
+--
+TSFile is the underlying file format used to store time-series data efficiently.
+Append-only means new data is added without overwriting the original file content.
+Apache Iceberg is a table format for large analytical datasets with strong metadata support.
+--
 
 === End-to-End Data Flow
 
@@ -189,16 +219,29 @@ image::apachestack.jpeg[Title="Compliance and Validation"]
 * Hot storage and history: Apache IoTDB and Apache TSFile
 * Cold analytics: Apache Iceberg and Apache Superset
 
+[.notes]
+--
+PLC4X connects industrial protocols to software.
+NiFi moves and transforms data between systems.
+BifroMQ and Kafka provide messaging and buffering.
+Flink and Beam process streams in motion.
+Superset is used for analytics and dashboards.
+--
+
 === Reference Architecture
 
-
+[.notes]
+--
+This slide is for the end-to-end picture: from edge devices through messaging and processing into historian storage and analytics.
+Focus on the flow, not every component detail.
+--
 
 [.section-break]
 == Compliance and Validation
 
 image::complianceandvalidation.jpeg[Title="Compliance and Validation"]
 
-=== Mapping Compliance to Configuration
+=== Reproducable builds
 
 image::mappingcompliance.jpeg[Title="Mapping Compliance"]
 
@@ -226,7 +269,13 @@ image::mappingcompliance.jpeg[Title="Mapping Compliance"]
 |9. Operation & Monitoring |Keep the system compliant in production
 |===
 
-
+[.notes]
+--
+CSV means Computerized System Validation.
+GAMP 5 means Good Automated Manufacturing Practice, version 5.
+URS means User Requirements Specification.
+SOPs means Standard Operating Procedures.
+--
 
 === What Good Testing Looks Like
 
@@ -239,16 +288,29 @@ image::mappingcompliance.jpeg[Title="Mapping Compliance"]
 |PQ |The system remains stable under peak IIoT load
 |===
 
-=== The Main Part 11 Elements
+[.notes]
+--
+IQ means Installation Qualification.
+OQ means Operational Qualification.
+PQ means Performance Qualification.
+--
 
-image::21-cfr-part-11-elements.png[Title="Main Elements of 21 CFR Part 11", alt="Infographic illustrating Validation, Security, Record Retention, Audit Trails, Electronic Signatures, and Training requirements"]
+=== Code of Federal Regulations Part 11
 
+image::cfrpart11.jpeg"[alt="Infographic illustrating Validation, Security, Record Retention, Audit Trails, Electronic Signatures, and Training requirements"]
+
+[.notes]
+--
+Part 11 is the U.S. regulation for electronic records and electronic signatures.
+The key themes are validation, security, retention, audit trails, signatures, and training.
 * Validation
 * Security
 * Record retention
 * Audit trails
 * Electronic signatures
 * Training
+CFR - Code of Federal Regulations
+--
 
 [.section-break]
 == The Demo
@@ -258,6 +320,12 @@ image::21-cfr-part-11-elements.png[Title="Main Elements of 21 CFR Part 11", alt=
 * Goal: show the path from ingestion to buffering to synchronization.
 * Watch for authenticated ingestion, offline buffering, and live sync progress.
 * The key story: the system keeps running even when the network does not.
+
+[.notes]
+--
+The demo shows operational resilience: data can be accepted locally, buffered, and later synchronized.
+Call out authentication, offline behavior, and recovery.
+--
 
 === Demo Steps
 
@@ -276,6 +344,8 @@ image::21-cfr-part-11-elements.png[Title="Main Elements of 21 CFR Part 11", alt=
 [.notes]
 --
 If time is short, run only ingestion and sync, then point to the dual-chart comparison and recovery behavior.
+SSE means Server-Sent Events.
+Idempotent means repeating the action does not create duplicates or incorrect state.
 --
 
 [.section-break]
@@ -285,15 +355,25 @@ image::conclusion.jpeg[Title="Conclusion"]
 
 === What to Remember
 
+image::whatremember.jpeg[Title="Remember"]
+
+[.notes]
+--
 * Open source can be transparent, scalable, and compliant.
 * Apache IoTDB, TSFile, and Iceberg create a practical modern data foundation.
 * The real win is avoiding proprietary scaling traps while meeting GMP expectations.
+--
 
 === Final Message
 
+image::finaloverview.jpeg[Title="Overview"]
+
+[.notes]
+--
 * Regulated manufacturing needs data that is trustworthy, durable, and inspectable.
 * Open architecture makes compliance easier to validate and easier to evolve.
 * Apache technologies give you a credible path from edge data to audit-ready history.
+--
 
 === Q&A
 
