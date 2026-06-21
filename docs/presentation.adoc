@@ -1,7 +1,7 @@
 :revealjs_theme: apache
 :revealjs_slideNumber: true
 :revealjs_hash: true
-:revealjs_transition: slide
+:revealjs_transition: convex
 :imagesdir: images
 :revealjs_width: 1920
 :revealjs_height: 1080
@@ -9,6 +9,8 @@
 :revealjs_center: false
 :revealjs_overflow: false  # Only enable if content is still clipped
 :revealjs_viewDistance: 5
+
+:docinfo:
 
 = Open Source for Regulated Manufacturing: GMP‑Compliant IIoT Data Logging with Apache IoTDB
 Lukas Ott <otluk@apache.org>
@@ -19,6 +21,7 @@ Welcome everyone to my presentation on Open Source for Regulated Manufacturing.
 I am Lukas Ott, Enterprise Architect. Today we'll talk about building scalable, auditable, and compliant IIoT data platforms with Apache Software Foundation technologies.
 --
 
+[.section-break]
 == The moderne Pharmaceutical Manufacturing
 
 image::modernpharmaceuticalmanufacturing.jpeg[Title="Modern pharmaceutical manufacturing"]
@@ -82,6 +85,7 @@ image::regulatory-storm-annex22.png[Title="Big Pharma Update: Annex 11 & 22", al
 Part 11 focuses on records and signatures. Annex 11 asks whether the entire system lifecycle is controlled.
 --
 
+[.section-break]
 == GMP Requirements for IIoT Data
 
 === Demystifying ALCOA++ (The Core Framework)
@@ -169,6 +173,7 @@ image::21-cfr-part-11-elements.png[Title="Main Elements of 21 CFR Part 11", alt=
 The Industrial Data Reality: High-frequency sensor & PLC data needs rapid ingestion, massive capacity, and strict ALCOA+ audit trails simultaneously.
 --
 
+[.section-break]
 == The Role of Open Source
 
 === Open Source in Regulated Environments
@@ -184,6 +189,7 @@ The Industrial Data Reality: High-frequency sensor & PLC data needs rapid ingest
 
 image::un-sti-oidc-solution.png[Title="OIDC UN STI Forum Publication Page", alt="Screenshot of page 36 highlighting Open Infrastructure Data Commons using iotdb.apache.org"]
 
+[.section-break]
 == The Apache Solution
 
 === Apache IoTDB as a GMP Compliant IIoT Historian
@@ -209,6 +215,7 @@ image::un-sti-oidc-solution.png[Title="OIDC UN STI Forum Publication Page", alt=
 === Reference Architecture Map
 image::gmp-compliant-iiot-data-architecture.png[Title="GMP-Compliant IIoT Data Architecture Blueprint", alt="End-to-end component diagram highlighting data paths from Edge Protocols through BifroMQ/Kafka up to IoTDB/TSFile and Iceberg Data Lakes"]
 
+[.section-break]
 == Compliance and Validation
 
 === Compliance Considerations
@@ -238,6 +245,7 @@ image::annex-11-csv-framework.png[Title="Annex 11 Computer System Validation", a
 * Operational Qualification (OQ): Verifying database failover operations, security profiles, user access, and automated data retention policies
 * Performance Qualification (PQ): Simulating maximum industrial high-frequency IIoT velocity to guarantee stability and zero data loss under peak load
 
+[.section-break]
 == Conclusion
 
 === Key Takeaways
