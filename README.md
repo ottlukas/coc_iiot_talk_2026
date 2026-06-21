@@ -111,11 +111,10 @@ python ../scripts/export_to_pdf.py ../docs/presentation.adoc
 
 * The script resolves input paths relative to the current working directory, and it falls back to the repository root when needed.
 * The default output location is `docs/exports/presentation.pdf`.
-* If Node.js is installed under a non-standard executable name, you can set it with the `NODE_EXECUTABLE` environment variable:
+* The export script now uses the Docker-based presentation container and does not require Node.js installed on the host. Ensure the container is running with:
 
 ```bash
-export NODE_EXECUTABLE=/usr/bin/nodejs
-python scripts/export_to_pdf.py docs/presentation.adoc
+docker compose -f docker/dev/docker-compose.yml up --build
 ```
 
 * If you want to provide a custom PDF path, use `--output`:
@@ -160,6 +159,7 @@ coc_iiot_talk_2026/
 └── scripts/                        # Build & utility scripts
     ├── compile.js                  # AsciiDoc → HTML converter
     ├── watch.js                    # File watcher & live-reload server
+    ├── export_to_pdf.py            # Docker-based PDF export helper
     └── organize_repo.py            # Repository cleanup automation
 ```
 

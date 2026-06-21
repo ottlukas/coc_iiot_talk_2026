@@ -15,8 +15,8 @@ Lukas Ott <otluk@apache.org>
 
 [.notes]
 --
-[cite_start]Welcome everyone to my presentation on Open Source for Regulated Manufacturing[cite: 156].
-I am Lukas Ott, Enterprise Architect. [cite_start]Today we'll talk about building scalable, auditable, and compliant IIoT data platforms with Apache Software Foundation technologies[cite: 2, 157].
+Welcome everyone to my presentation on Open Source for Regulated Manufacturing.
+I am Lukas Ott, Enterprise Architect. Today we'll talk about building scalable, auditable, and compliant IIoT data platforms with Apache Software Foundation technologies.
 --
 
 == The moderne Pharmaceutical Manufacturing
@@ -26,67 +26,67 @@ image::modernpharmaceuticalmanufacturing.jpeg[Title="Modern pharmaceutical manuf
 
 === Why Data Integrity Matters
 
-* [cite_start]*Regulated Industries:* Crucial for life sciences, including Pharma, MedTech, and Biotech manufacturing.
-* *The Core Conflict:* High-frequency IIoT industrial sensor data velocity colliding directly with strict compliance demands.
-* *The Shift:* Evolving global frameworks require absolute transparency across the entire data lifecycle.
-* [cite_start]*Motivation:* Can open source serve as a compliant historian backbone and pass a rigorous FDA/EU GMP inspection
+* Regulated Industries: Crucial for life sciences, including Pharma, MedTech, and Biotech manufacturing.
+* The Core Conflict: High-frequency IIoT industrial sensor data velocity colliding directly with strict compliance demands.
+* The Shift: Evolving global frameworks require absolute transparency across the entire data lifecycle.
+* Motivation: Can open source serve as a compliant historian backbone and pass a rigorous FDA/EU GMP inspection
 
 
 [.notes]
 --
-Data integrity is no longer just a checkbox; it's a fundamental requirement in automated life-science production lines[cite: 161].
+Data integrity is no longer just a checkbox; it's a fundamental requirement in automated life-science production lines.
 --
 
 === The 2026 Regulatory Storm
 
-* [cite_start]*The Hook:* Big Pharma is facing a massive regulatory shift heading into 2026[cite: 8, 9].
-* *Annex 11 Overhaul:* Expanding from 1,500 to 10,000 words, bringing highly detailed requirements for data integrity, cloud computing, and IT security[cite: 9, 31, 162].
-* *The New Annex 22:* Created specifically to regulate AI-supported and automated systems within GMP environments[cite: 10, 32, 163].
-* [cite_start]*The Collision:* High-frequency IIoT devices are generating petabytes of data meeting the CPU/AI compliance era[cite: 10, 164].
+* The Hook: Big Pharma is facing a massive regulatory shift heading into 2026.
+* Annex 11 Overhaul: Expanding from 1,500 to 10,000 words, bringing highly detailed requirements for data integrity, cloud computing, and IT security.
+* The New Annex 22: Created specifically to regulate AI-supported and automated systems within GMP environments.
+* The Collision: High-frequency IIoT devices are generating petabytes of data meeting the CPU/AI compliance era.
 
 image::regulatorystorm.jpeg[Title="Regulatory Storm"]
 
 [.notes]
 --
-Annex 11 is undergoing a major shift focusing on cloud control, IT security, and data integrity[cite: 165]. Annex 22 brings AI-supported systems under the GMP umbrella[cite: 166].
+Annex 11 is undergoing a major shift focusing on cloud control, IT security, and data integrity. Annex 22 brings AI-supported systems under the GMP umbrella.
 --
 
 === The Regulatory Villain
 
-* [cite_start]*Traditional Historians:* Proprietary ecosystems charging extortionate fees per data tag[cite: 11].
-* *The Scaling Break:* Too expensive to scale; when handling high-frequency IIoT velocity, they break or bankrupt you[cite: 11, 12].
-* [cite_start]*The Burning Question:* Can open-source software actually pass a rigorous FDA/EU GMP inspection better than proprietary options[cite: 13]?
+* Traditional Historians: Proprietary ecosystems charging extortionate fees per data tag.
+* The Scaling Break: Too expensive to scale; when handling high-frequency IIoT velocity, they break or bankrupt you.
+* The Burning Question: Can open-source software actually pass a rigorous FDA/EU GMP inspection better than proprietary options?
 
 image::regulatory-storm-annex22.png[Title="Big Pharma Update: Annex 11 & 22", alt="Graphic depicting AI/LLM restrictions and the introduction of Annex 22 in 2026"]
 
 === Compliance in 60 Seconds: FDA vs. EU (Part 1)
 
-* [cite_start]*🇺🇸 FDA 21 CFR Part 11 (US Regulation)* [cite: 39, 166]
-** Defines rules for electronic records & electronic signatures[cite: 40, 44].
-** Ensures electronic systems are trustworthy, secure, and legally equivalent to paper[cite: 41, 45].
-[cite_start]** Key Question: *"Are electronic records & signatures trustworthy?"* [cite: 16, 62, 166]
+* 🇺🇸 FDA 21 CFR Part 11 (US Regulation)
+** Defines rules for electronic records & electronic signatures.
+** Ensures electronic systems are trustworthy, secure, and legally equivalent to paper.
+** Key Question: *"Are electronic records & signatures trustworthy?"*
 
 === Compliance in 60 Seconds: FDA vs. EU (Part 2)
-* [cite_start]*🇪🇺 EU Annex 11 (GMP Guideline)* [cite: 51, 167]
-** Governs computerized systems in GMP environments[cite: 52].
-** Covers the full system lifecycle including validation, risk management, and supplier governance[cite: 53, 54, 56].
-[cite_start]** Key Question: *"Is the entire system validated, controlled, and compliant?"* [cite: 16, 63, 167]
+* 🇪🇺 EU Annex 11 (GMP Guideline)
+** Governs computerized systems in GMP environments.
+** Covers the full system lifecycle including validation, risk management, and supplier governance.
+** Key Question: *"Is the entire system validated, controlled, and compliant?"*
 
 === Compliance in 60 Seconds: The Takeaway
-* [cite_start]*🔗 Common Goal:* Ensure data integrity, traceability, and compliance[cite: 59].
-* *The Digital Shift:* Enable audit-ready, reliable digital processes instead of paper[cite: 60].
-* [cite_start]*🎯 Takeaway:* Both regulations ensure digital GMP data is trustworthy across the full data lifecycle[cite: 65, 168].
+* Common Goal: Ensure data integrity, traceability, and compliance.
+* The Digital Shift: Enable audit-ready, reliable digital processes instead of paper.
+* Takeaway: Both regulations ensure digital GMP data is trustworthy across the full data lifecycle.
 
 [.notes]
 --
-Part 11 focuses on records and signatures. Annex 11 asks whether the entire system lifecycle is controlled[cite: 169].
+Part 11 focuses on records and signatures. Annex 11 asks whether the entire system lifecycle is controlled.
 --
 
 == GMP Requirements for IIoT Data
 
 === Demystifying ALCOA++ (The Core Framework)
-* [cite_start]*The Gold Standard:* ALCOA+ is a framework ensuring the accuracy, consistency, and reliability of data in highly regulated industries[cite: 17, 72].
-* [cite_start]*The Evolution:* Original ALCOA metrics expand into ALCOA+ and ALCOA++ to safely cover automated, high-velocity infrastructure[cite: 73, 174].
+* The Gold Standard: ALCOA+ is a framework ensuring the accuracy, consistency, and reliability of data in highly regulated industries.
+* The Evolution: Original ALCOA metrics expand into ALCOA+ and ALCOA++ to safely cover automated, high-velocity infrastructure.
 
 image::alcoa.png[Title="ALCOA to ALCOA++ Evolution Framework", alt="Diagram shifting from original ALCOA, to ALCOA+, to ALCOA++ parameters"]
 
@@ -95,11 +95,11 @@ image::alcoa.png[Title="ALCOA to ALCOA++ Evolution Framework", alt="Diagram shif
 |===
 |Principle |Definition
 
-|Attributable |Data must be clearly linked to the person or device that generated it [cite: 77].
-|Legible |Data must be readable, permanent, and accessible throughout its lifecycle [cite: 78].
-|Contemporaneous |Data must be recorded at the time of the activity, not retrospectively [cite: 79].
-|Original |Data must be the first capture of information, not a copy or transcription [cite: 80].
-|Accurate |Data must be correct, truthful, and free from errors or tampering [cite: 81].
+|Attributable |Data must be clearly linked to the person or device that generated it
+|Legible |Data must be readable, permanent, and accessible throughout its lifecycle
+|Contemporaneous |Data must be recorded at the time of the activity, not retrospectively
+|Original |Data must be the first capture of information, not a copy or transcription
+|Accurate |Data must be correct, truthful, and free from errors or tampering
 |===
 
 === ALCOA+: The 4 Extensions
@@ -108,43 +108,43 @@ image::alcoa.png[Title="ALCOA to ALCOA++ Evolution Framework", alt="Diagram shif
 |===
 |Principle |Definition
 
-|Complete |All data, including deletions or modifications, must be retained and traceable [cite: 82].
-|Consistent |Data must be reliable, reproducible, and aligned with expected patterns [cite: 83].
-|Enduring |Data must be stored on durable media and remain accessible for required retention [cite: 84].
-|Available |Data must be readily accessible to authorized personnel when needed [cite: 85].
+|Complete |All data, including deletions or modifications, must be retained and traceable
+|Consistent |Data must be reliable, reproducible, and aligned with expected patterns
+|Enduring |Data must be stored on durable media and remain accessible for required retention
+|Available |Data must be readily accessible to authorized personnel when needed
 |===
 
 === ALCOA++: The 5 Modern IIoT Safeguards
 
 
-The Gap: Standard IT open-source tools fail ALCOA++ out of the box because mutable databases allow altering logs without audit trails [cite: 18].
+The Gap: Standard IT open-source tools fail ALCOA++ out of the box because mutable databases allow altering logs without audit trails.
 
-The 5 Security & Telemetry Dimensions: [cite: 17, 86]
+The 5 Security & Telemetry Dimensions:
 
 [cols="1,2", options="header"]
 |===
 |Principle |Definition
 
-|Integrity |Protected from unauthorized changes [cite: 86].
-|Robustness |Prevent data loss at high velocity [cite: 86].
-|Transparency |Open infrastructure design and review logic [cite: 86].
-|Accountability |Explicitly traceable to responsible personnel [cite: 86].
-|Reliability |Validated and controlled engineering environments [cite: 86].
+|Integrity |Protected from unauthorized changes
+|Robustness |Prevent data loss at high velocity
+|Transparency |Open infrastructure design and review logic
+|Accountability |Explicitly traceable to responsible personnel
+|Reliability |Validated and controlled engineering environments
 |===
 
 [.notes]
 --
-ALCOA++ introduces parameters explicitly meant to cover automated, high-velocity infrastructure like IIoT streams[cite: 174].
+ALCOA++ introduces parameters explicitly meant to cover automated, high-velocity infrastructure like IIoT streams.
 --
 
 === Main Elements of 21 CFR Part 11
 
-* [cite_start]*Validation:* Systems must be validated to perform exactly as intended[cite: 49, 175].
-* *Security:* Access to electronic records restricted to authorized users[cite: 48, 176].
-* *Record Retention:* Records must be securely retained in an unalterable environment[cite: 177].
-* *Audit Trails:* Every action captured automatically with precise date/time stamps[cite: 47, 178].
-* *Electronic Signatures:* Unique and indissolubly linked to their respective records[cite: 50, 179].
-* [cite_start]*Training:* Personnel must be trained and accountable under Part 11 requirements[cite: 180].
+* Validation: Systems must be validated to perform exactly as intended
+* Security: Access to electronic records restricted to authorized users
+* Record Retention: Records must be securely retained in an unalterable environment
+* Audit Trails: Every action captured automatically with precise date/time stamps
+* Electronic Signatures: Unique and indissolubly linked to their respective records
+* Training: Personnel must be trained and accountable under Part 11 requirements
 
 image::21-cfr-part-11-elements.png[Title="Main Elements of 21 CFR Part 11", alt="Infographic illustrating Validation, Security, Record Retention, Audit Trails, Electronic Signatures, and Training requirements"]
 
@@ -152,35 +152,35 @@ image::21-cfr-part-11-elements.png[Title="Main Elements of 21 CFR Part 11", alt=
 
 === Why Traditional Historians Struggle (Commercial Constraints)
 
-* [cite_start]*Proprietary Licensing:* Restrictive models based on strict data tag counts or ingestion volumes[cite: 11, 91, 181].
-* *Vendor Lock-In:* Limited architecture flexibility and high vendor dependency[cite: 11, 92, 182].
-* *Expensive Scaling:* Extreme costs to scale physical storage, high-availability, and retention[cite: 11, 93].
-* [cite_start]*Validation Effort:* Exceptionally high validation and customization efforts inside a GAMP 5 framework[cite: 94, 183].
+* Proprietary Licensing: Restrictive models based on strict data tag counts or ingestion volumes
+* Vendor Lock-In: Limited architecture flexibility and high vendor dependency
+* Expensive Scaling: Extreme costs to scale physical storage, high-availability, and retention
+* Validation Effort: Exceptionally high validation and customization efforts inside a GAMP 5 framework
 
 === Why Traditional Historians Struggle (Technical Constraints)
 
-* [cite_start]*Siloed Architectures:* Rigid data models offering minimal metadata, data lineage tracking, and query reproducibility[cite: 97].
-* *Velocity Bottlenecks:* Inability to handle high-frequency sensor and rapid PLC time-series streams natively[cite: 69, 96].
-* *Weak Auditing:* Demands intense layout customization to comply with automated ALCOA+ principles[cite: 98].
-* [cite_start]*Integration Gaps:* Poor interface performance when talking to modern streaming analytics Engines[cite: 99].
+* Siloed Architectures: Rigid data models offering minimal metadata, data lineage tracking, and query reproducibility
+* Velocity Bottlenecks: Inability to handle high-frequency sensor and rapid PLC time-series streams natively
+* Weak Auditing: Demands intense layout customization to comply with automated ALCOA+ principles
+* Integration Gaps: Poor interface performance when talking to modern streaming analytics Engines
 
 [.takeaway-box]
 --
-*The Industrial Data Reality:* High-frequency sensor & PLC data needs rapid ingestion, massive capacity, and strict ALCOA+ audit trails simultaneously[cite: 100, 101, 102, 103].
+The Industrial Data Reality: High-frequency sensor & PLC data needs rapid ingestion, massive capacity, and strict ALCOA+ audit trails simultaneously.
 --
 
 == The Role of Open Source
 
 === Open Source in Regulated Environments
 
-* [cite_start]*The Transparency Advantage:* Closed-source platforms act as compliance "black boxes"[cite: 185]. Open source allows auditors to inspect data processing logic directly[cite: 105, 186].
-* *Interoperability:* Open APIs and standardized file formats eliminate downstream analytical silos[cite: 105, 187].
-* [cite_start]*Ecosystem Trust:* The Apache Software Foundation (ASF) provides community governance that minimizes vendor lock-in risks[cite: 106, 107, 188].
+* The Transparency Advantage: Closed-source platforms act as compliance "black boxes". Open source allows auditors to inspect data processing logic directly.
+* Interoperability: Open APIs and standardized file formats eliminate downstream analytical silos
+* Ecosystem Trust: The Apache Software Foundation (ASF) provides community governance that minimizes vendor lock-in risks
 
 === Open Infrastructure Data Commons (OIDC)
 
-* [cite_start]*Real-World Baseline:* An open-source software platform leveraging Apache technologies for real-time monitoring and data preservation[cite: 109, 189].
-* [cite_start]*UN Recognition:* Formally published within the United Nations STI Solutions Book, proving open infrastructure handles mission-critical, long-term data preservation[cite: 110, 117, 190].
+* Real-World Baseline: An open-source software platform leveraging Apache technologies for real-time monitoring and data preservation.
+* UN Recognition: Formally published within the United Nations STI Solutions Book, proving open infrastructure handles mission-critical, long-term data preservation.
 
 image::un-sti-oidc-solution.png[Title="OIDC UN STI Forum Publication Page", alt="Screenshot of page 36 highlighting Open Infrastructure Data Commons using iotdb.apache.org"]
 
@@ -188,23 +188,23 @@ image::un-sti-oidc-solution.png[Title="OIDC UN STI Forum Publication Page", alt=
 
 === Apache IoTDB as a GMP Compliant IIoT Historian
 
-* [cite_start]*Purpose-Built:* Optimized directly for high-frequency industrial sensors and PLC time-series streams[cite: 112, 113, 191].
-* *Core Compliance features:* Structural mechanisms for unbending audit trail tracking, data versioning, and lineage[cite: 23, 114].
-* *Security Controls:* Built-in user authentication, role-based access control (RBAC), encryption, and automated data retention management[cite: 115, 192].
-* [cite_start]*UN Recognition:* Selected as one of the **Top 60 Global Innovation Cases** by the United Nations STI Forum[cite: 22, 117, 193].
+* Purpose-Built: Optimized directly for high-frequency industrial sensors and PLC time-series streams
+* Core Compliance features: Structural mechanisms for unbending audit trail tracking, data versioning, and lineage
+* Security Controls: Built-in user authentication, role-based access control (RBAC), encryption, and automated data retention management
+* UN Recognition: Selected as one of the **Top 60 Global Innovation Cases** by the United Nations STI Forum
 
 === Core Enabler: Apache TSFile
 
-* [cite_start]*Immutable Design Pattern:* A columnar file layout that is append-only, serving as a regulatory dream because data cannot be silently modified or manipulated[cite: 21, 123, 194].
-* *Data Segmentation:* Isolated physical data layout blocks enable clean validation boundaries and targeted spot-checks[cite: 123, 195].
-* [cite_start]*Ecosystem Hybridity:* Combining TSFile with Apache Iceberg catalogs allows complex systems to track full historical query lineage and reproduce query states[cite: 124, 125, 126, 196].
+* Immutable Design Pattern: A columnar file layout that is append-only, serving as a regulatory dream because data cannot be silently modified or manipulated
+* Data Segmentation: Isolated physical data layout blocks enable clean validation boundaries and targeted spot-checks
+* Ecosystem Hybridity: Combining TSFile with Apache Iceberg catalogs allows complex systems to track full historical query lineage and reproduce query states
 
 === Apache Projects for an End‑to‑End Pipeline
 
-* [cite_start]*Data Integration & Edge:* `Apache PLC4X` parses OPC-UA/Modbus protocols natively[cite: 136, 197]. `Apache NiFi` handles automated data flow and integration[cite: 135, 198].
-* *Messaging & Ingestion:* `Apache BifroMQ` serves as a high-throughput MQTT broker [cite: 130, 199], feeding distributed `Apache Kafka` data streams[cite: 129, 199].
-* *Stream Processing & Rules:* `Apache Flink` or `Apache Beam` execute real-time compliance filtering and threshold validation[cite: 131, 132, 200].
-* *Storage & Analytics:* `Apache IoTDB` (hot storage) tracks time-series, while `Apache Iceberg` handles cold archives [cite: 143, 201][cite_start], analyzed via `Apache Superset`[cite: 139, 201].
+* Data Integration & Edge: `Apache PLC4X` parses OPC-UA/Modbus protocols natively. `Apache NiFi` handles automated data flow and integration.
+* Messaging & Ingestion: `Apache BifroMQ` serves as a high-throughput MQTT broker, feeding distributed `Apache Kafka` data streams.
+* Stream Processing & Rules: `Apache Flink` or `Apache Beam` execute real-time compliance filtering and threshold validation.
+* Storage & Analytics: `Apache IoTDB` (hot storage) tracks time-series, while `Apache Iceberg` handles cold archives, analyzed via `Apache Superset`.
 
 === Reference Architecture Map
 image::gmp-compliant-iiot-data-architecture.png[Title="GMP-Compliant IIoT Data Architecture Blueprint", alt="End-to-end component diagram highlighting data paths from Edge Protocols through BifroMQ/Kafka up to IoTDB/TSFile and Iceberg Data Lakes"]
@@ -213,13 +213,13 @@ image::gmp-compliant-iiot-data-architecture.png[Title="GMP-Compliant IIoT Data A
 
 === Compliance Considerations
 
-* [cite_start]*Annex 11 Mapping:* Matching specific clauses (e.g., electronic audit trails, system security, automated printouts) to configuration profiles in Apache IoTDB[cite: 146, 202].
-* *21 CFR Part 11 Mapping:* Utilizing integrated user authorization matrices, electronic signatures concepts, and unalterable time-stamped logs[cite: 147, 203].
-* [cite_start]*Validation Boundaries:* Clearly defining software boundaries between underlying operating systems, infrastructure, and containerized Apache applications[cite: 148, 204].
+* Annex 11 Mapping: Matching specific clauses (e.g., electronic audit trails, system security, automated printouts) to configuration profiles in Apache IoTDB
+* 21 CFR Part 11 Mapping: Utilizing integrated user authorization matrices, electronic signatures concepts, and unalterable time-stamped logs
+* Validation Boundaries: Clearly defining software boundaries between underlying operating systems, infrastructure, and containerized Apache applications
 
 === Computer System Validation with GAMP 5
 
-* *The 9 Steps of Annex 11 Computer System Validation (CSV):* [cite: 88, 204]
+* The 9 Steps of Annex 11 Computer System Validation (CSV):
 1. Risk Assessment
 2. Supplier Qualification
 3. Requirements (URS)
@@ -234,25 +234,25 @@ image::annex-11-csv-framework.png[Title="Annex 11 Computer System Validation", a
 
 === The 3-Tier Testing Blueprint (Step 5)
 
-* [cite_start]*Installation Qualification (IQ):* Repeatable deployment checking using automated, reproducible container setups[cite: 148, 205].
-* *Operational Qualification (OQ):* Verifying database failover operations, security profiles, user access, and automated data retention policies[cite: 148, 206].
-* [cite_start]*Performance Qualification (PQ):* Simulating maximum industrial high-frequency IIoT velocity to guarantee stability and zero data loss under peak load[cite: 148, 207].
+* Installation Qualification (IQ): Repeatable deployment checking using automated, reproducible container setups
+* Operational Qualification (OQ): Verifying database failover operations, security profiles, user access, and automated data retention policies
+* Performance Qualification (PQ): Simulating maximum industrial high-frequency IIoT velocity to guarantee stability and zero data loss under peak load
 
 == Conclusion
 
 === Key Takeaways
 
-* [cite_start]*The Open Advantage:* Open-source ecosystems fully support transparent, scalable, and compliant industrial data platforms[cite: 151, 153, 208].
-* *Future-Proof Storage:* Combining Apache IoTDB, TSFile, and Iceberg builds a modern, cost-effective, and audit-ready data lake landscape[cite: 152, 209].
-* [cite_start]*Strategic Shift:* Adopting open source enables factories to navigate evolving regulations without getting trapped by legacy per-tag vendor licensing fees[cite: 210].
+* The Open Advantage: Open-source ecosystems fully support transparent, scalable, and compliant industrial data platforms
+* Future-Proof Storage: Combining Apache IoTDB, TSFile, and Iceberg builds a modern, cost-effective, and audit-ready data lake landscape
+* Strategic Shift: Adopting open source enables factories to navigate evolving regulations without getting trapped by legacy per-tag vendor licensing fees
 
 === Q&A
 * Thank you for attending!
-* *Speaker:* Lukas Ott, Enterprise Architect
-* *Project:* Apache IoTDB (https://iotdb.apache.org/)
-* *Email:* otluk@apache.org
+* Speaker: Lukas Ott, Enterprise Architect
+* Project: Apache IoTDB (https://iotdb.apache.org/)
+* Email: otluk@apache.org
 
 [.notes]
 --
-Thank you all. I'm now open for questions from the audience[cite: 211].
+Thank you all. I'm now open for questions from the audience.
 --
