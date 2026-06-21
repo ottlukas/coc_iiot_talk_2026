@@ -1,4 +1,4 @@
-FROM node:20-alpine
+FROM node:20-slim
 
 # Set node environment
 ENV NODE_ENV=development
@@ -14,14 +14,13 @@ RUN npm install
 # Copy scripts
 COPY scripts ./scripts/
 
-# Install Chromium for Puppeteer and test tooling
-RUN apk add --no-cache \
+# Install Chromium and emoji font support for Puppeteer PDF export
+RUN apt-get update && apt-get install -y --no-install-recommends \
     chromium \
-    nss \
-    freetype \
-    harfbuzz \
+    fonts-noto-color-emoji \
+    fontconfig \
     ca-certificates \
-    ttf-freefont
+    && rm -rf /var/lib/apt/lists/*
 
 RUN npm install puppeteer jest
 

@@ -42,6 +42,8 @@ docker build -f docker/dev/Dockerfile -t asciidoc-revealjs-presentation .
     ```bash
     docker run --rm -it -p 4200:4200 -v "$(pwd)/docs":/app/docs asciidoc-revealjs-presentation
     ```
+
+> Note: The Docker image installs emoji-capable system fonts so reveal.js slides containing emoji render correctly in PDF export.
 *   **Windows (PowerShell):**
     ```powershell
     docker run --rm -it -p 4200:4200 -v "${PWD}/docs":/app/docs asciidoc-revealjs-presentation

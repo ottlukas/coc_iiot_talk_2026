@@ -252,6 +252,16 @@ image::annex-11-csv-framework.png[Title="Annex 11 Computer System Validation", a
 * Project: Apache IoTDB (https://iotdb.apache.org/)
 * Email: otluk@apache.org
 
+=== Emoji Support Check
+* Emoji test: 🙂 🚀 ❤️
+* Emoticons and Unicode symbols should render correctly in exported PDF slides.
+* This slide validates browser rendering and PDF font fallback behavior.
+
+[.notes]
+--
+This slide proves emoji characters are supported during PDF export.
+--
+
 [.notes]
 --
 Thank you all. I'm now open for questions from the audience.

@@ -20,10 +20,19 @@ describe('puppeteer_export', () => {
     expect(appendPrintPdfQuery('http://localhost:4200#slide-1')).toBe('http://localhost:4200?print-pdf#slide-1');
   });
 
+  it('includes emoji fallback fonts in the reveal theme', () => {
+    const themeCss = fs.readFileSync(path.join(__dirname, '..', '..', 'docs', 'theme', 'apache.css'), 'utf8');
+    expect(themeCss).toMatch(/Segoe UI Emoji/);
+    expect(themeCss).toMatch(/Apple Color Emoji/);
+    expect(themeCss).toMatch(/Noto Color Emoji/);
+  });
+
   it('calls page.pdf with correct parameters', async () => {
     const page = {
       setDefaultNavigationTimeout: jest.fn(),
       goto: jest.fn().mockResolvedValue(undefined),
+      addStyleTag: jest.fn().mockResolvedValue(undefined),
+      evaluate: jest.fn().mockResolvedValue(undefined),
       pdf: jest.fn().mockResolvedValue(undefined),
     };
     const browser = {
@@ -37,6 +46,8 @@ describe('puppeteer_export', () => {
 
     await exportToPdf('http://localhost:4200', outputPath);
 
+    expect(page.addStyleTag).toHaveBeenCalledWith(expect.objectContaining({ content: expect.stringContaining('Segoe UI Emoji') }));
+    expect(page.evaluate).toHaveBeenCalledWith(expect.any(Function));
     expect(page.pdf).toHaveBeenCalledWith({
       path: outputPath,
       format: 'A4',
@@ -45,10 +56,38 @@ describe('puppeteer_export', () => {
     expect(browser.close).toHaveBeenCalled();
   });
 
+  it('waits for document fonts to be ready before generating PDF', async () => {
+    const page = {
+      setDefaultNavigationTimeout: jest.fn(),
+      goto: jest.fn().mockResolvedValue(undefined),
+      addStyleTag: jest.fn().mockResolvedValue(undefined),
+      evaluate: jest.fn().mockResolvedValue(undefined),
+      pdf: jest.fn().mockResolvedValue(undefined),
+    };
+    const browser = {
+      newPage: jest.fn().mockResolvedValue(page),
+      close: jest.fn().mockResolvedValue(undefined),
+    };
+    puppeteer.launch.mockResolvedValue(browser);
+
+    const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), 'ppt-export-'));
+    const outputPath = path.join(tempDir, 'docs', 'exports', 'presentation.pdf');
+
+    await exportToPdf('http://localhost:4200', outputPath);
+
+    expect(page.evaluate).toHaveBeenCalledTimes(1);
+    expect(page.pdf).toHaveBeenCalledWith({
+      path: outputPath,
+      format: 'A4',
+      printBackground: true,
+    });
+  });
+
   it('creates output directory if missing', async () => {
     const page = {
       setDefaultNavigationTimeout: jest.fn(),
       goto: jest.fn().mockResolvedValue(undefined),
+      evaluate: jest.fn().mockResolvedValue(undefined),
       pdf: jest.fn().mockResolvedValue(undefined),
     };
     const browser = {

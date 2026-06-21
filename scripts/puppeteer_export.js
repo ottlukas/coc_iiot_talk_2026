@@ -69,6 +69,22 @@ async function exportToPdf(url, outputPath) {
     const page = await browser.newPage();
     page.setDefaultNavigationTimeout(DEFAULT_TIMEOUT);
     await page.goto(pageUrl, { waitUntil: 'networkidle2', timeout: DEFAULT_TIMEOUT });
+    await page.addStyleTag({
+      content: `
+        html, body, .reveal, .reveal .slides, .reveal section,
+        .reveal h1, .reveal h2, .reveal h3, .reveal h4, .reveal h5, .reveal h6,
+        .reveal p, .reveal li, .reveal blockquote, .reveal code {
+          font-family: var(--r-main-font), "Segoe UI Emoji", "Apple Color Emoji", "Noto Color Emoji", system-ui, -apple-system, sans-serif !important;
+        }
+      `,
+    });
+    await page.evaluate(async () => {
+      await document.fonts.ready;
+    });
+    // Ensure the page is rendered using screen styles so the PDF matches the on-screen HTML
+    if (page.emulateMediaType) {
+      await page.emulateMediaType('screen');
+    }
     await page.pdf({ path: resolvedOutput, format: 'A4', printBackground: true });
     console.log(`Exported PDF to: ${resolvedOutput}`);
   } catch (error) {
