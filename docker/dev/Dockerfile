@@ -11,8 +11,19 @@ COPY package*.json ./
 # Install packages
 RUN npm install
 
-# Copy compile and watch scripts
-COPY scripts/compile.js scripts/watch.js ./scripts/
+# Copy scripts
+COPY scripts ./scripts/
+
+# Install Chromium for Puppeteer and test tooling
+RUN apk add --no-cache \
+    chromium \
+    nss \
+    freetype \
+    harfbuzz \
+    ca-certificates \
+    ttf-freefont
+
+RUN npm install puppeteer jest
 
 # Expose live-reload dev-server port
 EXPOSE 4200

@@ -90,6 +90,40 @@ npm run dev
 npm run build
 ```
 
+## 📄 Export Presentation to PDF
+
+The PDF export script can be executed from the repository root or from any subdirectory inside the repo.
+
+### From the project root
+
+```bash
+python scripts/export_to_pdf.py docs/presentation.adoc
+```
+
+### From a nested directory such as `.venv`
+
+```bash
+cd .venv
+python ../scripts/export_to_pdf.py ../docs/presentation.adoc
+```
+
+### Notes
+
+* The script resolves input paths relative to the current working directory, and it falls back to the repository root when needed.
+* The default output location is `docs/exports/presentation.pdf`.
+* If Node.js is installed under a non-standard executable name, you can set it with the `NODE_EXECUTABLE` environment variable:
+
+```bash
+export NODE_EXECUTABLE=/usr/bin/nodejs
+python scripts/export_to_pdf.py docs/presentation.adoc
+```
+
+* If you want to provide a custom PDF path, use `--output`:
+
+```bash
+python scripts/export_to_pdf.py docs/presentation.adoc --output docs/exports/presentation.pdf
+```
+
 ---
 
 ## 📂 Project Structure
