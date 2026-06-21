@@ -19,12 +19,18 @@ Lukas Ott <otluk@apache.org>
 I am Lukas Ott, Enterprise Architect. [cite_start]Today we'll talk about building scalable, auditable, and compliant IIoT data platforms with Apache Software Foundation technologies[cite: 2, 157].
 --
 
-== Why Data Integrity Matters
+== The moderne Pharmaceutical Manufacturing
+
+image::modernpharmaceuticalmanufacturing.jpeg[Title="Modern pharmaceutical manufacturing"]
+
+
+=== Why Data Integrity Matters
 
 * [cite_start]*Regulated Industries:* Crucial for life sciences, including Pharma, MedTech, and Biotech manufacturing.
 * *The Core Conflict:* High-frequency IIoT industrial sensor data velocity colliding directly with strict compliance demands.
 * *The Shift:* Evolving global frameworks require absolute transparency across the entire data lifecycle.
 * [cite_start]*Motivation:* Can open source serve as a compliant historian backbone and pass a rigorous FDA/EU GMP inspection
+
 
 [.notes]
 --
@@ -37,6 +43,8 @@ Data integrity is no longer just a checkbox; it's a fundamental requirement in a
 * *Annex 11 Overhaul:* Expanding from 1,500 to 10,000 words, bringing highly detailed requirements for data integrity, cloud computing, and IT security[cite: 9, 31, 162].
 * *The New Annex 22:* Created specifically to regulate AI-supported and automated systems within GMP environments[cite: 10, 32, 163].
 * [cite_start]*The Collision:* High-frequency IIoT devices are generating petabytes of data meeting the CPU/AI compliance era[cite: 10, 164].
+
+image::regulatorystorm.jpeg[Title="Regulatory Storm"]
 
 [.notes]
 --
