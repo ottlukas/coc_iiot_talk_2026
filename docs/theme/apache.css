@@ -43,6 +43,25 @@
   text-rendering: auto !important;
   font-kerning: normal !important;
   font-feature-settings: normal !important;
+  -webkit-font-smoothing: antialiased !important;
+  -moz-osx-font-smoothing: grayscale !important;
+  -webkit-text-size-adjust: 100% !important;
+  text-justify: none !important;
+}
+
+/* Print / PDF-specific reinforcement to avoid renderer-specific spacing regressions */
+@media print {
+  .reveal,
+  .reveal .slides section,
+  .reveal .slides section * {
+    word-spacing: normal !important;
+    letter-spacing: normal !important;
+    white-space: normal !important;
+    text-rendering: auto !important;
+    font-kerning: normal !important;
+    -webkit-font-smoothing: antialiased !important;
+    -moz-osx-font-smoothing: grayscale !important;
+  }
 }
 
 .reveal h1,

@@ -46,7 +46,10 @@ describe('puppeteer_export', () => {
 
     await exportToPdf('http://localhost:4200', outputPath);
 
+    // Ensure the theme css was injected (contains emoji fallback fonts)
     expect(page.addStyleTag).toHaveBeenCalledWith(expect.objectContaining({ content: expect.stringContaining('Segoe UI Emoji') }));
+    // And ensure we added print/transform override to prevent scaled text metrics
+    expect(page.addStyleTag).toHaveBeenCalledWith(expect.objectContaining({ content: expect.stringContaining('transform: none') }));
     expect(page.evaluate).toHaveBeenCalledWith(expect.any(Function));
     expect(page.pdf).toHaveBeenCalledWith({
       path: outputPath,

@@ -70,13 +70,42 @@ async function exportToPdf(url, outputPath) {
     page.setDefaultNavigationTimeout(DEFAULT_TIMEOUT);
     await page.goto(pageUrl, { waitUntil: 'networkidle2', timeout: DEFAULT_TIMEOUT });
     await page.addStyleTag({
-      content: `
-        html, body, .reveal, .reveal .slides, .reveal section,
-        .reveal h1, .reveal h2, .reveal h3, .reveal h4, .reveal h5, .reveal h6,
-        .reveal p, .reveal li, .reveal blockquote, .reveal code {
-          font-family: var(--r-main-font), "Segoe UI Emoji", "Apple Color Emoji", "Noto Color Emoji", system-ui, -apple-system, sans-serif !important;
+      content: (function() {
+        try {
+          const themePath = path.join(__dirname, '..', 'docs', 'theme', 'apache.css');
+          let themeCss = '';
+          if (fs.existsSync(themePath)) {
+            themeCss = fs.readFileSync(themePath, 'utf8');
+          }
+          // Add PDF/print-specific overrides to avoid renderer spacing regressions
+          const printOverrides = `
+            html, body, .reveal, .reveal .slides, .reveal section,
+            .reveal h1, .reveal h2, .reveal h3, .reveal h4, .reveal h5, .reveal h6,
+            .reveal p, .reveal li, .reveal blockquote, .reveal code {
+              font-family: var(--r-main-font), "Segoe UI Emoji", "Apple Color Emoji", "Noto Color Emoji", system-ui, -apple-system, sans-serif !important;
+              word-spacing: normal !important;
+              letter-spacing: normal !important;
+              text-rendering: optimizeLegibility !important;
+              -webkit-font-smoothing: antialiased !important;
+              -moz-osx-font-smoothing: grayscale !important;
+              font-kerning: normal !important;
+              font-feature-settings: normal !important;
+            }
+            /* Remove transforms during print to avoid scaled text metric changes */
+            .reveal, .reveal .slides, .reveal .slides section { transform: none !important; }
+            @media print {
+              .reveal, .reveal .slides, .reveal .slides section { transform: none !important; }
+            }
+          `;
+
+          return themeCss + '\n' + printOverrides;
+        } catch (e) {
+          return `
+            html, body, .reveal, .reveal .slides, .reveal section,
+            .reveal h1, .reveal p, .reveal li { font-family: system-ui, -apple-system, sans-serif !important; }
+          `;
         }
-      `,
+      })(),
     });
     await page.evaluate(async () => {
       await document.fonts.ready;
