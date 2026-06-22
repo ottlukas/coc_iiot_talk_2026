@@ -1,3 +1,17 @@
+:revealjs_theme: apache
+:revealjs_slideNumber: true
+:revealjs_hash: true
+:revealjs_transition: convex
+:imagesdir: images
+:revealjs_width: 1920
+:revealjs_height: 1080
+:revealjs_margin: 0.01
+:revealjs_center: false
+:revealjs_overflow: false
+:revealjs_viewDistance: 5
+
+:docinfo:
+
 = Open Source for Regulated Manufacturing: GMP-Ready IIoT Data Logging with Apache IoTDB
 Lukas Ott <otluk@apache.org>
 
@@ -69,7 +83,7 @@ For regulated manufacturing, the question is no longer only whether a single rec
 That includes ingestion, storage, processing, access, monitoring, retention, and change management.
 --
 
-=== Two Questions Regulators Ask
+=== Major Aspects
 
 image::questionregulator.jpeg[Title="Two questions regulators ask"]
 
@@ -86,6 +100,8 @@ Everything else in the architecture maps back to these two questions.
 
 [.section-break]
 == The Regulatory Lens
+
+image::regulatorylens.jpeg[Title="Regulatory Lens"]
 
 === Part 11 vs. Annex 11 in 60 Seconds
 
@@ -120,6 +136,8 @@ Together, they push us toward one shared goal: reliable data integrity from capt
 [.section-break]
 == Data Integrity Becomes Architecture
 
+image::dataintegrity.jpeg[Title="Data Integrity"]
+
 === ALCOA++ as the Practical Lens
 
 image::alcoa.jpeg[Title="ALCOA to ALCOA++ evolution framework"]
@@ -137,24 +155,21 @@ I do not want to walk through every term on this slide. The important point is t
 
 === ALCOA++ Translated to IIoT
 
-[cols="1,2", options="header"]
-|===
-|Principle |IIoT architecture implication
-
-|Attributable |Every reading links to a machine, sensor, gateway, service, and timestamp.
-|Contemporaneous |Data is captured as close as possible to the actual machine event.
-|Original |Raw values are preserved before transformation or aggregation.
-|Complete |Retries, gaps, corrections, and synchronization events remain traceable.
-|Enduring |Records survive retention periods, infrastructure changes, and restore scenarios.
-|Available |Authorized users can retrieve data for operations, review, or inspection.
-|Transparent |Processing logic, configuration, and data movement can be reviewed.
-|Accountable |System and user actions are linked to responsible identities or services.
-|===
-
 [.takeaway-box]
 --
 For IIoT, ALCOA++ is not a documentation checklist. It is an architecture requirement.
 --
+
+[.small]
+* **Attributable**: Every reading is linked to a machine, sensor, gateway, service, and timestamp.
+* **Contemporaneous**: Data is captured **immediately** at the machine event.
+* **Original**: Raw values are preserved **before** any transformation or aggregation.
+* **Complete**: Retries, gaps, corrections, and synchronization events remain **traceable**.
+* **Enduring**: Records survive **retention periods**, infrastructure changes, and recovery scenarios.
+* **Available**: Authorized users can retrieve data **at any time** for operations, review, or inspection.
+* **Transparent**: Processing logic, configuration, and data movement are **auditable**.
+* **Accountable**: System and user actions are tied to **responsible identities**.
+
 
 [.notes]
 --
@@ -171,7 +186,7 @@ If the data is complete, retry behavior, synchronization gaps, and corrections m
 This is why data integrity has to be designed into the platform.
 --
 
-=== What Compliance Really Means for Data
+=== Compliancy and Data
 
 image::compliancedata.jpeg[Title="Compliance and data"]
 
@@ -212,6 +227,8 @@ A credible IIoT data architecture must handle these failure modes in a controlle
 
 [.section-break]
 == Why Open Source?
+
+image::wopensource.jpeg[Title="Why"]
 
 === Why Open Source Helps Validation
 
@@ -265,6 +282,8 @@ Validatability means the system can be specified, tested, monitored, documented,
 
 [.section-break]
 == From Open Architecture to Apache IoTDB
+
+image::openarchitecture.jpeg[Title="Open Architecture"]
 
 === Open Architecture for Audit-Ready History
 
@@ -382,6 +401,8 @@ The key is that every compliance expectation should map to a concrete architectu
 [.section-break]
 == From Architecture to Validation Evidence
 
+image::balance.jpeg[Title="Balancing technology and compliance"]
+
 === Compliance and Validation
 
 image::complianceandvalidation.jpeg[Title="Compliance and validation"]
@@ -416,19 +437,14 @@ Not every component has the same GMP relevance, but every component that creates
 
 === Risk-Based Validation with GAMP 5
 
-[cols="1,2", options="header"]
-|===
-|Step |Purpose
-
-|1. Intended Use |Define what the system is expected to do.
-|2. Risk Assessment |Identify patient, product quality, and data integrity risks.
-|3. User Requirements |Define business, quality, and operational requirements.
-|4. Design Specifications |Translate requirements into controlled architecture and configuration.
-|5. IQ / OQ / PQ |Prove installation, operation, and performance.
-|6. SOPs and Training |Ensure controlled and repeatable use.
-|7. Monitoring and Review |Verify ongoing compliant operation.
-|8. Change Control |Manage updates without breaking validated state.
-|===
+. *Intended Use*: Define what the system is expected to do.
+. *Risk Assessment*: Identify patient, product quality, and data integrity risks.
+. *User Requirements*: Define business, quality, and operational requirements.
+. *Design Specifications*: Translate requirements into controlled architecture and configuration.
+. *IQ / OQ / PQ*: Prove installation, operation, and performance.
+. *SOPs and Training*: Ensure controlled and repeatable use.
+. *Monitoring and Review*: Verify ongoing compliant operation.
+. *Change Control*: Manage updates without breaking validated state.
 
 [.notes]
 --
@@ -477,6 +493,8 @@ But records, access control, retention, auditability, training, and validation e
 [.section-break]
 == The Demo: Resilience and Traceability
 
+image::demo.jpeg[Title="Demo"]
+
 === Demo Scenario: Network Outage Without Data Loss
 
 * A production line continues generating readings.
@@ -506,11 +524,7 @@ That is the pattern I want to show now.
 === Live Demo: Hybrid IoT Data Logging and Visualization
 
 * Goal: show the path from ingestion to buffering to synchronization.
-* Watch for authenticated ingestion.
-* Watch for offline buffering.
-* Watch for live synchronization progress.
-* Watch for historical visibility in Apache IoTDB.
-* Watch for idempotent resume behavior after interruption.
+
 
 [.notes]
 --
@@ -538,7 +552,6 @@ Fifth, idempotent resume behavior, meaning that repeating the operation does not
 |3 |Open the dashboard and observe the local buffer chart.
 |4 |Trigger `Sync to IoTDB` and watch the live SSE progress stream.
 |5 |Verify that synchronized historical data appears in the IoTDB chart.
-|6 |Simulate an interruption and show idempotent resume behavior.
 |===
 
 [.notes]
@@ -552,6 +565,8 @@ Idempotent means repeating the action does not create duplicates or incorrect st
 
 [.section-break]
 == Conclusion
+
+image::conbridge.jpeg[Title="ConBridge"]
 
 === From Edge Data to Audit-Ready History
 
