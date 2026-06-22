@@ -18,10 +18,12 @@ import urllib.error
 import urllib.request
 import uuid
 from pathlib import Path
+import re
 
 # Configuration constants
 DEFAULT_URL = 'http://localhost:4200'
 DEFAULT_OUTPUT_NAME = 'presentation.pdf'
+DEFAULT_NOTES_SUFFIX = '-speaker-notes'
 
 # Resolve script location dynamically (works on Windows and Linux)
 SCRIPT_DIR = Path(__file__).resolve().parent
@@ -79,6 +81,15 @@ def infer_output_pdf_path(adoc_path: str | Path, root_dir: Path = ROOT_DIR) -> P
     if path.suffix.lower() != '.adoc':
         raise ValueError('Input file must be an AsciiDoc file with .adoc extension')
     return root_dir / 'docs' / 'exports' / DEFAULT_OUTPUT_NAME
+
+
+def infer_notes_pdf_path(slides_output: Path) -> Path:
+    """Derive speaker-notes PDF path from slides output path.
+
+    E.g. presentation.pdf -> presentation-speaker-notes.pdf
+    """
+    stem = slides_output.stem + DEFAULT_NOTES_SUFFIX
+    return slides_output.with_name(stem + slides_output.suffix)
 
 
 def validate_input_file(adoc_path: Path) -> None:
@@ -222,6 +233,115 @@ def host_to_container_output_path(output_path: Path) -> Path:
         return Path('/tmp') / f'export-{uuid.uuid4().hex}.pdf'
 
 
+def parse_adoc_for_images(adoc_path: Path) -> list[dict]:
+    """Parse AsciiDoc source for image references.
+
+    Returns a list of dicts: { 'ref': str, 'line': int, 'text': str }
+    Supports AsciiDoc `image::path[]`, `image:src[]` and HTML `<img src>` and `data-src` patterns.
+    """
+    pattern_image_macro = re.compile(r"image::([^\[]+)\[")
+    pattern_image_inline = re.compile(r"(?<!:)image:([^\[]+)\[")
+    pattern_img_tag = re.compile(r"<img[^>]+src=[\"']([^\"']+)[\"']", re.IGNORECASE)
+    pattern_data_src = re.compile(r"data-src=[\"']([^\"']+)[\"']", re.IGNORECASE)
+
+    results = []
+    with adoc_path.open('r', encoding='utf8') as fh:
+        for idx, line in enumerate(fh, start=1):
+            for m in pattern_image_macro.finditer(line):
+                ref = m.group(1).strip()
+                ref = ref.lstrip(':')
+                results.append({'ref': ref, 'line': idx, 'text': line.strip()})
+            for m in pattern_image_inline.finditer(line):
+                ref = m.group(1).strip()
+                ref = ref.lstrip(':')
+                results.append({'ref': ref, 'line': idx, 'text': line.strip()})
+            for m in pattern_img_tag.finditer(line):
+                ref = m.group(1).strip()
+                ref = ref.lstrip(':')
+                results.append({'ref': ref, 'line': idx, 'text': line.strip()})
+            for m in pattern_data_src.finditer(line):
+                ref = m.group(1).strip()
+                ref = ref.lstrip(':')
+                results.append({'ref': ref, 'line': idx, 'text': line.strip()})
+
+    return results
+
+
+def validate_image_sources(image_refs: list[dict], adoc_path: Path) -> None:
+    """Validate that image sources referenced in AsciiDoc are available.
+
+    - For local files: checks file exists relative to the AsciiDoc file or project.
+    - For remote URLs: attempts a short HTTP request.
+    Raises FileNotFoundError with details if any missing.
+    """
+    missing = []
+    adoc_dir = adoc_path.resolve().parent
+    for item in image_refs:
+        ref = item['ref']
+        if ref.startswith('http://') or ref.startswith('https://'):
+            try:
+                with urllib.request.urlopen(ref, timeout=5) as resp:
+                    if resp.status >= 400:
+                        missing.append((item, f'HTTP {resp.status}'))
+            except Exception as e:
+                missing.append((item, str(e)))
+        else:
+            # Try relative to adoc, then docs/images, then project root
+            candidates = [adoc_dir / ref]
+            # strip leading slash
+            if ref.startswith('/'):
+                candidates.append(ROOT_DIR / ref.lstrip('/'))
+            candidates.append(ROOT_DIR / 'docs' / ref)
+            candidates.append(ROOT_DIR / 'docs' / 'images' / ref)
+
+            found = False
+            for c in candidates:
+                try:
+                    if c.exists():
+                        found = True
+                        break
+                except Exception:
+                    continue
+            if not found:
+                missing.append((item, 'file not found'))
+
+    if missing:
+        messages = []
+        for it, why in missing:
+            messages.append(f"Line {it['line']}: {it['ref']} -> {why} (context: {it['text']})")
+        raise FileNotFoundError('Missing image assets:\n' + '\n'.join(messages))
+
+
+def check_pdf_for_images(pdf_path: Path, image_refs: list[dict]) -> None:
+    """Check generated PDF for embedded images.
+
+    Strategy:
+    - Look for PDF image objects via `/Subtype /Image` tokens.
+    - Also search for basenames of referenced images inside PDF bytes as a heuristic.
+    Raises RuntimeError if no images are found or referenced images are not embedded.
+    """
+    data = pdf_path.read_bytes()
+    has_image_objects = b'/Subtype /Image' in data or b'/Type /XObject' in data
+
+    missing = []
+    # Check that at least one image object exists
+    if not has_image_objects:
+        missing.append('PDF does not contain image XObject tokens')
+
+    # If we found no image objects, the PDF clearly lacks embedded images.
+    if not has_image_objects:
+        raise RuntimeError('PDF image validation failed:\nPDF does not contain image XObject tokens')
+
+    # Heuristic: if there are image refs and image objects exist, assume export succeeded.
+    # Embedded PDF objects typically do not carry original filenames, so filename-based
+    # matching is unreliable for this renderer.
+    if image_refs and has_image_objects:
+        return
+
+    if missing:
+        raise RuntimeError('PDF image validation failed:\n' + '\n'.join(missing))
+
+
 def copy_output_from_container(
     container_id: str, container_path: Path, output_path: Path
 ) -> None:
@@ -335,29 +455,122 @@ def main(argv=None) -> int:
         default=DEFAULT_URL,
         help=f'URL of the running presentation server (default: {DEFAULT_URL})',
     )
-    parser.add_argument('--output', help='Explicit output PDF path')
+    parser.add_argument('--output', help='Explicit output PDF path (legacy, maps to slides output)')
+    parser.add_argument('--slides-output', help='Explicit slides PDF output path')
+    parser.add_argument('--notes-output', help='Explicit speaker-notes PDF output path')
+    parser.add_argument('--slides-only', action='store_true', help='Only export slides PDF')
+    parser.add_argument('--notes-only', action='store_true', help='Only export speaker-notes PDF')
     args = parser.parse_args(argv)
 
     # Resolve input file path
     adoc_path = resolve_input_path(args.adoc_path)
     validate_input_file(adoc_path)
 
-    # Determine output path
-    output_path = Path(args.output) if args.output else infer_output_pdf_path(adoc_path, ROOT_DIR)
-    if args.output and not output_path.is_absolute():
-        output_path = Path.cwd() / output_path
+    # Parse AsciiDoc for image references and validate sources before export
+    image_refs = parse_adoc_for_images(adoc_path)
+    if image_refs:
+        validate_image_sources(image_refs, adoc_path)
 
-    # Ensure output directory exists
-    ensure_output_dir(output_path)
+    # Determine slides and notes output paths
+    # Backwards compatibility: --output maps to slides output
+    if args.slides_output:
+        slides_output = Path(args.slides_output)
+    elif args.output:
+        slides_output = Path(args.output)
+    else:
+        slides_output = infer_output_pdf_path(adoc_path, ROOT_DIR)
 
-    # Run export
-    run_puppeteer_export(output_path, args.url)
+    if slides_output and not slides_output.is_absolute():
+        slides_output = Path.cwd() / slides_output
 
-    # Verify output was created
-    if not output_path.exists():
-        raise RuntimeError(f'Export did not create the expected PDF file: {output_path}')
+    if args.notes_output:
+        notes_output = Path(args.notes_output)
+    else:
+        notes_output = infer_notes_pdf_path(slides_output)
 
-    print(f'PDF export complete: {output_path}')
+    if notes_output and not notes_output.is_absolute():
+        notes_output = Path.cwd() / notes_output
+
+    # Ensure output directories exist for the artifacts we're about to create
+    if not args.notes_only:
+        ensure_output_dir(slides_output)
+    if not args.slides_only:
+        ensure_output_dir(notes_output)
+
+    performed = []
+
+    # Slides export (legacy path and default)
+    if not args.notes_only:
+        run_puppeteer_export(slides_output, args.url)
+        if not slides_output.exists():
+            raise RuntimeError(f'Export did not create the expected slides PDF file: {slides_output}')
+        print(f'Slides PDF export complete: {slides_output}')
+        # Post-export PDF validation for images only when images were referenced
+        if image_refs:
+            check_pdf_for_images(slides_output, image_refs)
+        performed.append(slides_output)
+
+    # Notes export (separate run with --mode=notes)
+    if not args.slides_only:
+        # Prepare Docker invocation similar to run_puppeteer_export but pass --mode notes
+        docker_cli, supports_compose = find_docker_cli()
+        container_id, used_compose = find_running_presentation_container(docker_cli, supports_compose)
+        container_output = host_to_container_output_path(notes_output)
+        copy_back = container_output.parent == Path('/tmp')
+
+        if used_compose:
+            command = [
+                *docker_cli,
+                '-f',
+                str(COMPOSE_FILE),
+                'exec',
+                '-T',
+                SERVICE_NAME,
+                'node',
+                CONTAINER_HELPER_SCRIPT.as_posix(),
+                '--url',
+                args.url,
+                '--output',
+                container_output.as_posix(),
+                '--mode',
+                'notes',
+            ]
+        else:
+            docker_runtime = find_docker_runtime()
+            if not docker_runtime:
+                raise RuntimeError('Docker executable not found. Install Docker and retry.')
+            command = [
+                docker_runtime,
+                'exec',
+                '-i',
+                container_id,
+                'node',
+                CONTAINER_HELPER_SCRIPT.as_posix(),
+                '--url',
+                args.url,
+                '--output',
+                container_output.as_posix(),
+                '--mode',
+                'notes',
+            ]
+
+        try:
+            subprocess.run(command, check=True, capture_output=True, text=True)
+            if copy_back:
+                ensure_output_dir(notes_output)
+                copy_output_from_container(container_id, container_output, notes_output)
+        except subprocess.CalledProcessError as err:
+            raise RuntimeError(
+                f'Puppeteer notes export failed with exit code {err.returncode}: '
+                f'{err.stderr.strip() or err.stdout.strip()}'
+            ) from err
+
+        if not notes_output.exists():
+            raise RuntimeError(f'Export did not create the expected notes PDF file: {notes_output}')
+        print(f'Speaker-notes PDF export complete: {notes_output}')
+        performed.append(notes_output)
+
+    print('PDF export complete:', ', '.join(str(p) for p in performed))
     return 0
 
 

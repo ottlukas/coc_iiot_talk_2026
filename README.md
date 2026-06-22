@@ -112,7 +112,9 @@ python ../scripts/export_to_pdf.py ../docs/presentation.adoc
 ### Notes
 
 * The script resolves input paths relative to the current working directory, and it falls back to the repository root when needed.
-* The default output location is `docs/exports/presentation.pdf`.
+* The default behavior now generates two PDFs in one run:
+    - `docs/exports/presentation.pdf` (slides only)
+    - `docs/exports/presentation-speaker-notes.pdf` (speaker notes handout)
 * The export script now uses the Docker-based presentation container and does not require Node.js installed on the host. Ensure the container is running with:
 
 ```bash
@@ -120,10 +122,18 @@ docker compose -f docker/dev/docker-compose.yml up --build
 ```
 
 * If you want to provide a custom PDF path, use `--output`:
-
 ```bash
 python scripts/export_to_pdf.py docs/presentation.adoc --output docs/exports/presentation.pdf
 ```
+
+Additional flags:
+
+- `--slides-output <path>`: explicitly set slides PDF path
+- `--notes-output <path>`: explicitly set speaker-notes PDF path
+- `--slides-only`: export only the slides PDF (skip notes)
+- `--notes-only`: export only the notes PDF (skip slides)
+
+By default a single invocation produces both artifacts (slides + speaker notes).
 
 ---
 

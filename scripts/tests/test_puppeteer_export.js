@@ -1,7 +1,7 @@
 const fs = require('fs');
 const os = require('os');
 const path = require('path');
-const { exportToPdf, appendPrintPdfQuery } = require('../puppeteer_export');
+const { exportToPdf, appendPrintPdfQuery, parseArgs } = require('../puppeteer_export');
 
 jest.mock('puppeteer', () => ({
   launch: jest.fn(),
@@ -84,6 +84,60 @@ describe('puppeteer_export', () => {
       format: 'A4',
       printBackground: true,
     });
+  });
+
+  it('parses --mode argument correctly', () => {
+    const args = parseArgs(['node', 'script', '--url', 'http://localhost:4200', '--output', '/tmp/out.pdf', '--mode', 'notes']);
+    expect(args.mode).toBe('notes');
+    expect(args.url).toBe('http://localhost:4200');
+    expect(args.output).toBe('/tmp/out.pdf');
+  });
+
+  it('generates notes-mode PDF by transforming DOM', async () => {
+    const page = {
+      setDefaultNavigationTimeout: jest.fn(),
+      goto: jest.fn().mockResolvedValue(undefined),
+      addStyleTag: jest.fn().mockResolvedValue(undefined),
+      evaluate: jest.fn().mockResolvedValue(undefined),
+      pdf: jest.fn().mockResolvedValue(undefined),
+    };
+    const browser = {
+      newPage: jest.fn().mockResolvedValue(page),
+      close: jest.fn().mockResolvedValue(undefined),
+    };
+    puppeteer.launch.mockResolvedValue(browser);
+
+    const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), 'ppt-export-'));
+    const outputPath = path.join(tempDir, 'docs', 'exports', 'presentation-notes.pdf');
+
+    await exportToPdf('http://localhost:4200', outputPath, 'notes');
+
+    expect(page.evaluate).toHaveBeenCalled();
+    expect(page.pdf).toHaveBeenCalledWith({
+      path: outputPath,
+      format: 'A4',
+      printBackground: true,
+    });
+  });
+
+  it('throws when images failed to load in slides mode', async () => {
+    const page = {
+      setDefaultNavigationTimeout: jest.fn(),
+      goto: jest.fn().mockResolvedValue(undefined),
+      addStyleTag: jest.fn().mockResolvedValue(undefined),
+      evaluate: jest.fn().mockResolvedValue(['/bad/image.png']),
+      pdf: jest.fn().mockResolvedValue(undefined),
+    };
+    const browser = {
+      newPage: jest.fn().mockResolvedValue(page),
+      close: jest.fn().mockResolvedValue(undefined),
+    };
+    puppeteer.launch.mockResolvedValue(browser);
+
+    const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), 'ppt-export-'));
+    const outputPath = path.join(tempDir, 'docs', 'exports', 'presentation.pdf');
+
+    await expect(exportToPdf('http://localhost:4200', outputPath, 'slides')).rejects.toThrow('Some images failed to load');
   });
 
   it('creates output directory if missing', async () => {

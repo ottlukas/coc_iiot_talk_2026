@@ -9,6 +9,9 @@ from scripts.export_to_pdf import (
     main,
     run_puppeteer_export,
     validate_input_file,
+    parse_adoc_for_images,
+    validate_image_sources,
+    check_pdf_for_images,
 )
 
 
@@ -38,7 +41,7 @@ class TestExportToPdf(unittest.TestCase):
                 path.write_text('%PDF-1.4')
 
             mock_export.side_effect = create_output
-            result = main([str(adoc_path), '--output', str(output_pdf)])
+            result = main([str(adoc_path), '--output', str(output_pdf), '--slides-only'])
 
             self.assertEqual(result, 0)
             mock_export.assert_called_once_with(output_pdf, 'http://localhost:4200')
@@ -57,7 +60,7 @@ class TestExportToPdf(unittest.TestCase):
                 path.write_text('%PDF-1.4')
 
             mock_export.side_effect = create_output
-            main([str(adoc_path), '--output', str(output_pdf)])
+            main([str(adoc_path), '--output', str(output_pdf), '--slides-only'])
 
             self.assertTrue(output_pdf.parent.exists())
             mock_export.assert_called_once_with(output_pdf, 'http://localhost:4200')
@@ -89,7 +92,7 @@ class TestExportToPdf(unittest.TestCase):
                     current_dir = Path.cwd()
                     os.chdir(venv_dir)
                     try:
-                        result = main(['../docs/presentation.adoc'])
+                        result = main(['../docs/presentation.adoc', '--slides-only'])
                     finally:
                         os.chdir(current_dir)
 
@@ -149,7 +152,56 @@ class TestExportToPdf(unittest.TestCase):
                 with self.assertRaises(RuntimeError) as ctx:
                     main([str(adoc_path), '--output', str(output_pdf)])
 
-            self.assertIn('Export did not create the expected PDF file', str(ctx.exception))
+            self.assertIn('Export did not create the expected slides PDF file', str(ctx.exception))
+
+        def test_parse_adoc_for_images_detects_macros_and_tags(self):
+            with tempfile.TemporaryDirectory() as tmpdir:
+                adoc = Path(tmpdir) / 'presentation.adoc'
+                content = """
+    = Title
+
+    image::images/figure1.png[]
+
+    Some inline image: image:images/inline.png[]
+
+    <img src="/assets/pic.jpg" />
+    """
+                adoc.write_text(content)
+                refs = parse_adoc_for_images(adoc)
+                self.assertEqual(len(refs), 3)
+                self.assertIn('images/figure1.png', [r['ref'] for r in refs])
+
+        def test_validate_image_sources_local_and_missing(self):
+            with tempfile.TemporaryDirectory() as tmpdir:
+                repo = Path(tmpdir)
+                docs = repo / 'docs'
+                docs.mkdir()
+                adoc = docs / 'presentation.adoc'
+                adoc.write_text('image::images/existing.png[]\nimage::images/missing.png[]')
+
+                imgs_dir = docs / 'images'
+                imgs_dir.mkdir()
+                (imgs_dir / 'existing.png').write_text('PNGDATA')
+
+                refs = parse_adoc_for_images(adoc)
+                # Should raise because missing.png is absent
+                with self.assertRaises(FileNotFoundError):
+                    validate_image_sources(refs, adoc)
+
+        def test_check_pdf_for_images_success_and_failure(self):
+            with tempfile.TemporaryDirectory() as tmpdir:
+                pdf_ok = Path(tmpdir) / 'ok.pdf'
+                # minimal fake PDF with image object and filename
+                pdf_ok.write_bytes(b'%PDF-1.4\n/Type /XObject\n/Subtype /Image\nstream\n...\nendstream\nimg.png')
+
+                refs = [{'ref': 'images/img.png', 'line': 1, 'text': 'image::images/img.png[]'}]
+                # Should not raise
+                check_pdf_for_images(pdf_ok, refs)
+
+                pdf_bad = Path(tmpdir) / 'bad.pdf'
+                pdf_bad.write_bytes(b'%PDF-1.4\n%%EOF')
+                with self.assertRaises(RuntimeError):
+                    check_pdf_for_images(pdf_bad, refs)
 
 
 if __name__ == '__main__':
