@@ -6,7 +6,7 @@
 :revealjs_width: 1920
 :revealjs_height: 1080
 :revealjs_margin: 0.01
-:revealjs_center: false
+:revealjs_center: true
 :revealjs_overflow: false
 :revealjs_viewDistance: 5
 
@@ -19,7 +19,9 @@ Lukas Ott <otluk@apache.org>
 --
 Welcome everyone. I’m Lukas Ott, Enterprise Architect, and today I want to show how open source can support scalable, inspectable, and GMP-ready IIoT data platforms.
 
-The key message is simple: compliance does not come from a database alone. It comes from the validated system around it: controlled ingestion, traceability, access control, retention, monitoring, testing, and lifecycle governance.
+The key message is simple: compliance does not come from a database alone. 
+
+It comes from the validated system around it: controlled ingestion, traceability, access control, retention, monitoring, testing, and lifecycle governance.
 --
 
 [.section-break]
@@ -160,16 +162,19 @@ I do not want to walk through every term on this slide. The important point is t
 For IIoT, ALCOA++ is not a documentation checklist. It is an architecture requirement.
 --
 
-[.small]
-* **Attributable**: Every reading is linked to a machine, sensor, gateway, service, and timestamp.
-* **Contemporaneous**: Data is captured **immediately** at the machine event.
-* **Original**: Raw values are preserved **before** any transformation or aggregation.
-* **Complete**: Retries, gaps, corrections, and synchronization events remain **traceable**.
-* **Enduring**: Records survive **retention periods**, infrastructure changes, and recovery scenarios.
-* **Available**: Authorized users can retrieve data **at any time** for operations, review, or inspection.
-* **Transparent**: Processing logic, configuration, and data movement are **auditable**.
-* **Accountable**: System and user actions are tied to **responsible identities**.
+|===
+|  | 
 
+|**Attributable**: Every reading is linked to a machine, sensor, gateway, service, and timestamp.
+|**Contemporaneous**: Data is captured **immediately** at the machine event.
+|**Original**: Raw values are preserved **before** any transformation or aggregation.
+|**Complete**: Retries, gaps, corrections, and synchronization events remain **traceable**.
+|**Enduring**: Records survive **retention periods**, infrastructure changes, and recovery scenarios.
+|**Available**: Authorized users can retrieve data **at any time** for operations, review, or inspection.
+|**Transparent**: Processing logic, configuration, and data movement are **auditable**.
+|**Accountable**: System and user actions are tied to **responsible identities**.
+
+|===
 
 [.notes]
 --
@@ -200,16 +205,21 @@ At every stage we need to answer: where did the data come from, what happened to
 --
 
 === What Can Go Wrong on the Shopfloor?
+|===
+|  | 
 
-* Network outage during production
-* Duplicate readings after retry
-* Missing or inconsistent timestamps
-* Unauthorized data access
-* Silent data loss during synchronization
-* Uncontrolled transformation logic
-* Retention or backup failure
-* Configuration drift between environments
-* Unclear source attribution
+| Network outage during production
+| Duplicate readings after retry
+| Missing or inconsistent timestamps
+| Unauthorized data access
+| Silent data loss during synchronization
+| Uncontrolled transformation logic
+| Retention or backup failure
+| Configuration drift between environments
+| Unclear source attribution
+
+|===
+
 
 [.takeaway-box]
 --
@@ -448,7 +458,7 @@ Not every component has the same GMP relevance, but every component that creates
 
 [.notes]
 --
-The key point is that we do not validate open source differently from commercial software.
+The key point is that we do not validate open source differently from closed source software.
 
 We validate the implemented system based on intended use, risk, and evidence.
 
