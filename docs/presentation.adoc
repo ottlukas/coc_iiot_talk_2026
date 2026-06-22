@@ -1,330 +1,530 @@
-:revealjs_theme: apache
-:revealjs_slideNumber: true
-:revealjs_hash: true
-:revealjs_transition: convex
-:imagesdir: images
-:revealjs_width: 1920
-:revealjs_height: 1080
-:revealjs_margin: 0.05
-:revealjs_center: false
-:revealjs_overflow: false
-:revealjs_viewDistance: 5
-
-:docinfo:
-
-= Open Source for Regulated Manufacturing: GMP-Compliant IIoT Data Logging with Apache IoTDB
+= Open Source for Regulated Manufacturing: GMP-Ready IIoT Data Logging with Apache IoTDB
 Lukas Ott <otluk@apache.org>
 
 [.notes]
 --
-Welcome everyone. I’m Lukas Ott, Enterprise Architect, and today I’ll show how open source can support scalable, auditable, and GMP-ready IIoT data platforms.
+Welcome everyone. I’m Lukas Ott, Enterprise Architect, and today I want to show how open source can support scalable, inspectable, and GMP-ready IIoT data platforms.
+
+The key message is simple: compliance does not come from a database alone. It comes from the validated system around it: controlled ingestion, traceability, access control, retention, monitoring, testing, and lifecycle governance.
 --
 
 [.section-break]
-== Why This Matters
+== The Pressure: Connected Manufacturing Meets Regulation
 
 image::modernpharmaceuticalmanufacturing.jpeg[Title="Modern pharmaceutical manufacturing"]
 
 [.notes]
 --
-Buzzwords like industry 5.0 and AI agents entering the shopfloor is in highly regulated industry, where literally humans are on the line really critical.
-The current technical architecture on the shopfloor is not meant to be developed for agents. The industry is currently on the path to get industry 4.0 ready to get more and more machines end to end connected.
-The next  upcoming evolution with agents is basically not considered as the semantics and data model divers much per machine and produciton site as well as the technology stack.
+Manufacturing is becoming more connected, more automated, and increasingly data-driven.
+
+Machines, sensors, PLCs, vision systems, and edge devices generate high-frequency data. That data is no longer only useful for dashboards. In regulated manufacturing, machine data can become part of quality decisions, investigations, and inspection evidence.
+
+That creates a tension: we want real-time data and scalable analytics, but we also need trustworthy records, controlled systems, and long-term inspection readiness.
 --
 
-=== The Manufacturing Reality
+=== The Shopfloor Is Becoming a Data Platform
 
-* Pharma, MedTech, and Biotech run on high-frequency sensor and machine data.
-* That data must be trustworthy, traceable, and available for inspection.
-* The challenge is to keep up with velocity without losing compliance.
-* The question: can open source become a compliant historian backbone?
-
-image::manufacturingpharma.jpeg[Title="pharmaceutical manufacturing"]
+image::manufacturingpharma.jpeg[Title="Pharmaceutical manufacturing"]
 
 [.notes]
 --
-Data integrity is not a paperwork exercise; it is part of production quality.
-ALCOA means Attributable, Legible, Contemporaneous, Original, and Accurate.
+The shopfloor is no longer a collection of isolated machines. It is becoming a distributed data platform.
+
+But many shopfloor architectures were built machine by machine, site by site, and vendor by vendor. That often leads to fragmented semantics, inconsistent data models, proprietary interfaces, and technology stacks that are difficult to validate end to end.
+
+So the question for today is: how can we build a scalable IIoT data foundation without losing control, traceability, and trust?
 --
 
-=== The Regulatory Pressure Is Rising
+=== The Core Tension
 
-* GMP expectations keep expanding around data integrity, cloud use, and security.
-* AI-supported systems are becoming part of regulated manufacturing.
-* IIoT platforms now need to handle volume, speed, and auditability together.
-* The result: compliance has to be designed in, not added later.
-
-[.notes]
---
-GMP pressure is no longer just about records and signatures; it is expanding into cloud, cybersecurity, and AI governance.
-The key point is that regulated systems now need to prove control across the full lifecycle, not only at the point of data capture.
-With Annex 11 already raising expectations, Annex 22 on AI is the next signal that intelligent systems will need validation, traceability, and human oversight.
-For IIoT platforms, that means compliance must cover ingestion, storage, processing, and decision support end to end.
-The message to remember: if AI and connected systems are part of production, their behavior must be explainable, controlled, and auditable.
---
-
-image::regulatorystorm.jpeg[Title="Regulatory storm"]
-
-=== Regulatory Compliance
-
-image::questionregulator.jpeg[Title="Two Questions Regulators"]
-
-[.notes]
---
-That is the cleanest way to frame FDA and EU expectations: records on one side, lifecycle control on the other.
-* Is the record trustworthy?
-* Is the whole system controlled?
---
-
-=== Comaparing the two Aspects of Regulations
-
-image::fdaeu.jpeg[Title="FDA vs. EU"]
-
-[.notes]
---
-|FDA 21 CFR Part 11 |Electronic records and signatures must be trustworthy, secure, and equivalent to paper.
-|EU Annex 11 |Computerized systems must be validated, controlled, and managed across the full lifecycle.
---
-
-=== Shared Compliance Goal
-
-image::compliancetakeaway.jpeg[Title="Compliance Takeaway"]
-
-* Part 11 asks whether records and signatures can be trusted.
-* Annex 11 asks whether the entire system is validated and controlled.
-* Both demand reliable data integrity across the full data lifecycle.
-
-[.section-break]
-== What Compliance Really Means for Data
-
-image::compliancedata.jpeg[Title="Compliance and Data"]
-
-=== ALCOA++ as the Practical Lens
-
-image::alcoa.jpeg[Title="ALCOA to ALCOA++ Evolution Framework"]
-
-[.notes]
---
-* Data must be attributable, legible, contemporaneous, original, and accurate.
-* It must also be complete, consistent, enduring, and available.
-* In IIoT, that is not enough unless the platform also protects integrity at machine speed.
---
-
-=== ALCOA: Core Principles
-
-[cols="1,2", options="header"]
-|===
-|Principle |Definition
-
-|Attributable |Clearly linked to the person or device that generated it
-|Legible |Readable and accessible throughout its lifecycle
-|Contemporaneous |Captured at the time of the activity
-|Original |Preserved as the first capture of information
-|Accurate |Correct, truthful, and free from tampering
-|===
-
-=== ALCOA+: The Extensions
-
-[cols="1,2", options="header"]
-|===
-|Principle |Definition
-
-|Complete |All changes and deletions remain traceable
-|Consistent |Data remains reproducible and aligned with expectations
-|Enduring |Stored on durable media for required retention
-|Available |Accessible to authorized personnel when needed
-|===
-
-=== ALCOA++ for IIoT
-
-[cols="1,2", options="header"]
-|===
-|Principle |Definition
-
-|Integrity |Protected from unauthorized change
-|Robustness |Survives high-velocity ingestion without data loss
-|Transparency |Processing logic can be inspected and reviewed
-|Accountability |Actions can be traced to responsible users or systems
-|Reliability |Behaves predictably in validated environments
-|===
-
-=== Why Traditional Historians Struggle
-
-* Proprietary pricing often scales with tags, ingestion, or retention.
-* Vendor lock-in makes architecture changes expensive.
-* Validation becomes harder when systems are opaque.
-* High-frequency streams expose performance and audit gaps.
+* Manufacturing needs more real-time data.
+* GMP requires trustworthy and inspectable records.
+* AI and analytics increase the demand for structured, contextualized data.
+* Legacy shopfloor architectures are often fragmented and opaque.
 
 [.takeaway-box]
 --
-The challenge is not just storing data. The challenge is storing it in a way that survives inspection, scale, and change.
+The future shopfloor needs data platforms that are both scalable and inspectable.
 --
-
-[.section-break]
-== Open Source?
-
-image::whyopensource.jpeg[Title="Why Open Source"]
-
-=== Open Source Fits Regulated Environments
-
-* Transparency: auditors can inspect the logic, not just the marketing.
-* Interoperability: open APIs reduce siloed architectures.
-* Governance: community-driven projects reduce dependence on a single vendor.
-* Flexibility: architecture can evolve with the process, not against it.
-
-=== A Real-World Reference
-
-* Open infrastructure can support mission-critical preservation and monitoring.
-* Apache-based systems have already been recognized in global innovation contexts.
-* That matters because regulated industries need proof, not promises.
-
-[.section-break]
-== The Apache Stack
-
-image::apachestack.jpeg[Title="Compliance and Validation"]
-
-=== Apache IoTDB as the Historian Core
-
-* Built for high-frequency industrial sensors and PLC time-series.
-* Supports auditability, versioning, and lineage-friendly storage.
-* Includes authentication, RBAC, encryption, and retention controls.
-* Designed for use cases where data volume and compliance both matter.
 
 [.notes]
 --
-IoTDB is the time-series database at the center of the stack.
-RBAC means role-based access control.
+This is the core tension of the talk.
+
+On one side, manufacturing wants more connectivity, more automation, more analytics, and eventually AI-supported decision-making.
+
+On the other side, GMP environments require evidence. The system must show where data came from, when it was captured, whether it was changed, who or what changed it, and whether it can be retrieved when needed.
+--
+
+=== Regulatory Pressure Is Expanding
+
+image::regulatorystorm.jpeg[Title="Regulatory pressure"]
+
+[.notes]
+--
+The pressure is not only more data. It is more connected systems, more cloud, more cybersecurity expectations, and more AI-supported processes.
+
+For regulated manufacturing, the question is no longer only whether a single record is correct. The question is whether the full computerized system lifecycle is controlled.
+
+That includes ingestion, storage, processing, access, monitoring, retention, and change management.
+--
+
+=== Two Questions Regulators Ask
+
+image::questionregulator.jpeg[Title="Two questions regulators ask"]
+
+[.notes]
+--
+For this talk, I simplify the regulatory discussion into two questions.
+
+First: is the electronic record trustworthy?
+
+Second: is the whole computerized system controlled?
+
+Everything else in the architecture maps back to these two questions.
+--
+
+[.section-break]
+== The Regulatory Lens
+
+=== Part 11 vs. Annex 11 in 60 Seconds
+
+image::fdaeu.jpeg[Title="Part 11 vs Annex 11"]
+
+[.notes]
+--
+Those two questions map nicely to two regulatory perspectives.
+
+FDA 21 CFR Part 11 focuses on whether electronic records and electronic signatures can be trusted and treated as equivalent to paper-based records.
+
+EU GMP Annex 11 takes a broader lifecycle view. It asks whether the computerized system is validated, governed, secured, monitored, and controlled throughout its lifecycle.
+
+The simplified view is: Part 11 focuses on trusted records and signatures. Annex 11 focuses on validated and controlled systems.
+--
+
+=== The Shared Compliance Goal
+
+image::compliancetakeaway.jpeg[Title="Compliance takeaway"]
+
+[.notes]
+--
+The takeaway is simple.
+
+Part 11 focuses attention on trusted electronic records and signatures.
+
+Annex 11 expands the view to the computerized system lifecycle.
+
+Together, they push us toward one shared goal: reliable data integrity from capture to processing, storage, retention, and inspection.
+--
+
+[.section-break]
+== Data Integrity Becomes Architecture
+
+=== ALCOA++ as the Practical Lens
+
+image::alcoa.jpeg[Title="ALCOA to ALCOA++ evolution framework"]
+
+[.notes]
+--
+ALCOA is often introduced as a data integrity framework: attributable, legible, contemporaneous, original, and accurate.
+
+ALCOA+ extends that with complete, consistent, enduring, and available.
+
+For IIoT, we need to translate those principles into architecture. This is no longer only about a human entering data into a form. It is about machine-generated data, automated ingestion, buffering, synchronization, transformation, storage, and long-term availability.
+
+I do not want to walk through every term on this slide. The important point is the evolution: data integrity becomes an end-to-end platform requirement.
+--
+
+=== ALCOA++ Translated to IIoT
+
+[cols="1,2", options="header"]
+|===
+|Principle |IIoT architecture implication
+
+|Attributable |Every reading links to a machine, sensor, gateway, service, and timestamp.
+|Contemporaneous |Data is captured as close as possible to the actual machine event.
+|Original |Raw values are preserved before transformation or aggregation.
+|Complete |Retries, gaps, corrections, and synchronization events remain traceable.
+|Enduring |Records survive retention periods, infrastructure changes, and restore scenarios.
+|Available |Authorized users can retrieve data for operations, review, or inspection.
+|Transparent |Processing logic, configuration, and data movement can be reviewed.
+|Accountable |System and user actions are linked to responsible identities or services.
+|===
+
+[.takeaway-box]
+--
+For IIoT, ALCOA++ is not a documentation checklist. It is an architecture requirement.
+--
+
+[.notes]
+--
+This is where the regulatory language becomes practical.
+
+If a sensor reading is attributable, we must know which device, gateway, and service produced it.
+
+If the data is contemporaneous, timestamp strategy matters.
+
+If the data is original, we need to preserve raw values before downstream transformation.
+
+If the data is complete, retry behavior, synchronization gaps, and corrections must be visible.
+
+This is why data integrity has to be designed into the platform.
+--
+
+=== What Compliance Really Means for Data
+
+image::compliancedata.jpeg[Title="Compliance and data"]
+
+[.notes]
+--
+This slide translates compliance into a data pipeline.
+
+It is not only encrypted storage. It is a controlled data journey: validated ingestion, protected processing, secure storage, traceable consumption, audit trails, lineage, monitoring, and alerting.
+
+At every stage we need to answer: where did the data come from, what happened to it, who or what accessed it, and can we prove that later?
+--
+
+=== What Can Go Wrong on the Shopfloor?
+
+* Network outage during production
+* Duplicate readings after retry
+* Missing or inconsistent timestamps
+* Unauthorized data access
+* Silent data loss during synchronization
+* Uncontrolled transformation logic
+* Retention or backup failure
+* Configuration drift between environments
+* Unclear source attribution
+
+[.takeaway-box]
+--
+A GMP-ready IIoT architecture must be designed for failure, not only for normal operation.
+--
+
+[.notes]
+--
+This is important because real manufacturing environments are not perfect.
+
+Networks fail. Gateways restart. Messages are retried. Timestamps can differ. Configuration can drift. Data can be transformed without enough traceability.
+
+A credible IIoT data architecture must handle these failure modes in a controlled and observable way.
+--
+
+[.section-break]
+== Why Open Source?
+
+=== Why Open Source Helps Validation
+
+image::whyopensource.jpeg[Title="Why open source"]
+
+[.notes]
+--
+Open source does not remove validation work. It does not make a system compliant by default.
+
+But open source gives us something valuable in regulated environments: transparency, inspectable architecture, open interfaces, community review, and less dependency on a single vendor roadmap.
+
+For regulated industries, that matters because validation depends on understanding and controlling the implemented system.
+--
+
+=== Open Source Is Not Automatically Compliant
+
+* The software is not validated by default.
+* The implemented system must be qualified and validated.
+* Supplier and community governance still need assessment.
+* Security patching and dependency management must be controlled.
+* Documentation, testing, SOPs, and change control remain mandatory.
+
+[.takeaway-box]
+--
+Open source is not a shortcut around GMP. It is a transparent foundation that can support validated architectures.
+--
+
+[.notes]
+--
+This is an important distinction.
+
+We should not say that an open source component is automatically compliant. Compliance comes from the implemented and validated system.
+
+But transparency, open standards, and inspectable behavior can make technical assessment, integration, and long-term governance easier.
+--
+
+=== What to Remember About Open Source
+
+image::whatremember.jpeg[Title="Transparent, scalable, validatable"]
+
+[.notes]
+--
+If there are three things to remember about open source in this context, they are transparency, scalability, and validatability.
+
+Transparency means open interfaces and inspectable architecture.
+
+Scalability means the architecture can grow across machines, sites, and data volumes.
+
+Validatability means the system can be specified, tested, monitored, documented, and controlled.
+--
+
+[.section-break]
+== From Open Architecture to Apache IoTDB
+
+=== Open Architecture for Audit-Ready History
+
+image::finaloverview.jpeg[Title="Open architecture overview"]
+
+[.notes]
+--
+Before we look at individual technologies, this is the architecture pattern.
+
+We start with edge devices, machines, PLCs, sensors, and inspection systems.
+
+We ingest and validate signals. We process and contextualize data. We orchestrate workflows. We analyze and visualize information.
+
+The outcome must be audit-ready history: searchable, inspectable, retained, and governed.
+
+The bottom layer is critical: security, governance, traceability, and auditability are not add-ons. They must run across the full architecture.
+--
+
+=== Example Intended Use
+
+* Capture high-frequency machine and sensor readings.
+* Buffer data locally when central connectivity is unavailable.
+* Synchronize data into a historian without duplicates.
+* Visualize current and historical data.
+* Support traceability, operational resilience, and inspection readiness.
+
+[.takeaway-box]
+--
+The goal is not to validate a database in isolation. The goal is to validate the implemented system for its intended use.
+--
+
+[.notes]
+--
+In regulated environments, intended use is central.
+
+For this example, the intended use is to capture, buffer, store, synchronize, and visualize high-frequency machine data from regulated manufacturing equipment.
+
+The system supports operational monitoring, data integrity, and inspection readiness.
+
+It does not replace the full quality management system, electronic batch record approval, or final product release process.
+--
+
+=== Apache-Based IIoT Data Logging Reference Architecture
+
+image::apachestack.jpeg[Title="Apache stack reference architecture"]
+
+[.notes]
+--
+This slide is not saying every project is mandatory. It shows a modular Apache-based reference architecture.
+
+For this talk, the core is Apache IoTDB and TSFile as the historian foundation.
+
+Apache PLC4X can help connect to industrial protocols.
+
+Apache NiFi can orchestrate controlled data flows.
+
+Kafka or BifroMQ can provide buffering and decoupling.
+
+Flink or Beam can process streams.
+
+Iceberg, Spark, and Superset can support analytical consumption and visualization.
+
+The most important part is the cross-cutting layer: data integrity, security, validation evidence, retention, monitoring, and alerting.
+--
+
+=== Apache IoTDB as the Historian Core
+
+* Optimized for high-frequency industrial time-series data.
+* Stores structured device and sensor measurements.
+* Supports integration with authentication, authorization, encryption, monitoring, and retention controls.
+* Can serve as the historian core inside a validated IIoT architecture.
+* Works together with controlled ingestion, metadata, logging, and validation processes.
+
+[.notes]
+--
+Apache IoTDB is the time-series database at the center of the architecture.
+
+The important wording here is that IoTDB can serve as the historian core inside a validated architecture.
+
+The database alone does not make the system compliant. The system becomes GMP-ready when the architecture around it provides controlled ingestion, traceability, access control, retention, monitoring, testing, and lifecycle governance.
 --
 
 === Apache TSFile as the Storage Foundation
 
-* Append-only by design, which supports immutable storage patterns.
-* Columnar layout improves efficiency and validation boundaries.
-* Works well with historical reproducibility and spot-checking.
-* Can be paired with Apache Iceberg for richer query lineage.
+* Time-series file format optimized for efficient storage and query.
+* Supports append-oriented storage patterns.
+* Helps separate raw time-series history from downstream analytics.
+* Supports reproducibility and inspection when combined with controlled storage, access, and retention design.
+* Can be paired with analytical formats such as Apache Iceberg.
 
 [.notes]
 --
-TSFile is the underlying file format used to store time-series data efficiently.
-Append-only means new data is added without overwriting the original file content.
-Apache Iceberg is a table format for large analytical datasets with strong metadata support.
+TSFile is the underlying time-series file format used by IoTDB.
+
+Append-oriented storage patterns are useful because they support preservation of historical data and reproducibility.
+
+However, immutability is not only a file-format property. A tamper-evident and inspection-ready design also depends on access control, storage policies, backups, checksums, monitoring, and operational procedures.
 --
 
-=== End-to-End Data Flow
+=== Mapping Compliance Expectations to Technical Controls
 
-* Edge and protocol parsing: Apache PLC4X
-* Flow orchestration and integration: Apache NiFi
-* Messaging and buffering: Apache BifroMQ and Apache Kafka
-* Stream processing and rules: Apache Flink or Apache Beam
-* Hot storage and history: Apache IoTDB and Apache TSFile
-* Cold analytics: Apache Iceberg and Apache Superset
+image::mappingcompliance.jpeg[Title="Mapping compliance to configuration"]
 
 [.notes]
 --
-PLC4X connects industrial protocols to software.
-NiFi moves and transforms data between systems.
-BifroMQ and Kafka provide messaging and buffering.
-Flink and Beam process streams in motion.
-Superset is used for analytics and dashboards.
---
+This is where compliance becomes engineering.
 
-=== Reference Architecture
+A requirement like record integrity is implemented through controlled write paths, checksums, raw data preservation, and access control.
 
-[.notes]
---
-This slide is for the end-to-end picture: from edge devices through messaging and processing into historian storage and analytics.
-Focus on the flow, not every component detail.
+A requirement like validation evidence becomes deployment logs, test records, configuration snapshots, monitoring records, and change history.
+
+The key is that every compliance expectation should map to a concrete architecture or operational control.
 --
 
 [.section-break]
-== Compliance and Validation
+== From Architecture to Validation Evidence
 
-image::complianceandvalidation.jpeg[Title="Compliance and Validation"]
+=== Compliance and Validation
 
-=== Reproducable builds
-
-image::mappingcompliance.jpeg[Title="Mapping Compliance"]
+image::complianceandvalidation.jpeg[Title="Compliance and validation"]
 
 [.notes]
 --
-* Annex 11: audit trails, security, lifecycle control, and supplier governance.
-* Part 11: access control, signatures, and trustworthy records.
-* Validation starts by defining the system boundaries clearly.
+After the architecture, the next question is: how do we make this usable in a regulated environment?
+
+The answer is not one feature. It is a validation lifecycle.
+
+That lifecycle includes intended use, system boundaries, risk assessment, user requirements, design specifications, testing, documented evidence, operating procedures, monitoring, periodic review, and controlled change.
 --
 
-=== CSV With GAMP 5
+=== Validation Starts with System Boundaries
+
+* What is GMP-relevant?
+* What is the regulated record?
+* Which components create, modify, store, or display the record?
+* Which integrations are in scope?
+* Which users, services, and systems can access the data?
+* What is the intended use?
+* What is explicitly out of scope?
+
+[.notes]
+--
+Before validating anything, we need to define the system boundary.
+
+For IIoT this is especially important because the architecture can include machines, gateways, brokers, stream processors, databases, dashboards, cloud services, and analytical platforms.
+
+Not every component has the same GMP relevance, but every component that creates, modifies, stores, or displays regulated records needs to be understood.
+--
+
+=== Risk-Based Validation with GAMP 5
 
 [cols="1,2", options="header"]
 |===
 |Step |Purpose
 
-|1. Risk Assessment |Identify compliance and operational risks early
-|2. Supplier Qualification |Confirm the platform and vendors are suitable
-|3. URS |Define user and business requirements
-|4. Design & Specifications |Translate needs into controlled design
-|5. IQ/OQ/PQ |Prove installation, operation, and performance
-|6. Data Integrity Controls |Verify traceability and auditability
-|7. SOPs & Training |Ensure users follow controlled procedures
-|8. Change Control & Review |Manage updates without breaking validation
-|9. Operation & Monitoring |Keep the system compliant in production
+|1. Intended Use |Define what the system is expected to do.
+|2. Risk Assessment |Identify patient, product quality, and data integrity risks.
+|3. User Requirements |Define business, quality, and operational requirements.
+|4. Design Specifications |Translate requirements into controlled architecture and configuration.
+|5. IQ / OQ / PQ |Prove installation, operation, and performance.
+|6. SOPs and Training |Ensure controlled and repeatable use.
+|7. Monitoring and Review |Verify ongoing compliant operation.
+|8. Change Control |Manage updates without breaking validated state.
 |===
 
 [.notes]
 --
-CSV means Computerized System Validation.
-GAMP 5 means Good Automated Manufacturing Practice, version 5.
-URS means User Requirements Specification.
-SOPs means Standard Operating Procedures.
+The key point is that we do not validate open source differently from commercial software.
+
+We validate the implemented system based on intended use, risk, and evidence.
+
+GAMP 5 gives us a practical risk-based approach for doing that.
 --
 
 === What Good Testing Looks Like
 
-[cols="1,3", options="header"]
+[cols="1,2,2", options="header"]
 |===
-|Test |What it proves
+|Test |What it proves |IIoT example
 
-|IQ |The system is deployed repeatably and correctly
-|OQ |Security, failover, and retention behave as intended
-|PQ |The system remains stable under peak IIoT load
+|IQ |The system is installed repeatably and correctly. |Correct versions, configuration, certificates, storage paths, deployment scripts.
+|OQ |The system functions as specified. |RBAC, retention, backup, synchronization, failover, audit logging, monitoring.
+|PQ |The system performs under realistic production conditions. |Peak sensor load, network outage, replay, idempotent sync, long-running ingestion.
 |===
 
 [.notes]
 --
-IQ means Installation Qualification.
-OQ means Operational Qualification.
-PQ means Performance Qualification.
+IQ means Installation Qualification. It proves that the system is installed correctly and repeatably.
+
+OQ means Operational Qualification. It proves that specified functions behave as intended.
+
+PQ means Performance Qualification. It proves that the system performs under realistic operating conditions.
+
+For an IIoT historian, PQ is especially important because peak load, network interruption, retry behavior, and synchronization can directly affect data completeness and trust.
 --
 
-=== Code of Federal Regulations Part 11
+=== Part 11 Control Themes
 
-image::cfrpart11.jpeg"[alt="Infographic illustrating Validation, Security, Record Retention, Audit Trails, Electronic Signatures, and Training requirements"]
+image::cfrpart11.jpeg[alt="Infographic illustrating Validation, Security, Record Retention, Audit Trails, Electronic Signatures, and Training requirements"]
 
 [.notes]
 --
-Part 11 is the U.S. regulation for electronic records and electronic signatures.
-The key themes are validation, security, retention, audit trails, signatures, and training.
-* Validation
-* Security
-* Record retention
-* Audit trails
-* Electronic signatures
-* Training
-CFR - Code of Federal Regulations
+Part 11 brings recurring control themes: validation, security, record retention, audit trails, electronic signatures, and training.
+
+Not every historian use case requires electronic signatures inside the historian itself. In many architectures, signatures are handled in a higher-level MES, QMS, LIMS, or review workflow.
+
+But records, access control, retention, auditability, training, and validation evidence must still be addressed in the implemented process.
 --
 
 [.section-break]
-== The Demo
+== The Demo: Resilience and Traceability
+
+=== Demo Scenario: Network Outage Without Data Loss
+
+* A production line continues generating readings.
+* The central historian is temporarily unavailable.
+* The local system continues accepting data.
+* Readings are buffered safely.
+* Synchronization resumes when connectivity returns.
+* Duplicate records are avoided through idempotent behavior.
+* Historical data becomes visible in Apache IoTDB.
+
+[.takeaway-box]
+--
+The demo proves continuity, traceability, and recoverability under realistic shopfloor conditions.
+--
+
+[.notes]
+--
+The demo focuses on one realistic shopfloor problem: connectivity is not perfect.
+
+A production line may continue generating readings even when the central historian is temporarily unavailable.
+
+The system must keep accepting data locally, buffer it safely, and synchronize later without duplicates or silent data loss.
+
+That is the pattern I want to show now.
+--
 
 === Live Demo: Hybrid IoT Data Logging and Visualization
 
 * Goal: show the path from ingestion to buffering to synchronization.
-* Watch for authenticated ingestion, offline buffering, and live sync progress.
-* The key story: the system keeps running even when the network does not.
+* Watch for authenticated ingestion.
+* Watch for offline buffering.
+* Watch for live synchronization progress.
+* Watch for historical visibility in Apache IoTDB.
+* Watch for idempotent resume behavior after interruption.
 
 [.notes]
 --
-The demo shows operational resilience: data can be accepted locally, buffered, and later synchronized.
-Call out authentication, offline behavior, and recovery.
+During the demo, focus on the control points.
+
+First, authenticated ingestion.
+
+Second, local buffering.
+
+Third, synchronization progress.
+
+Fourth, historical visibility in IoTDB.
+
+Fifth, idempotent resume behavior, meaning that repeating the operation does not create duplicates or incorrect state.
 --
 
 === Demo Steps
@@ -333,46 +533,68 @@ Call out authentication, offline behavior, and recovery.
 |===
 |Step |Action
 
-|1 |Log in as `operator` with `operator`
-|2 |Send sample readings to `/ingest` or use the ingestion helper
-|3 |Open the dashboard and observe the local buffer chart
-|4 |Trigger `Sync to IoTDB` and watch the live SSE progress stream
-|5 |Verify the synchronized historical data appears in the IoTDB chart
-|6 |Show idempotent resume behavior after a simulated interruption
+|1 |Log in as `operator` with `operator`.
+|2 |Send sample readings to `/ingest` or use the ingestion helper.
+|3 |Open the dashboard and observe the local buffer chart.
+|4 |Trigger `Sync to IoTDB` and watch the live SSE progress stream.
+|5 |Verify that synchronized historical data appears in the IoTDB chart.
+|6 |Simulate an interruption and show idempotent resume behavior.
 |===
 
 [.notes]
 --
-If time is short, run only ingestion and sync, then point to the dual-chart comparison and recovery behavior.
+If time is short, run only ingestion and synchronization, then point to the dual-chart comparison and recovery behavior.
+
 SSE means Server-Sent Events.
+
 Idempotent means repeating the action does not create duplicates or incorrect state.
 --
 
 [.section-break]
 == Conclusion
 
+=== From Edge Data to Audit-Ready History
+
 image::conclusion.jpeg[Title="Conclusion"]
 
-=== What to Remember
+[.notes]
+--
+The future of regulated manufacturing will be more connected, more automated, and more data-driven.
 
-image::whatremember.jpeg[Title="Remember"]
+But the core questions remain simple.
+
+Can we trust the record?
+
+Can we prove the system is controlled?
+
+Apache IoTDB and the Apache ecosystem give us a strong open foundation for high-frequency IIoT data logging.
+
+But compliance is created by the full validated system: architecture, controls, evidence, monitoring, procedures, and change control.
+
+Open source is not a shortcut around GMP. It is a transparent foundation we can validate and evolve together.
+--
+
+=== Final Takeaways
+
+* Regulated manufacturing does not just need more data.
+* It needs data that can be trusted, inspected, and preserved.
+* Apache IoTDB can serve as the historian core of a GMP-ready IIoT architecture.
+* Apache technologies provide modular building blocks from edge to analytics.
+* Validation depends on intended use, risk, evidence, procedures, and lifecycle control.
+* Open source supports transparency, scalability, and validatability.
+
+[.takeaway-box]
+--
+Open source is not a shortcut around validation. It is a foundation for transparent, scalable, and inspectable manufacturing data platforms.
+--
 
 [.notes]
 --
-* Open source can be transparent, scalable, and compliant.
-* Apache IoTDB, TSFile, and Iceberg create a practical modern data foundation.
-* The real win is avoiding proprietary scaling traps while meeting GMP expectations.
---
+If there is one message to remember, it is this:
 
-=== Final Message
+Apache IoTDB can serve as the historian core of a GMP-ready IIoT architecture, but compliance does not come from the database alone.
 
-image::finaloverview.jpeg[Title="Overview"]
-
-[.notes]
---
-* Regulated manufacturing needs data that is trustworthy, durable, and inspectable.
-* Open architecture makes compliance easier to validate and easier to evolve.
-* Apache technologies give you a credible path from edge data to audit-ready history.
+It comes from the validated system around it: controlled ingestion, traceability, access control, retention, monitoring, testing, and lifecycle governance.
 --
 
 === Q&A
@@ -384,7 +606,8 @@ image::finaloverview.jpeg[Title="Overview"]
 ** Apache PLC4X: https://plc4x.apache.org/
 ** Apache StreamPipes: https://streampipes.apache.org/
 
-* otluk@apache.org
+* Contact:
+** Lukas Ott <otluk@apache.org>
 
 [.notes]
 --
