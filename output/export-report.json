@@ -1,0 +1,42 @@
+{
+  "status": "success",
+  "timestamp": "2026-06-27T20:19:39.152825",
+  "source_file": "C:\\Users\\luk\\Development\\coc_iiot_talk_2026\\docs\\presentation.adoc",
+  "error_message": "",
+  "outputs": {
+    "presentation_html": "C:\\Users\\luk\\Development\\coc_iiot_talk_2026\\output\\presentation.html",
+    "presentation_pdf": "C:\\Users\\luk\\Development\\coc_iiot_talk_2026\\output\\presentation.pdf",
+    "presentation_with_notes_pdf": "C:\\Users\\luk\\Development\\coc_iiot_talk_2026\\output\\presentation-with-notes.pdf",
+    "export_report": "C:\\Users\\luk\\Development\\coc_iiot_talk_2026\\output\\export-report.json",
+    "export_log": "C:\\Users\\luk\\Development\\coc_iiot_talk_2026\\output\\export.log"
+  },
+  "images_validation": {
+    "total_images": 23,
+    "missing_images": [],
+    "warnings": []
+  },
+  "commands_executed": [
+    {
+      "command": [
+        "docker",
+        "run",
+        "--rm",
+        "--add-host",
+        "host.docker.internal:host-gateway",
+        "-v",
+        "C:/Users/luk/Development/coc_iiot_talk_2026/output:/slides",
+        "astefanutti/decktape",
+        "reveal",
+        "--size",
+        "1920x1080",
+        "--pause",
+        "1000",
+        "http://host.docker.internal:52711/presentation.html",
+        "/slides/presentation.pdf"
+      ],
+      "exit_code": 0,
+      "stdout": "Loading page http://host.docker.internal:52711/presentation.html ...\nFailed to load resource: the server responded with a status of 404 (File not found)\nFailed to load resource: the server responded with a status of 404 (File not found)\nLoading page finished with status: 200\nReveal JS plugin activated\n\nPrinting slide #/0      ( 1/39) ...\nPrinting slide #/_the_pressure_connected_manufacturing_meets_regulation ( 2/39) ...\nPrinting slide #/_the_shopfloor_is_becoming_a_data_platform ( 3/39) ...            \nPrinting slide #/_the_core_tension ( 4/39) ...                         \nPrinting slide #/_regulatory_pressure_is_expanding ( 5/39) ...\nPrinting slide #/_major_aspects ( 6/39) ...                   \nPrinting slide #/_the_regulatory_lens ( 7/39) ...\nPrinting slide #/_part_11_vs_annex_11_in_60_seconds ( 8/39) ...\nPrinting slide #/_the_shared_compliance_goal ( 9/39) ...       \nPrinting slide #/_data_integrity_becomes_architecture (10/39) ...\nPrinting slide #/_alcoa_as_the_practical_lens (11/39) ...        \nPrinting slide #/_alcoa_translated_to_iiot (12/39) ...   \nPrinting slide #/_compliancy_and_data (13/39) ...     \nPrinting slide #/_what_can_go_wrong_on_the_shopfloor (14/39) ...\nPrinting slide #/_why_open_source (15/39) ...                   \nPrinting slide #/_why_open_source_helps_validation (16/39) ...\nPrinting slide #/_open_source_is_not_automatically_compliant (17/39) ...\nPrinting slide #/_what_to_remember_about_open_source (18/39) ...        \nPrinting slide #/_from_open_architecture_to_apache_iotdb (19/39) ...\nPrinting slide #/_open_architecture_for_audit_ready_history (20/39) ...\nPrinting slide #/_example_intended_use (21/39) ...                     \nPrinting slide #/_apache_based_iiot_data_logging_reference_architecture (22/39) ...\nPrinting slide #/_apache_iotdb_as_the_historian_core (23/39) ...                   \nPrinting slide #/_apache_tsfile_as_the_storage_foundation (24/39) ...\nPrinting slide #/_mapping_compliance_expectations_to_technical_controls (25/39) ...\nPrinting slide #/_from_architecture_to_validation_evidence (26/39) ...             \nPrinting slide #/_compliance_and_validation (27/39) ...               \nPrinting slide #/_validation_starts_with_system_boundaries (28/39) ...\nPrinting slide #/_risk_based_validation_with_gamp_5 (29/39) ...       \nPrinting slide #/_what_good_testing_looks_like (30/39) ...     \nPrinting slide #/_part_11_control_themes (31/39) ...      \nPrinting slide #/_the_demo_resilience_and_traceability (32/39) ...\nPrinting slide #/_demo_scenario_network_outage_without_data_loss (33/39) ...\nPrinting slide #/_live_demo_hybrid_iot_data_logging_and_visualization (34/39) ...\nPrinting slide #/_demo_steps (35/39) ...                                         \nSkipping font compression: Read ttf table data error\n\nPrinting slide #/_conclusion (36/39) ...\nPrinting slide #/_from_edge_data_to_audit_ready_history (37/39) ...\nPrinting slide #/_final_takeaways (38/39) ...                      \nPrinting slide #/_qa    (39/39) ...          \nPrinted 39 slides",
+      "stderr": "Unable to find image 'astefanutti/decktape:latest' locally\nlatest: Pulling from astefanutti/decktape\n4f4fb700ef54: Pulling fs layer\n08b9a74c4471: Pulling fs layer\n4abcf2066143: Pulling fs layer\ncfeae6dd44de: Pulling fs layer\ncd8a85dcc7e8: Pulling fs layer\n915102154836: Pulling fs layer\ne55399176109: Pulling fs layer\n4f4fb700ef54: Already exists\n915102154836: Download complete\ncfeae6dd44de: Download complete\n4abcf2066143: Download complete\n08b9a74c4471: Download complete\n4abcf2066143: Pull complete\n915102154836: Pull complete\ncd8a85dcc7e8: Download complete\ne55399176109: Download complete\ne55399176109: Pull complete\ncd8a85dcc7e8: Pull complete\n08b9a74c4471: Pull complete\ncfeae6dd44de: Pull complete\n4f4fb700ef54: Pull complete\nDigest: sha256:c03fa250554ec239ff77ba0541747ff348a1849f4c81f5bf7a244499f749a7ce\nStatus: Downloaded newer image for astefanutti/decktape:latest"
+    }
+  ]
+}
