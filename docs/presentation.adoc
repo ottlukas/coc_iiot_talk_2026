@@ -25,7 +25,8 @@ It comes from the validated system around it: controlled ingestion, traceability
 --
 
 [.section-break]
-== The Pressure: Connected Manufacturing Meets Regulation
+== The Pressure +
+Connected Manufacturing Meets Regulation
 
 image::modernpharmaceuticalmanufacturing.jpeg[Title="Modern pharmaceutical manufacturing"]
 
@@ -53,13 +54,12 @@ So the question for today is: how can we build a scalable IIoT data foundation w
 
 === The Core Tension
 
-[.fragment.fade-in]
 * Manufacturing needs more real-time data.
-[.fragment.fade-in]
+
 * GMP requires trustworthy and inspectable records.
-[.fragment.fade-in]
+
 * AI and analytics increase the demand for structured, contextualized data.
-[.fragment.fade-in]
+
 * Legacy shopfloor architectures are often fragmented and opaque.
 
 [.takeaway-box.typewriter]
@@ -340,7 +340,8 @@ The system supports operational monitoring, data integrity, and inspection readi
 It does not replace the full quality management system, electronic batch record approval, or final product release process.
 --
 
-=== Apache-Based IIoT Data Logging Reference Architecture
+=== Apache-Based IIoT Data Logging +
+Reference Architecture
 
 image::apachestack.jpeg[Title="Apache stack reference architecture"]
 
@@ -397,7 +398,8 @@ Append-oriented storage patterns are useful because they support preservation of
 However, immutability is not only a file-format property. A tamper-evident and inspection-ready design also depends on access control, storage policies, backups, checksums, monitoring, and operational procedures.
 --
 
-=== Mapping Compliance Expectations to Technical Controls
+=== Mapping Compliance +
+Expectations to Technical Controls
 
 image::mappingcompliance.jpeg[Title="Mapping compliance to configuration"]
 
@@ -509,7 +511,8 @@ But records, access control, retention, auditability, training, and validation e
 
 image::demo.jpeg[Title="Demo"]
 
-=== Demo Scenario: Network Outage Without Data Loss
+=== Demo Scenario +
+Network Outage Without Data Loss
 
 * A production line continues generating readings.
 * The central historian is temporarily unavailable.
