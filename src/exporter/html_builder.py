@@ -3,9 +3,12 @@ Prepares the build directory, compiles AsciiDoc to Reveal.js HTML via Docker, an
 """
 
 import logging
+import os
 import shutil
+import stat
 from pathlib import Path
 from typing import List
+from datetime import datetime
 from . config import ExporterConfig, ImageReference
 from . docker_utils import run_docker_command, format_docker_volume_path
 from . asciidoc_parser import extract_images_dir, normalize_adoc_content
@@ -19,12 +22,78 @@ def prepare_build_directory(
 ) -> None:
     """
     Creates and populates the build directory with adoc source, custom css, docinfo, and images.
+    If the build directory has permission issues, creates a timestamped backup and uses a fresh directory.
     """
     logger.info("Preparing clean build directory at: %s", build_dir)
     
     # 1. Clean and recreate build directory
     if build_dir.exists():
-        shutil.rmtree(build_dir)
+        # Helper to handle permission errors during deletion
+        def handle_remove_error(func, path, exc_info):
+            """Handle permission errors by attempting to change permissions and retry."""
+            # Try to add write permissions and retry
+            try:
+                if os.path.isdir(path):
+                    os.chmod(path, stat.S_IRWXU)  # Full owner permissions for directories
+                else:
+                    os.chmod(path, stat.S_IWRITE | stat.S_IREAD)  # Write+read for files
+                func(path)
+                logger.debug("Removed after chmod: %s", path)
+            except Exception as e:
+                logger.warning("Could not remove %s: %s", path, str(e))
+        
+        def fix_permissions_recursive(path):
+            """Recursively fix permissions before deletion."""
+            try:
+                for root, dirs, files in os.walk(path, topdown=False):
+                    for name in files:
+                        file_path = os.path.join(root, name)
+                        try:
+                            os.chmod(file_path, stat.S_IWRITE | stat.S_IREAD)
+                        except Exception:
+                            pass
+                    for name in dirs:
+                        dir_path = os.path.join(root, name)
+                        try:
+                            os.chmod(dir_path, stat.S_IRWXU)
+                        except Exception:
+                            pass
+                # Fix root directory permissions
+                os.chmod(path, stat.S_IRWXU)
+            except Exception as e:
+                logger.debug("Error fixing permissions recursively: %s", str(e))
+        
+        try:
+            fix_permissions_recursive(build_dir)
+            shutil.rmtree(build_dir, onerror=handle_remove_error)
+        except Exception as e:
+            logger.warning("Failed to remove build directory: %s. Attempting to clean contents instead.", str(e))
+            # If full removal fails, try to clean just the key files we need
+            try:
+                for item in build_dir.iterdir():
+                    if item.is_dir():
+                        try:
+                            shutil.rmtree(item, onerror=handle_remove_error)
+                        except Exception:
+                            logger.warning("Could not remove subdirectory: %s", item)
+                    else:
+                        try:
+                            item.unlink()
+                        except Exception:
+                            logger.warning("Could not remove file: %s", item)
+            except Exception as cleanup_error:
+                logger.warning("Could not clean build directory contents: %s. Creating backup instead.", str(cleanup_error))
+                # Last resort: backup the problematic directory
+                backup_dir = build_dir.parent / f"presentation-export-backup-{datetime.now().strftime('%Y%m%d-%H%M%S')}"
+                try:
+                    build_dir.rename(backup_dir)
+                    logger.info("Backed up problematic build directory to: %s", backup_dir)
+                except Exception as backup_error:
+                    logger.error("Could not create backup: %s", backup_error)
+                    raise RuntimeError(f"Cannot clean or backup build directory: {cleanup_error}") from backup_error
+    
+    build_dir.mkdir(parents=True, exist_ok=True)
+    
     build_dir.mkdir(parents=True, exist_ok=True)
 
     # 2. Copy and normalize source adoc file

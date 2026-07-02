@@ -1,51 +1,93 @@
-# Dependencies
-node_modules/
-
-# Git
+################################
+# GIT
+################################
 .git/
 .gitignore
+.gitattributes
 
-# Documentation
-*.md
-
-# IDE
+################################
+# IDE & EDITORS
+################################
 .idea/
 .vscode/
+*.swp
+*.swo
+*~
+.project
+.pydevproject
+.settings/
+*.sublime-project
+*.sublime-workspace
 
-# Generated files
+################################
+# DEPENDENCIES
+################################
+node_modules/
+npm-debug.log*
+.venv/
+venv/
+env/
+
+################################
+# GENERATED FILES & CACHES
+################################
 output/
 docs/exports/
 docs/docinfo.html
-
-# Logs
-*.log
-
-# Python
-__pycache__/
+.pytest_cache/
+.coverage
+htmlcov/
+build/presentation-export/
 *.pyc
+__pycache__/
 
-# OS
+################################
+# OS SPECIFIC
+################################
 .DS_Store
 Thumbs.db
 
-# License
-LICENSE
+################################
+# DOCUMENTATION (KEEP IN IMAGE)
+################################
+# Note: README, CONTRIBUTING, CHANGELOG, LICENSE should be included for reference
 
-# Docker
-.docker/
+################################
+# DOCKER
+################################
+Dockerfile*
+docker-compose.yml
+.dockerignore
 
-# Environment files
+################################
+# ENVIRONMENT FILES
+################################
 .env
 .env.*
 
-# Test files
-*_test.py
-*_test.js
+################################
+# TEST FILES
+################################
+src/tests/
+src/scripts/tests/
 tests/
+*.test.js
+*_test.py
+pytest.ini
+jest.config.js
 
-# Coverage
-coverage/
-
-# Temporary files
+################################
+# TEMPORARY FILES
+################################
 *.tmp
+*.log
+*.bak
+
+################################
+# COVERAGE & REPORTS
+################################
+coverage/
+.nyc_output/
+test-results/
+
 *.temp

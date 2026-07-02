@@ -19,6 +19,20 @@ A complete, Dockerized toolchain for creating and presenting AsciiDoc-based slid
 
 ---
 
+## ⚙️ Recent Updates (v1.1.0)
+
+This repository has been restructured for better organization and clarity:
+
+- ✅ New **`.editorconfig`** for consistent code formatting
+- ✅ **`CONTRIBUTING.md`** with contribution guidelines
+- ✅ **`CHANGELOG.md`** tracking version history and deprecations
+- ✅ Improved **`.gitignore`** and **`.dockerignore`** organization
+- ⚠️ **Deprecated**: `src/scripts/export_to_pdf.py` → Use `src/scripts/export_presentation.py`
+
+📖 See [RESTRUCTURING_GUIDE.md](RESTRUCTURING_GUIDE.md) for complete details and cleanup recommendations.
+
+---
+
 ## \ud83d\ude80\ufe0f Quick Start (Using Docker Compose)
 
 The easiest way to build and run the presentation server is using Docker Compose:
@@ -198,54 +212,88 @@ image::images/demo.jpeg[Demo Image,800,600]
 
 ---
 
-## \ud83d\udcc2 Project Structure
+## 📂 Project Structure
 
 ```text
 coc_iiot_talk_2026/
-├── README.md                          # This guide
-├── LICENSE                            # Apache License 2.0
+├── .editorconfig                      # Code formatting consistency
 ├── .gitignore                         # Git ignore patterns
 ├── .dockerignore                      # Docker ignore patterns
+├── CHANGELOG.md                       # Version history
+├── CONTRIBUTING.md                    # Contribution guidelines
+├── LICENSE                            # Apache License 2.0
+├── README.md                          # This guide
 ├── package.json                       # Node.js dependencies & scripts
-├── docker/
+│
+├── docker/                            # Docker configuration
 │   └── dev/
 │       ├── Dockerfile                 # Development container image
-│       ├── docker-compose.yml         # Development compose file
-│       └── .dockerignore              # Docker-specific ignore patterns
-├── docs/
-│   ├── presentation.adoc              # Main slide source code
+│       └── docker-compose.yml         # Container orchestration
+│
+├── docs/                              # Presentation content (source)
+│   ├── presentation.adoc              # Main AsciiDoc slide source
 │   ├── images/                        # Slide images & diagrams
-│   │   ├── alcoa.jpeg
-│   │   ├── apachestack.jpeg
-│   │   ├── balance.jpeg
-│   │   └── ... (other presentation images)
 │   └── theme/
 │       └── apache.css                 # Custom presentation stylesheet
-└── src/
-    ├── scripts/
-    │   ├── compile.js                 # AsciiDoc → HTML converter
-    │   ├── watch.js                   # File watcher & live-reload server
-    │   ├── export_presentation.py     # Main PDF export script (Decktape-based)
-    │   └── export_to_pdf.py           # DEPRECATED: Legacy exporter (delegates to new script)
-    └── exporter/
-        ├── asciidoc_parser.py         # AsciiDoc parsing utilities
-        ├── config.py                  # Export configuration
-        ├── decktape_exporter.py       # Decktape export functionality
-        ├── docker_utils.py            # Docker utility functions
-        ├── html_builder.py            # HTML compilation utilities
-        ├── http_server.py             # Temporary HTTP server for export
-        ├── pdf_utils.py               # PDF generation utilities
-        └── reporting.py               # Export reporting and logging
-    └── tests/
-        ├── test_asciidoc_parser.py    # AsciiDoc parser tests
-        ├── test_deprecated_exporter.py # Legacy exporter tests
-        ├── test_docker_commands.py    # Docker command tests
-        └── test_paths.py              # Path resolution tests
+│
+├── output/                            # Generated exports (git-ignored)
+│   ├── presentation.pdf
+│   ├── presentation-with-notes.pdf
+│   ├── presentation.html
+│   ├── export-report.json
+│   └── export.log
+│
+├── public/                            # Static assets & reveal.js
+│   ├── index.html
+│   ├── images/
+│   └── reveal.js/                     # Bundled library
+│
+└── src/                               # Application source code
+    ├── exporter/                      # PDF export utilities
+    │   ├── asciidoc_parser.py
+    │   ├── config.py
+    │   ├── decktape_exporter.py
+    │   ├── docker_utils.py
+    │   ├── html_builder.py
+    │   ├── http_server.py
+    │   ├── pdf_utils.py
+    │   └── reporting.py
+    │
+    ├── scripts/                       # Entry points
+    │   ├── compile.js                 # AsciiDoc → HTML
+    │   ├── watch.js                   # File watcher
+    │   └── export_presentation.py    # Main PDF exporter
+    │
+    └── tests/                         # Test suite
+        ├── test_asciidoc_parser.py
+        ├── test_docker_commands.py
+        ├── test_paths.py
+        ├── pdf_quality.test.js
+        ├── watch_compile.test.js
+        └── outputs/
 ```
+
+### Key Points on New Structure
+
+- **`docs/`** — Source of truth for presentation content
+- **`src/exporter/`** — PDF export logic (unified exporter)
+- **`src/scripts/`** — Executable entry points (compile, watch, export)
+- **`src/tests/`** — All tests consolidated here
+- **`output/`** — Transient generated files (git-ignored)
+- **`CHANGELOG.md`** — Version history and deprecation notices
+- **`CONTRIBUTING.md`** — Guidelines for contributors
+- **`.editorconfig`** — Cross-editor formatting consistency
+
+### Files Removed or Deprecated
+
+- ❌ `src/scripts/export_to_pdf.py` — **DEPRECATED**  
+  Use `src/scripts/export_presentation.py` instead
+- ⚠️ `build/presentation-export/` — Remove (stale build artifact)
+- 🔄 Duplicate reveal.js in `public/` — Clean up and consolidate
 
 ---
 
-## \ud83d\udd27 Troubleshooting
+## 🔧 Troubleshooting
 
 ### 1. Images not visible in the exported PDF
 - Ensure the image exists in `docs/images/` and is referenced correctly in `presentation.adoc`

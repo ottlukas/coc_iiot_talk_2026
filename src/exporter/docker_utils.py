@@ -106,8 +106,11 @@ def run_docker_command(
         exit_code = result.returncode
     except subprocess.TimeoutExpired as e:
         logger.error("Command timed out: %s", " ".join(command_args))
-        stdout = e.stdout or ""
-        stderr = (e.stderr or "") + f"\n[ERROR] Command timed out after {timeout} seconds"
+        # Convert bytes to string if needed (TimeoutExpired may return bytes even with text=True)
+        stdout_str = e.stdout if isinstance(e.stdout, str) else (e.stdout.decode() if e.stdout else "")
+        stderr_str = e.stderr if isinstance(e.stderr, str) else (e.stderr.decode() if e.stderr else "")
+        stdout = stdout_str or ""
+        stderr = stderr_str + f"\n[ERROR] Command timed out after {timeout} seconds"
         exit_code = -1
     except Exception as e:
         logger.error("Command execution failed: %s", str(e))
