@@ -11,8 +11,9 @@ COPY package*.json ./
 # Install packages
 RUN npm install
 
-# Copy scripts
-COPY scripts ./scripts/
+# Copy source files
+COPY src/ ./src/
+COPY docs/ ./docs/
 
 # Install Chromium and emoji font support for Puppeteer PDF export
 RUN apt-get update && apt-get install -y --no-install-recommends \
@@ -28,4 +29,4 @@ RUN npm install puppeteer jest
 EXPOSE 4200
 
 # Start watching and serving
-CMD ["node", "scripts/watch.js"]
+CMD ["node", "src/scripts/watch.js"]

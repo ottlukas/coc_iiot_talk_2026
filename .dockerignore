@@ -1,0 +1,51 @@
+# Dependencies
+node_modules/
+
+# Git
+.git/
+.gitignore
+
+# Documentation
+*.md
+
+# IDE
+.idea/
+.vscode/
+
+# Generated files
+output/
+docs/exports/
+docs/docinfo.html
+
+# Logs
+*.log
+
+# Python
+__pycache__/
+*.pyc
+
+# OS
+.DS_Store
+Thumbs.db
+
+# License
+LICENSE
+
+# Docker
+.docker/
+
+# Environment files
+.env
+.env.*
+
+# Test files
+*_test.py
+*_test.js
+tests/
+
+# Coverage
+coverage/
+
+# Temporary files
+*.tmp
+*.temp
