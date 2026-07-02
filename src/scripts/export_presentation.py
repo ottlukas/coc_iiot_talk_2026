@@ -11,25 +11,30 @@ import sys
 from datetime import datetime
 from pathlib import Path
 
-from ..exporter.config import ExporterConfig, ExportResult
-from ..exporter.docker_utils import check_docker_availability
-from ..exporter.asciidoc_parser import (
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
+SRC_ROOT = PROJECT_ROOT / "src"
+if str(SRC_ROOT) not in sys.path:
+    sys.path.insert(0, str(SRC_ROOT))
+
+from exporter.config import ExporterConfig, ExportResult
+from exporter.docker_utils import check_docker_availability
+from exporter.asciidoc_parser import (
     parse_images_from_adoc,
     validate_and_resolve_images,
     parse_slides_and_notes,
 )
-from ..exporter.html_builder import (
+from exporter.html_builder import (
     prepare_build_directory,
     fetch_revealjs_assets,
     compile_asciidoc_to_html,
 )
-from ..exporter.http_server import TempHTTPServer, wait_for_server_healthy
-from ..exporter.decktape_exporter import export_slides_with_decktape
-from ..exporter.pdf_utils import generate_notes_pdf_handout
-from ..exporter.reporting import write_export_report
+from exporter.http_server import TempHTTPServer, wait_for_server_healthy
+from exporter.decktape_exporter import export_slides_with_decktape
+from exporter.pdf_utils import generate_notes_pdf_handout
+from exporter.reporting import write_export_report
 
 # ROOT dir of the project
-ROOT_DIR = Path(__file__).resolve().parent.parent
+ROOT_DIR = PROJECT_ROOT
 
 # Define logger
 logger = logging.getLogger("exporter")

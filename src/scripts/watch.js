@@ -1,11 +1,40 @@
+const fs = require('fs');
 const chokidar = require('chokidar');
 const liveServer = require('live-server');
 const { execSync } = require('child_process');
 const path = require('path');
 
-const ROOT_DIR = path.join(__dirname, '..');
+const ROOT_DIR = path.join(__dirname, '..', '..');
 const SLIDES_DIR = path.join(ROOT_DIR, 'docs');
 const PUBLIC_DIR = path.join(ROOT_DIR, 'public');
+
+function getServerParams() {
+  const port = parseInt(process.env.PORT || 4200, 10);
+  return {
+    port,
+    host: '0.0.0.0',
+    root: PUBLIC_DIR,
+    open: false,
+    file: 'index.html',
+    wait: 500,
+    logLevel: 1
+  };
+}
+
+function logPaths() {
+  console.log('[Paths] ROOT_DIR =', ROOT_DIR);
+  console.log('[Paths] SLIDES_DIR =', SLIDES_DIR);
+  console.log('[Paths] PUBLIC_DIR =', PUBLIC_DIR);
+}
+
+function logPublicFiles() {
+  try {
+    const files = fs.readdirSync(PUBLIC_DIR);
+    console.log('[Paths] public directory contents:', files);
+  } catch (err) {
+    console.warn('[Paths] Unable to list public directory:', err.message);
+  }
+}
 
 // Helper to run compiler
 let isCompiling = false;
@@ -16,6 +45,7 @@ function compileSlides() {
   console.log(`\n[${new Date().toLocaleTimeString()}] Change detected, recompiling...`);
   try {
     execSync('node ' + path.join(__dirname, 'compile.js'), { stdio: 'inherit', cwd: ROOT_DIR });
+    logPublicFiles();
     console.log(`[${new Date().toLocaleTimeString()}] Recompile complete.`);
   } catch (err) {
     console.error(`[${new Date().toLocaleTimeString()}] Compilation failed:`, err.message);
@@ -24,40 +54,49 @@ function compileSlides() {
   }
 }
 
-// 1. Initial compile
-console.log('--- Initial Build ---');
-compileSlides();
+function startWatcher() {
+  console.log(`\nWatching for changes in: ${SLIDES_DIR}`);
+  const watcher = chokidar.watch(SLIDES_DIR, {
+    ignored: /(^|[\/\\])\../,
+    persistent: true,
+    ignoreInitial: true,
+    usePolling: true,
+    interval: 1000,
+    binaryInterval: 3000
+  });
 
-// 2. Setup file watcher
-console.log(`\nWatching for changes in: ${SLIDES_DIR}`);
-const watcher = chokidar.watch(SLIDES_DIR, {
-  ignored: /(^|[\/\\])\../, // ignore dotfiles/folders
-  persistent: true,
-  ignoreInitial: true,
-  // Add polling fallback for VM/Docker volumes
-  usePolling: true,
-  interval: 1000,
-  binaryInterval: 3000
-});
+  watcher.on('all', (event, filePath) => {
+    console.log(`[Watcher] Event '${event}' on file: ${path.relative(__dirname, filePath)}`);
+    compileSlides();
+  });
+}
 
-watcher.on('all', (event, filePath) => {
-  console.log(`[Watcher] Event '${event}' on file: ${path.relative(__dirname, filePath)}`);
+function startServer() {
+  const serverParams = getServerParams();
+  console.log('[Server] live-server configuration:', serverParams);
+  console.log(`Starting live-reload server at http://localhost:${serverParams.port}...`);
+  liveServer.start(serverParams);
+}
+
+function init() {
+  logPaths();
+  console.log('--- Initial Build ---');
   compileSlides();
-});
+  startWatcher();
+  startServer();
+}
 
-// 3. Start development server
-const port = process.env.PORT || 4200;
-const host = '0.0.0.0';
+if (require.main === module) {
+  init();
+}
 
-const serverParams = {
-  port: parseInt(port, 10),
-  host: host,
-  root: PUBLIC_DIR,
-  open: false, // Don't open browser inside container
-  file: 'index.html',
-  wait: 500, // wait time before reload injection
-  logLevel: 1 // only errors and restarts
+module.exports = {
+  ROOT_DIR,
+  SLIDES_DIR,
+  PUBLIC_DIR,
+  getServerParams,
+  compileSlides,
+  startWatcher,
+  startServer,
+  init
 };
-
-console.log(`Starting live-reload server at http://localhost:${port}...`);
-liveServer.start(serverParams);

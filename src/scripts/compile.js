@@ -6,13 +6,16 @@ const asciidoctorRevealjs = require('@asciidoctor/reveal.js');
 // Register the reveal.js converter with Asciidoctor.js
 asciidoctorRevealjs.register();
 
-const ROOT_DIR = path.join(__dirname, '..');
+const ROOT_DIR = path.join(__dirname, '..', '..');
 const PUBLIC_DIR = path.join(ROOT_DIR, 'public');
 const SLIDES_DIR = path.join(ROOT_DIR, 'docs');
 const REVEAL_DEST = path.join(PUBLIC_DIR, 'reveal.js');
 
 try {
   console.log('[Build] Starting presentation compilation...');
+  console.log('[Build] ROOT_DIR =', ROOT_DIR);
+  console.log('[Build] PUBLIC_DIR =', PUBLIC_DIR);
+  console.log('[Build] SLIDES_DIR =', SLIDES_DIR);
 
   // 1. Ensure public directory structure exists
   fs.ensureDirSync(PUBLIC_DIR);
