@@ -83,7 +83,6 @@ Thumbs.db
 ################################
 # GENERATED FILES
 ################################
-output/
 docs/exports/
 *.log
 *.tmp
@@ -140,7 +139,6 @@ coverage/
 public/
 
 # Compiled files
-*.pdf
 *.pptx
 *.html
 
