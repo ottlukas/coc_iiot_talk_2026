@@ -1,0 +1,86 @@
+# Dependencies
+node_modules/
+package-lock.json
+npm-debug.log*
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual environments
+.env
+.venv
+env/
+venv/
+ENV/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.project
+.pydevproject
+.settings/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Generated files
+output/
+docs/exports/
+docs/docinfo.html
+
+# Logs
+*.log
+output/export.log
+
+# Docker
+.docker/
+
+# Temporary files
+*.tmp
+*.temp
+
+# Test coverage
+coverage/
+.html
+
+# Jest
+.coverage
+
+# Puppeteer
+.puppeteer_cache/
+
+# Reveal.js build output
+public/
+
+# Compiled files
+*.pdf
+*.pptx
+*.html
+
+# Environment variables
+.env
+.env.local
+.env.*.local

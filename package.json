@@ -2,13 +2,15 @@
   "name": "coc-iiot-talk-2026-presentation",
   "version": "1.0.0",
   "description": "Reveal.js Docker setup for creating and presenting AsciiDoc-based presentations",
-  "main": "scripts/watch.js",
+  "main": "src/scripts/watch.js",
   "scripts": {
-    "build": "node scripts/compile.js",
-    "dev": "node scripts/watch.js",
-    "test:python": "python -m unittest discover -s tests",
+    "build": "node src/scripts/compile.js",
+    "dev": "node src/scripts/watch.js",
+    "export:pdf": "python src/scripts/export_presentation.py",
+    "test:python": "python -m unittest discover -s src/tests",
     "test:js": "jest",
-    "test": "npm run test:python && npm run test:js"
+    "test": "npm run test:python && npm run test:js",
+    "clean": "rm -rf output/ docs/exports/"
   },
   "dependencies": {
     "@asciidoctor/core": "^3.0.0",
