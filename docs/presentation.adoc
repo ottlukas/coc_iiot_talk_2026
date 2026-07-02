@@ -21,7 +21,7 @@ Welcome everyone. I’m Lukas Ott, Enterprise Architect, and today I want to sho
 
 The key message is simple: compliance does not come from a database alone. 
 
-It comes from the validated system around it: controlled ingestion, traceability, access control, retention, monitoring, testing, and lifecycle governance.
+It comes from the validated system around it: controlled ingestion, traceability, access control, retention, monitoring, testing, and lifecycle governance. [.highlight]#This is the practical foundation for GMP-ready IIoT.#
 --
 
 [.section-break]
@@ -53,12 +53,16 @@ So the question for today is: how can we build a scalable IIoT data foundation w
 
 === The Core Tension
 
+[.fragment.fade-in]
 * Manufacturing needs more real-time data.
+[.fragment.fade-in]
 * GMP requires trustworthy and inspectable records.
+[.fragment.fade-in]
 * AI and analytics increase the demand for structured, contextualized data.
+[.fragment.fade-in]
 * Legacy shopfloor architectures are often fragmented and opaque.
 
-[.takeaway-box]
+[.takeaway-box.typewriter]
 --
 The future shopfloor needs data platforms that are both scalable and inspectable.
 --
@@ -171,7 +175,7 @@ For IIoT, ALCOA++ is not a documentation checklist. It is an architecture requir
 |**Complete**: Retries, gaps, corrections, and synchronization events remain **traceable**.
 |**Enduring**: Records survive **retention periods**, infrastructure changes, and recovery scenarios.
 |**Available**: Authorized users can retrieve data **at any time** for operations, review, or inspection.
-|**Transparent**: Processing logic, configuration, and data movement are **auditable**.
+|**Transparent**: Processing logic, configuration, and data movement are [.color-transition]#auditable#.
 |**Accountable**: System and user actions are tied to **responsible identities**.
 
 |===
