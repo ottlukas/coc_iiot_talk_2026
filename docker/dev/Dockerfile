@@ -14,7 +14,6 @@ RUN npm install
 # Copy source files
 COPY src/ ./src/
 COPY docs/ ./docs/
-COPY public/ ./public/
 
 # Install Chromium and emoji font support for Puppeteer PDF export
 RUN apt-get update && apt-get install -y --no-install-recommends \
