@@ -1,17 +1,17 @@
 {
   "status": "success",
-  "timestamp": "2026-07-02T20:38:29.923194",
-  "source_file": "/home/luk/Development/coc_iiot_talk_2026/docs/presentation.adoc",
+  "timestamp": "2026-09-25T16:42:21.237941",
+  "source_file": "C:\\Users\\luk\\Development\\coc_iiot_talk_2026\\docs\\presentation.adoc",
   "error_message": "",
   "outputs": {
-    "presentation_html": "/home/luk/Development/coc_iiot_talk_2026/output/presentation.html",
-    "presentation_pdf": "/home/luk/Development/coc_iiot_talk_2026/output/presentation.pdf",
-    "presentation_with_notes_pdf": "/home/luk/Development/coc_iiot_talk_2026/output/presentation-with-notes.pdf",
-    "export_report": "/home/luk/Development/coc_iiot_talk_2026/output/export-report.json",
-    "export_log": "/home/luk/Development/coc_iiot_talk_2026/output/export.log"
+    "presentation_html": "C:\\Users\\luk\\Development\\coc_iiot_talk_2026\\output\\presentation.html",
+    "presentation_pdf": "C:\\Users\\luk\\Development\\coc_iiot_talk_2026\\output\\presentation.pdf",
+    "presentation_with_notes_pdf": "C:\\Users\\luk\\Development\\coc_iiot_talk_2026\\output\\presentation-with-notes.pdf",
+    "export_report": "C:\\Users\\luk\\Development\\coc_iiot_talk_2026\\output\\export-report.json",
+    "export_log": "C:\\Users\\luk\\Development\\coc_iiot_talk_2026\\output\\export.log"
   },
   "images_validation": {
-    "total_images": 23,
+    "total_images": 19,
     "missing_images": [],
     "warnings": []
   },
@@ -21,21 +21,21 @@
         "docker",
         "run",
         "--rm",
-        "--network",
-        "host",
+        "--add-host",
+        "host.docker.internal:host-gateway",
         "-v",
-        "/home/luk/Development/coc_iiot_talk_2026/output:/slides",
+        "C:/Users/luk/Development/coc_iiot_talk_2026/output:/slides",
         "astefanutti/decktape",
         "reveal",
         "--size",
         "1920x1080",
         "--pause",
         "1000",
-        "http://127.0.0.1:44473/presentation.html",
+        "http://host.docker.internal:51378/presentation.html",
         "/slides/presentation.pdf"
       ],
       "exit_code": 0,
-      "stdout": "Loading page http://127.0.0.1:44473/presentation.html ...\nFailed to load resource: the server responded with a status of 404 (File not found)\nFailed to load resource: the server responded with a status of 404 (File not found)\nLoading page finished with status: 200\nReveal JS plugin activated\n\nPrinting slide #/0      ( 1/39) ...\nPrinting slide #/_the_pressure ( 2/39) ...\nPrinting slide #/_the_shopfloor_is_becoming_a_data_platform ( 3/39) ...\nPrinting slide #/_the_core_tension ( 4/39) ...                         \nPrinting slide #/_regulatory_pressure_is_expanding ( 5/39) ...\nPrinting slide #/_major_aspects ( 6/39) ...                   \nPrinting slide #/_the_regulatory_lens ( 7/39) ...\nPrinting slide #/_part_11_vs_annex_11_in_60_seconds ( 8/39) ...\nPrinting slide #/_the_shared_compliance_goal ( 9/39) ...       \nPrinting slide #/_data_integrity_becomes_architecture (10/39) ...\nPrinting slide #/_alcoa_as_the_practical_lens (11/39) ...        \nPrinting slide #/_alcoa_translated_to_iiot (12/39) ...   \nPrinting slide #/_compliancy_and_data (13/39) ...     \nPrinting slide #/_what_can_go_wrong_on_the_shopfloor (14/39) ...\nPrinting slide #/_why_open_source (15/39) ...                   \nPrinting slide #/_why_open_source_helps_validation (16/39) ...\nPrinting slide #/_open_source_is_not_automatically_compliant (17/39) ...\nPrinting slide #/_what_to_remember_about_open_source (18/39) ...        \nPrinting slide #/_from_open_architecture_to_apache_iotdb (19/39) ...\nPrinting slide #/_open_architecture_for_audit_ready_history (20/39) ...\nPrinting slide #/_example_intended_use (21/39) ...                     \nPrinting slide #/_apache_based_iiot_data_logging (22/39) ...\nPrinting slide #/_apache_iotdb_as_the_historian_core (23/39) ...\nPrinting slide #/_apache_tsfile_as_the_storage_foundation (24/39) ...\nPrinting slide #/_mapping_compliance (25/39) ...                     \nPrinting slide #/_from_architecture_to_validation_evidence (26/39) ...\nPrinting slide #/_compliance_and_validation (27/39) ...               \nPrinting slide #/_validation_starts_with_system_boundaries (28/39) ...\nPrinting slide #/_risk_based_validation_with_gamp_5 (29/39) ...       \nPrinting slide #/_what_good_testing_looks_like (30/39) ...     \nPrinting slide #/_part_11_control_themes (31/39) ...      \nPrinting slide #/_the_demo_resilience_and_traceability (32/39) ...\nPrinting slide #/_demo_scenario (33/39) ...                       \nPrinting slide #/_live_demo_hybrid_iot_data_logging_and_visualization (34/39) ...\nPrinting slide #/_demo_steps (35/39) ...                                         \nSkipping font compression: Read ttf table data error\n\nPrinting slide #/_conclusion (36/39) ...\nPrinting slide #/_from_edge_data_to_audit_ready_history (37/39) ...\nPrinting slide #/_final_takeaways (38/39) ...                      \nPrinting slide #/_qa    (39/39) ...          \nPrinted 39 slides",
+      "stdout": "Loading page http://host.docker.internal:51378/presentation.html ...\nFailed to load resource: the server responded with a status of 404 (File not found)\nFailed to load resource: the server responded with a status of 404 (File not found)\nLoading page finished with status: 200\nReveal JS plugin activated\n\nPrinting slide #/0      ( 1/31) ...\nPrinting slide #/_the_pressure ( 2/31) ...\nPrinting slide #/_the_shopfloor_is_becoming_a_data_platform ( 3/31) ...\nPrinting slide #/_the_core_tension ( 4/31) ...                         \nPrinting slide #/_regulatory_pressure_is_expanding ( 5/31) ...\nPrinting slide #/_major_aspects ( 6/31) ...                   \nPrinting slide #/_the_regulatory_lens ( 7/31) ...\nPrinting slide #/_part_11_vs_annex_11_in_60_seconds ( 8/31) ...\nPrinting slide #/_the_shared_compliance_goal ( 9/31) ...       \nPrinting slide #/_data_integrity_becomes_architecture (10/31) ...\nPrinting slide #/_alcoa_as_the_practical_lens (11/31) ...        \nPrinting slide #/_compliancy_and_data (12/31) ...        \nPrinting slide #/_what_can_go_wrong_on_the_shopfloor (13/31) ...\nPrinting slide #/_why_open_source (14/31) ...                   \nPrinting slide #/_why_open_source_helps_validation (15/31) ...\nPrinting slide #/_open_source_is_not_automatically_compliant (16/31) ...\nPrinting slide #/_what_to_remember_about_open_source (17/31) ...        \nPrinting slide #/_from_open_architecture_to_apache_iotdb (18/31) ...\nPrinting slide #/_open_architecture_for_audit_ready_history (19/31) ...\nPrinting slide #/_example_intended_use (20/31) ...                     \nPrinting slide #/_apache_based_iiot_data_logging (21/31) ...\nPrinting slide #/_apache_iotdb_as_the_historian_core (22/31) ...\nPrinting slide #/_apache_tsfile_as_the_storage_foundation (23/31) ...\nPrinting slide #/_the_demo_resilience_and_traceability (24/31) ...   \nPrinting slide #/_demo_scenario (25/31) ...                       \nPrinting slide #/_live_demo_hybrid_iot_data_logging_and_visualization (26/31) ...\nPrinting slide #/_demo_steps (27/31) ...                                         \nPrinting slide #/_conclusion (28/31) ...\nPrinting slide #/_from_edge_data_to_audit_ready_history (29/31) ...\nPrinting slide #/_final_takeaways (30/31) ...                      \nPrinting slide #/_check_out (31/31) ...      \nPrinted 31 slides",
       "stderr": ""
     }
   ]

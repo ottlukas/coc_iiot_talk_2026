@@ -159,42 +159,6 @@ For IIoT, we need to translate those principles into architecture. This is no lo
 I do not want to walk through every term on this slide. The important point is the evolution: data integrity becomes an end-to-end platform requirement.
 --
 
-=== ALCOA++ Translated to IIoT
-
-[.takeaway-box]
---
-For IIoT, ALCOA++ is not a documentation checklist. It is an architecture requirement.
---
-
-|===
-|  | 
-
-|**Attributable**: Every reading is linked to a machine, sensor, gateway, service, and timestamp.
-|**Contemporaneous**: Data is captured **immediately** at the machine event.
-|**Original**: Raw values are preserved **before** any transformation or aggregation.
-|**Complete**: Retries, gaps, corrections, and synchronization events remain **traceable**.
-|**Enduring**: Records survive **retention periods**, infrastructure changes, and recovery scenarios.
-|**Available**: Authorized users can retrieve data **at any time** for operations, review, or inspection.
-|**Transparent**: Processing logic, configuration, and data movement are [.color-transition]#auditable#.
-|**Accountable**: System and user actions are tied to **responsible identities**.
-
-|===
-
-[.notes]
---
-This is where the regulatory language becomes practical.
-
-If a sensor reading is attributable, we must know which device, gateway, and service produced it.
-
-If the data is contemporaneous, timestamp strategy matters.
-
-If the data is original, we need to preserve raw values before downstream transformation.
-
-If the data is complete, retry behavior, synchronization gaps, and corrections must be visible.
-
-This is why data integrity has to be designed into the platform.
---
-
 === Compliancy and Data
 
 image::compliancedata.jpeg[Title="Compliance and data"]
@@ -223,7 +187,6 @@ At every stage we need to answer: where did the data come from, what happened to
 | Unclear source attribution
 
 |===
-
 
 [.takeaway-box]
 --
@@ -398,114 +361,6 @@ Append-oriented storage patterns are useful because they support preservation of
 However, immutability is not only a file-format property. A tamper-evident and inspection-ready design also depends on access control, storage policies, backups, checksums, monitoring, and operational procedures.
 --
 
-=== Mapping Compliance +
-Expectations to Technical Controls
-
-image::mappingcompliance.jpeg[Title="Mapping compliance to configuration"]
-
-[.notes]
---
-This is where compliance becomes engineering.
-
-A requirement like record integrity is implemented through controlled write paths, checksums, raw data preservation, and access control.
-
-A requirement like validation evidence becomes deployment logs, test records, configuration snapshots, monitoring records, and change history.
-
-The key is that every compliance expectation should map to a concrete architecture or operational control.
---
-
-[.section-break]
-== From Architecture to Validation Evidence
-
-image::balance.jpeg[Title="Balancing technology and compliance"]
-
-=== Compliance and Validation
-
-image::complianceandvalidation.jpeg[Title="Compliance and validation"]
-
-[.notes]
---
-After the architecture, the next question is: how do we make this usable in a regulated environment?
-
-The answer is not one feature. It is a validation lifecycle.
-
-That lifecycle includes intended use, system boundaries, risk assessment, user requirements, design specifications, testing, documented evidence, operating procedures, monitoring, periodic review, and controlled change.
---
-
-=== Validation Starts with System Boundaries
-
-* What is GMP-relevant?
-* What is the regulated record?
-* Which components create, modify, store, or display the record?
-* Which integrations are in scope?
-* Which users, services, and systems can access the data?
-* What is the intended use?
-* What is explicitly out of scope?
-
-[.notes]
---
-Before validating anything, we need to define the system boundary.
-
-For IIoT this is especially important because the architecture can include machines, gateways, brokers, stream processors, databases, dashboards, cloud services, and analytical platforms.
-
-Not every component has the same GMP relevance, but every component that creates, modifies, stores, or displays regulated records needs to be understood.
---
-
-=== Risk-Based Validation with GAMP 5
-
-. *Intended Use*: Define what the system is expected to do.
-. *Risk Assessment*: Identify patient, product quality, and data integrity risks.
-. *User Requirements*: Define business, quality, and operational requirements.
-. *Design Specifications*: Translate requirements into controlled architecture and configuration.
-. *IQ / OQ / PQ*: Prove installation, operation, and performance.
-. *SOPs and Training*: Ensure controlled and repeatable use.
-. *Monitoring and Review*: Verify ongoing compliant operation.
-. *Change Control*: Manage updates without breaking validated state.
-
-[.notes]
---
-The key point is that we do not validate open source differently from closed source software.
-
-We validate the implemented system based on intended use, risk, and evidence.
-
-GAMP 5 gives us a practical risk-based approach for doing that.
---
-
-=== What Good Testing Looks Like
-
-[cols="1,2,2", options="header"]
-|===
-|Test |What it proves |IIoT example
-
-|IQ |The system is installed repeatably and correctly. |Correct versions, configuration, certificates, storage paths, deployment scripts.
-|OQ |The system functions as specified. |RBAC, retention, backup, synchronization, failover, audit logging, monitoring.
-|PQ |The system performs under realistic production conditions. |Peak sensor load, network outage, replay, idempotent sync, long-running ingestion.
-|===
-
-[.notes]
---
-IQ means Installation Qualification. It proves that the system is installed correctly and repeatably.
-
-OQ means Operational Qualification. It proves that specified functions behave as intended.
-
-PQ means Performance Qualification. It proves that the system performs under realistic operating conditions.
-
-For an IIoT historian, PQ is especially important because peak load, network interruption, retry behavior, and synchronization can directly affect data completeness and trust.
---
-
-=== Part 11 Control Themes
-
-image::cfrpart11.jpeg[alt="Infographic illustrating Validation, Security, Record Retention, Audit Trails, Electronic Signatures, and Training requirements"]
-
-[.notes]
---
-Part 11 brings recurring control themes: validation, security, record retention, audit trails, electronic signatures, and training.
-
-Not every historian use case requires electronic signatures inside the historian itself. In many architectures, signatures are handled in a higher-level MES, QMS, LIMS, or review workflow.
-
-But records, access control, retention, auditability, training, and validation evidence must still be addressed in the implemented process.
---
-
 [.section-break]
 == The Demo: Resilience and Traceability
 
@@ -629,9 +484,12 @@ Apache IoTDB can serve as the historian core of a GMP-ready IIoT architecture, b
 It comes from the validated system around it: controlled ingestion, traceability, access control, retention, monitoring, testing, and lifecycle governance.
 --
 
-=== Q&A
+=== Check out:
 
-* Thank you.
+* Git Repositories
+** https://github.com/ottlukas/iot-data-logging-hybrid_2026
+** https://github.com/ottlukas/coc_iiot_talk_2026
+** https://github.com/ottlukas/ApacheCon_2022_IoT
 
 * Projects:
 ** Apache IoTDB: https://iotdb.apache.org/
