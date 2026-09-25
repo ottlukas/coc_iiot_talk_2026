@@ -11,6 +11,8 @@
   --coc-paper: #ffffff;
   --coc-soft: #f4f1f2;
   --coc-code: #2b1026;
+  --coc-heading-color: var(--coc-plum);
+  --coc-subheading-color: var(--coc-magenta);
   --r-background-color: var(--coc-paper);
   --r-main-font: "Montserrat", "Avenir Next", "Segoe UI", Arial, sans-serif;
   --r-heading-font: "Montserrat", "Avenir Next", "Segoe UI", Arial, sans-serif;
@@ -60,6 +62,10 @@ body {
 
 .reveal .slides section:nth-of-type(4n+1) {
   background-image: var(--gradient-1);
+  --r-main-color: var(--coc-paper);
+  --r-heading-color: var(--coc-paper);
+  --coc-heading-color: var(--coc-paper);
+  --coc-subheading-color: var(--coc-paper);
 }
 
 .reveal .slides section:nth-of-type(4n+2) {
@@ -377,13 +383,13 @@ body {
 
 .reveal h2 {
   font-size: 2.2em;
-  color: var(--coc-plum);
+  color: var(--coc-heading-color);
   margin-bottom: 1rem;
 }
 
 .reveal h3 {
   font-size: 1.45em;
-  color: var(--coc-magenta);
+  color: var(--coc-subheading-color);
   margin-bottom: 0.8rem;
 }
 
