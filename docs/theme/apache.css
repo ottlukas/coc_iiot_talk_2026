@@ -64,7 +64,7 @@ body {
   border-radius: 0;
 }
 
-.reveal .slides section:nth-of-type(4n+1) {
+.reveal .slides section.section-break {
   background-image: var(--gradient-1);
   color: var(--coc-paper);
   --r-main-color: var(--coc-paper);
@@ -79,16 +79,11 @@ body {
   --coc-animation-end: var(--coc-paper);
 }
 
-.reveal .slides section:nth-of-type(4n+2) {
+.reveal .slides section:not(.section-break):nth-of-type(4n+1),
+.reveal .slides section:not(.section-break):nth-of-type(4n+2),
+.reveal .slides section:not(.section-break):nth-of-type(4n+3),
+.reveal .slides section:not(.section-break):nth-of-type(4n+4) {
   background-image: var(--gradient-2);
-}
-
-.reveal .slides section:nth-of-type(4n+3) {
-  background-image: var(--gradient-3);
-}
-
-.reveal .slides section:nth-of-type(4n+4) {
-  background-image: var(--gradient-4);
 }
 
 .reveal .slides section * {
