@@ -2,51 +2,60 @@
 
 /* Overrides for Apache Training Presentation Theme */
 :root {
-  --r-background-color: #f4f7fb;
-  --r-main-font: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Helvetica Neue", Arial, sans-serif;
-  --r-heading-font: "Segoe UI", "Roboto", "Helvetica Neue", Arial, sans-serif;
+  --coc-plum: #5b0b3d;
+  --coc-deep-plum: #2b1026;
+  --coc-ink: #4d1b24;
+  --coc-orange: #ed6a2d;
+  --coc-magenta: #81247b;
+  --coc-red: #d7192f;
+  --coc-paper: #ffffff;
+  --coc-soft: #f4f1f2;
+  --coc-code: #2b1026;
+  --r-background-color: var(--coc-paper);
+  --r-main-font: "Montserrat", "Avenir Next", "Segoe UI", Arial, sans-serif;
+  --r-heading-font: "Montserrat", "Avenir Next", "Segoe UI", Arial, sans-serif;
   --r-code-font: "SFMono-Regular", Consolas, "Liberation Mono", Monaco, monospace;
   --r-heading-font-weight: 700;
-  --r-heading-color: #b22b27;
-  --r-main-color: #102a43;
-  --r-link-color: #b22b27;
-  --r-link-color-hover: #8a1f1b;
-  --r-selection-background-color: rgba(178, 43, 39, 0.15);
-  --r-selection-color: #b22b27;
+  --r-heading-color: var(--coc-plum);
+  --r-main-color: var(--coc-ink);
+  --r-link-color: var(--coc-plum);
+  --r-link-color-hover: var(--coc-orange);
+  --r-selection-background-color: rgba(129, 36, 123, 0.18);
+  --r-selection-color: var(--coc-plum);
   --r-main-font-size: 38px;
-  --r-heading-line-height: 1.08;
+  --r-heading-line-height: 1.1;
   --r-heading-letter-spacing: normal;
   --r-heading-text-transform: none;
   --r-heading-text-shadow: none;
   --r-block-margin: 1.25rem;
   --r-heading-margin: 0 0 0.85rem 0;
-  --gradient-1: radial-gradient(circle at top left, #f8fbff 0%, #dbeafe 38%, #f4f7fb 100%);
-  --gradient-2: radial-gradient(circle at top right, #fff1f0 0%, #f9e1de 40%, #f8fafc 100%);
-  --gradient-3: linear-gradient(135deg, #f4f9ff 0%, #e7f5ff 45%, #fdfbff 100%);
-  --gradient-4: linear-gradient(135deg, #f8f0ff 0%, #e5f1ff 55%, #f9fcff 100%);
+  --gradient-1: linear-gradient(180deg, var(--coc-deep-plum) 0%, var(--coc-deep-plum) 100%);
+  --gradient-2: linear-gradient(180deg, var(--coc-paper) 0%, var(--coc-paper) 100%);
+  --gradient-3: linear-gradient(180deg, var(--coc-paper) 0%, var(--coc-paper) 100%);
+  --gradient-4: linear-gradient(180deg, var(--coc-paper) 0%, var(--coc-paper) 100%);
 }
 
 /* Base Reveal elements */
 html,
 body {
   min-height: 100%;
-  background: linear-gradient(180deg, #f7faff 0%, #eef4fc 100%);
+  background: var(--coc-paper);
 }
 
 .reveal {
   font-family: var(--r-main-font);
   color: var(--r-main-color);
-  background: radial-gradient(circle at top left, rgba(178, 43, 39, 0.08), transparent 28%), linear-gradient(180deg, #f7fbff 0%, #eef4fc 100%);
+  background: var(--coc-paper);
 }
 
 .reveal .slides section {
-  padding: clamp(1.25rem, 2.5vw, 2.8rem);
+  padding: clamp(1.25rem, 4vw, 4.5rem);
   min-height: calc(100vh - 3rem);
-  background-color: rgba(255, 255, 255, 0.85);
-  background-blend-mode: overlay;
-  backdrop-filter: blur(12px);
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.35);
-  border-radius: 28px;
+  background-color: var(--coc-paper);
+  background-blend-mode: normal;
+  backdrop-filter: none;
+  box-shadow: none;
+  border-radius: 0;
 }
 
 .reveal .slides section:nth-of-type(4n+1) {
@@ -66,26 +75,26 @@ body {
 }
 
 .reveal .slides section * {
-  text-shadow: 0 0 1px rgba(255, 255, 255, 0.75);
+  text-shadow: none;
 }
 
 .reveal .fragment.fade-in {
   opacity: 0;
-  transform: translateY(12px);
-  animation: fadeIn 0.85s ease-out forwards;
+  transform: translateY(0);
+  animation: fadeIn 0.45s ease-out forwards;
 }
 
 .reveal .typewriter {
   display: inline-block;
   overflow: hidden;
   white-space: nowrap;
-  border-right: 0.18em solid rgba(178, 43, 29, 0.85);
+  border-right: 0.18em solid var(--coc-orange);
   animation: typing 2.5s steps(40, end) forwards, blink-caret 0.75s step-end infinite;
   max-width: 100%;
 }
 
 .reveal .highlight {
-  color: #b22b27;
+  color: var(--coc-orange);
   font-weight: 700;
   animation: glowPulse 1.8s ease-in-out 0.3s both;
 }
@@ -122,21 +131,21 @@ body {
 
 @keyframes glowPulse {
   from {
-    color: #b22b27;
-    text-shadow: 0 0 0 rgba(178, 43, 29, 0);
+    color: var(--coc-orange);
+    text-shadow: 0 0 0 rgba(237, 106, 45, 0);
   }
   to {
-    color: #6a1214;
-    text-shadow: 0 0 18px rgba(178, 43, 29, 0.35);
+    color: var(--coc-magenta);
+    text-shadow: 0 0 18px rgba(129, 36, 123, 0.25);
   }
 }
 
 @keyframes colorShift {
   from {
-    color: #102a43;
+    color: var(--coc-plum);
   }
   to {
-    color: #b22b27;
+    color: var(--coc-orange);
   }
 }
 
@@ -169,18 +178,18 @@ body {
 }
 
 .reveal .takeaway-box {
-  background: rgba(255, 255, 255, 0.8);
-  border: 1px solid rgba(178, 43, 29, 0.18);
-  border-radius: 16px;
+  background: var(--coc-soft);
+  border: 1px solid rgba(91, 11, 61, 0.2);
+  border-radius: 0;
   padding: 22px;
   margin-top: 1.5rem;
   text-align: left;
-  transition: transform 0.35s ease, box-shadow 0.35s ease;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
 .reveal .takeaway-box:hover {
   transform: translateY(-3px);
-  box-shadow: 0 18px 30px rgba(16, 42, 67, 0.09);
+  box-shadow: 0 12px 24px rgba(43, 16, 38, 0.12);
 }
 
 .reveal h1,
@@ -195,7 +204,7 @@ body {
 
 .reveal h1 {
   font-size: clamp(2.6rem, 4vw + 1rem, 5.2rem);
-  border-bottom: 3px solid rgba(178, 43, 29, 0.95);
+  border-bottom: 3px solid var(--coc-orange);
   padding-bottom: 0.6rem;
   margin-bottom: 1.5rem;
   max-width: 16ch;
@@ -203,13 +212,13 @@ body {
 
 .reveal h2 {
   font-size: clamp(1.9rem, 3vw + 0.7rem, 3rem);
-  color: #102a43;
+  color: var(--coc-plum);
   margin-bottom: 1rem;
 }
 
 .reveal h3 {
   font-size: clamp(1.4rem, 2.2vw + 0.5rem, 1.9rem);
-  color: #b22b27;
+  color: var(--coc-magenta);
   margin-bottom: 0.8rem;
 }
 
@@ -219,9 +228,9 @@ body {
 }
 
 .reveal blockquote {
-  background: rgba(255, 255, 255, 0.92);
-  border-left: 4px solid #b22b27;
-  box-shadow: 0 10px 22px rgba(16, 42, 67, 0.08);
+  background: var(--coc-soft);
+  border-left: 4px solid var(--coc-orange);
+  box-shadow: 0 10px 22px rgba(43, 16, 38, 0.1);
   font-style: italic;
   padding: 18px 24px;
   width: min(90%, 62ch);
@@ -368,13 +377,13 @@ body {
 
 .reveal h2 {
   font-size: 2.2em;
-  color: #102a43;
+  color: var(--coc-plum);
   margin-bottom: 1rem;
 }
 
 .reveal h3 {
   font-size: 1.45em;
-  color: #b22b27;
+  color: var(--coc-magenta);
   margin-bottom: 0.8rem;
 }
 
@@ -411,7 +420,7 @@ body {
 }
 
 .reveal strong {
-  color: #b22b27;
+  color: var(--coc-magenta);
   font-weight: 600;
 }
 
@@ -420,15 +429,15 @@ body {
 }
 
 .reveal .slide-number {
-  color: #7f8c8d;
+  color: var(--coc-plum);
   font-size: 0.75em;
   background-color: transparent;
 }
 
 .reveal blockquote {
-  background: rgba(255, 255, 255, 0.92);
-  border-left: 4px solid #b22b27;
-  box-shadow: 0 10px 22px rgba(16, 42, 67, 0.08);
+  background: var(--coc-soft);
+  border-left: 4px solid var(--coc-orange);
+  box-shadow: 0 10px 22px rgba(43, 16, 38, 0.1);
   font-style: italic;
   padding: 18px 24px;
   width: min(90%, 62ch);
@@ -436,35 +445,35 @@ body {
 }
 
 .reveal pre {
-  box-shadow: 0 10px 24px rgba(16, 42, 67, 0.08);
-  border-radius: 12px;
-  border: 1px solid rgba(33, 47, 61, 0.12);
+  box-shadow: 0 10px 24px rgba(43, 16, 38, 0.12);
+  border-radius: 0;
+  border: 1px solid rgba(91, 11, 61, 0.2);
   width: min(90%, 72ch);
   margin: 1.5rem auto;
 }
 
 .reveal code {
-  font-family: "Fira Code", Monaco, Consolas, "Segoe UI Emoji", "Apple Color Emoji", "Noto Color Emoji", monospace;
+  font-family: var(--r-code-font);
   font-size: 0.95em;
-  border-radius: 6px;
-  background: #1f2937;
-  color: #f7fafc;
+  border-radius: 0;
+  background: var(--coc-code);
+  color: var(--coc-paper);
   padding: 3px 8px;
 }
 
 .reveal pre code {
   padding: 18px;
-  background: #1f2937;
-  color: #f7fafc;
+  background: var(--coc-code);
+  color: var(--coc-paper);
   display: block;
   overflow-x: auto;
   line-height: 1.5;
 }
 
 .takeaway-box {
-  background: rgba(178, 43, 39, 0.06);
-  border: 1px solid rgba(178, 43, 39, 0.18);
-  border-radius: 12px;
+  background: var(--coc-soft);
+  border: 1px solid rgba(91, 11, 61, 0.2);
+  border-radius: 0;
   padding: 20px;
   margin-top: 1.5rem;
   text-align: left;
