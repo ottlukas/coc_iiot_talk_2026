@@ -13,6 +13,10 @@
   --coc-code: #2b1026;
   --coc-heading-color: var(--coc-plum);
   --coc-subheading-color: var(--coc-magenta);
+  --coc-emphasis-color: var(--coc-magenta);
+  --coc-highlight-color: var(--coc-orange);
+  --coc-animation-start: var(--coc-plum);
+  --coc-animation-end: var(--coc-orange);
   --r-background-color: var(--coc-paper);
   --r-main-font: "Montserrat", "Avenir Next", "Segoe UI", Arial, sans-serif;
   --r-heading-font: "Montserrat", "Avenir Next", "Segoe UI", Arial, sans-serif;
@@ -62,10 +66,17 @@ body {
 
 .reveal .slides section:nth-of-type(4n+1) {
   background-image: var(--gradient-1);
+  color: var(--coc-paper);
   --r-main-color: var(--coc-paper);
   --r-heading-color: var(--coc-paper);
+  --r-link-color: var(--coc-paper);
+  --r-link-color-hover: var(--coc-paper);
   --coc-heading-color: var(--coc-paper);
   --coc-subheading-color: var(--coc-paper);
+  --coc-emphasis-color: var(--coc-paper);
+  --coc-highlight-color: var(--coc-paper);
+  --coc-animation-start: var(--coc-paper);
+  --coc-animation-end: var(--coc-paper);
 }
 
 .reveal .slides section:nth-of-type(4n+2) {
@@ -94,13 +105,13 @@ body {
   display: inline-block;
   overflow: hidden;
   white-space: nowrap;
-  border-right: 0.18em solid var(--coc-orange);
+  border-right: 0.18em solid var(--coc-highlight-color);
   animation: typing 2.5s steps(40, end) forwards, blink-caret 0.75s step-end infinite;
   max-width: 100%;
 }
 
 .reveal .highlight {
-  color: var(--coc-orange);
+  color: var(--coc-highlight-color);
   font-weight: 700;
   animation: glowPulse 1.8s ease-in-out 0.3s both;
 }
@@ -137,21 +148,21 @@ body {
 
 @keyframes glowPulse {
   from {
-    color: var(--coc-orange);
+    color: var(--coc-highlight-color);
     text-shadow: 0 0 0 rgba(237, 106, 45, 0);
   }
   to {
-    color: var(--coc-magenta);
+    color: var(--coc-emphasis-color);
     text-shadow: 0 0 18px rgba(129, 36, 123, 0.25);
   }
 }
 
 @keyframes colorShift {
   from {
-    color: var(--coc-plum);
+    color: var(--coc-animation-start);
   }
   to {
-    color: var(--coc-orange);
+    color: var(--coc-animation-end);
   }
 }
 
@@ -210,7 +221,7 @@ body {
 
 .reveal h1 {
   font-size: clamp(2.6rem, 4vw + 1rem, 5.2rem);
-  border-bottom: 3px solid var(--coc-orange);
+  border-bottom: 3px solid var(--coc-highlight-color);
   padding-bottom: 0.6rem;
   margin-bottom: 1.5rem;
   max-width: 16ch;
@@ -426,7 +437,7 @@ body {
 }
 
 .reveal strong {
-  color: var(--coc-magenta);
+  color: var(--coc-emphasis-color);
   font-weight: 600;
 }
 
@@ -435,7 +446,7 @@ body {
 }
 
 .reveal .slide-number {
-  color: var(--coc-plum);
+  color: var(--coc-emphasis-color);
   font-size: 0.75em;
   background-color: transparent;
 }
